@@ -75,7 +75,7 @@ public class SearchRepositoryImpl implements SearchRepository {
   }
 
   @Override
-  public List<Document> countByExperience() {
+  public List<Document> findCountByExperience() {
     final List<Document> posts = new ArrayList<>();
 
     MongoDatabase database = client.getDatabase("jobs");

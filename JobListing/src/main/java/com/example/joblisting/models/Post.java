@@ -1,6 +1,7 @@
 package com.example.joblisting.models;
 
 import lombok.Data;
+import nonapi.io.github.classgraph.json.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -10,6 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Data
 @Document(collection = "example")
 public class Post {
+  @Id
+  private String id;
+
   private String profile;
 
   @Field("desc")

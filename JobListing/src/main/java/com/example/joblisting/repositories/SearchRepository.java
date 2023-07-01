@@ -13,5 +13,5 @@ public interface SearchRepository {
 
   List<Post> findByPattern(String pattern);
 
-  List<Document> countByExperience();
+  List<Document> findCountByExperience();
 }
