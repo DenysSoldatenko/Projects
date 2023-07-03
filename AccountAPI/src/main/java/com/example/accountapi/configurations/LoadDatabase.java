@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 
@@ -14,9 +15,11 @@ import org.springframework.context.annotation.Bean;
 /**
  * Configuration class for initializing the database with sample data.
  */
+@Slf4j
 public class LoadDatabase {
 
   private AccountRepository accountRepository;
+  private final Random random = new Random();
 
   /**
    * Initializes the database with sample account records.
@@ -27,7 +30,6 @@ public class LoadDatabase {
   public CommandLineRunner initDatabase() {
     return args -> {
       List<Account> accounts = new ArrayList<>();
-      Random random = new Random();
 
       for (int i = 0; i < 10; i++) {
         String accountNumber = UUID.randomUUID().toString().substring(0, 8);
@@ -42,7 +44,7 @@ public class LoadDatabase {
       }
 
       accountRepository.saveAll(accounts);
-      System.out.println("Sample database initialized with 10 random records.");
+      log.info("Sample database initialized with 10 random records.");
     };
   }
 

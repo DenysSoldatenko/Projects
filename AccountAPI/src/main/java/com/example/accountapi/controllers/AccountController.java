@@ -8,7 +8,6 @@ import com.example.accountapi.models.Amount;
 import com.example.accountapi.services.AccountService;
 import com.example.accountapi.utils.AccountAssembler;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -44,7 +43,7 @@ public class AccountController {
   public CollectionModel<EntityModel<Account>> getAllAccounts() {
     List<EntityModel<Account>> accounts = service.listAll().stream()
         .map(assembler::toModel)
-        .collect(Collectors.toList());
+        .toList();
 
     return CollectionModel.of(
     accounts,
