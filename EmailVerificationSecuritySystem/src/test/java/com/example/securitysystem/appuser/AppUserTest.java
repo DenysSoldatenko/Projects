@@ -12,10 +12,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 /**
  * Unit tests for the AppUser class.
  */
-public class AppUserTest {
+class AppUserTest {
 
   @Test
-  public void testGetAuthorities() {
+  void testGetAuthorities() {
     AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
 
     Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
@@ -24,14 +24,14 @@ public class AppUserTest {
   }
 
   @Test
-  public void testIsAccountNonExpired() {
+  void testIsAccountNonExpired() {
     AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
 
     assertTrue(user.isAccountNonExpired());
   }
 
   @Test
-  public void testIsAccountNonLocked() {
+  void testIsAccountNonLocked() {
     AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
     user.setLocked(true);
 
@@ -39,14 +39,14 @@ public class AppUserTest {
   }
 
   @Test
-  public void testIsCredentialsNonExpired() {
+  void testIsCredentialsNonExpired() {
     AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
 
     assertTrue(user.isCredentialsNonExpired());
   }
 
   @Test
-  public void testIsEnabled() {
+  void testIsEnabled() {
     AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
     user.setEnabled(true);
 
@@ -54,21 +54,21 @@ public class AppUserTest {
   }
 
   @Test
-  public void testIsUsername() {
+  void testIsUsername() {
     AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
 
     assertEquals("john@example.com", user.getUsername());
   }
 
   @Test
-  public void testIsPassword() {
+  void testIsPassword() {
     AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
 
     assertEquals("password", user.getPassword());
   }
 
   @Test
-  public void testIdGetter() {
+  void testIdGetter() {
     AppUser user = new AppUser();
     user.setId(1L);
 
@@ -76,7 +76,7 @@ public class AppUserTest {
   }
 
   @Test
-  public void testFirstNameGetter() {
+  void testFirstNameGetter() {
     AppUser user = new AppUser();
     user.setFirstName("John");
 
@@ -84,7 +84,7 @@ public class AppUserTest {
   }
 
   @Test
-  public void testLastNameGetter() {
+  void testLastNameGetter() {
     AppUser user = new AppUser();
     user.setLastName("Doe");
 
@@ -92,7 +92,7 @@ public class AppUserTest {
   }
 
   @Test
-  public void testEmailGetter() {
+  void testEmailGetter() {
     AppUser user = new AppUser();
     user.setEmail("john@example.com");
 
@@ -100,7 +100,7 @@ public class AppUserTest {
   }
 
   @Test
-  public void testPasswordGetter() {
+  void testPasswordGetter() {
     AppUser user = new AppUser();
     user.setPassword("password123");
 
@@ -108,7 +108,7 @@ public class AppUserTest {
   }
 
   @Test
-  public void testAppUserRoleGetter() {
+  void testAppUserRoleGetter() {
     AppUser user = new AppUser();
     user.setAppUserRole(AppUserRole.USER);
 

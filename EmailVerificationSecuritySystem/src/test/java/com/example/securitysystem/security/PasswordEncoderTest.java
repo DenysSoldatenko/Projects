@@ -8,10 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 /**
  * Unit tests for the PasswordEncoder class.
  */
-public class PasswordEncoderTest {
+class PasswordEncoderTest {
 
   @Test
-  public void testBcryptPasswordEncoderBean() {
+  void testBcryptPasswordEncoderBean() {
     BCryptPasswordEncoder bcryptPasswordEncoder = new PasswordEncoder().bcryptPasswordEncoder();
 
     assertNotNull(bcryptPasswordEncoder);

@@ -18,7 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * Unit tests for the ConfirmationTokenService class.
  */
 @ExtendWith(MockitoExtension.class)
-public class ConfirmationTokenServiceTest {
+class ConfirmationTokenServiceTest {
 
   @Mock
   private ConfirmationTokenRepository confirmationTokenRepository;
@@ -30,7 +30,7 @@ public class ConfirmationTokenServiceTest {
   }
 
   @Test
-  public void testSaveConfirmationToken() {
+  void testSaveConfirmationToken() {
     ConfirmationToken token = new ConfirmationToken(
         "token123",
         LocalDateTime.now(),
@@ -43,7 +43,7 @@ public class ConfirmationTokenServiceTest {
   }
 
   @Test
-  public void testGetToken() {
+  void testGetToken() {
     String tokenValue = "token123";
     ConfirmationToken token = new ConfirmationToken(
         tokenValue,
@@ -61,7 +61,7 @@ public class ConfirmationTokenServiceTest {
   }
 
   @Test
-  public void testFindNonExpiredToken() {
+  void testFindNonExpiredToken() {
     AppUser appUser = new AppUser();
     LocalDateTime createdAt = LocalDateTime.now().minusMinutes(30);
     LocalDateTime expiresAt = LocalDateTime.now().plusHours(1);
@@ -78,7 +78,7 @@ public class ConfirmationTokenServiceTest {
   }
 
   @Test
-  public void testSetConfirmedAt() {
+  void testSetConfirmedAt() {
     String tokenValue = "token123";
     ConfirmationToken token = new ConfirmationToken(tokenValue, LocalDateTime.now(),
         LocalDateTime.now().plusHours(1), new AppUser());

@@ -42,7 +42,7 @@ class SearchRepositoryImplTest {
   }
 
   @Test
-  public void testFindByText() {
+  void testFindByText() {
     String searchText = "Java Developer";
 
     when(mockClient.getDatabase(any())).thenReturn(mockDatabase);
@@ -56,7 +56,7 @@ class SearchRepositoryImplTest {
   }
 
   @Test
-  public void testFindCountByExperience() {
+  void testFindCountByExperience() {
     when(mockClient.getDatabase(any())).thenReturn(mockDatabase);
     when(mockDatabase.getCollection(any())).thenReturn(mockCollection);
     when(mockCollection.aggregate(any(List.class)))

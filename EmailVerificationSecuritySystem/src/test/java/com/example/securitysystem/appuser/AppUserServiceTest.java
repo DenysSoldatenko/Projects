@@ -27,7 +27,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  * Unit tests for the AppUserService class.
  */
 @ExtendWith(SpringExtension.class)
-public class AppUserServiceTest {
+class AppUserServiceTest {
 
   @Mock
   private AppUserRepository appUserRepository;
@@ -53,7 +53,7 @@ public class AppUserServiceTest {
   }
 
   @Test
-  public void testLoadUserByUsername_UserExists() {
+  void testLoadUserByUsername_UserExists() {
     AppUser user = new AppUser();
     user.setEmail("test@example.com");
     when(appUserRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
@@ -65,7 +65,7 @@ public class AppUserServiceTest {
   }
 
   @Test
-  public void testLoadUserByUsername_UserNotFound() {
+  void testLoadUserByUsername_UserNotFound() {
     when(appUserRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
 
     assertThrows(UsernameNotFoundException.class,
@@ -73,7 +73,7 @@ public class AppUserServiceTest {
   }
 
   @Test
-  public void testSignUpUser_UserAlreadyExists() {
+  void testSignUpUser_UserAlreadyExists() {
     AppUser existingUser = new AppUser();
     existingUser.setEmail("existing@example.com");
     when(appUserRepository.findByEmail("existing@example.com"))
@@ -83,7 +83,7 @@ public class AppUserServiceTest {
   }
 
   @Test
-  public void testSignUpUser_NewUser() {
+  void testSignUpUser_NewUser() {
     AppUser newUser = new AppUser();
     newUser.setEmail("new@example.com");
     newUser.setPassword("password");
@@ -99,7 +99,7 @@ public class AppUserServiceTest {
   }
 
   @Test
-  public void testEnableAppUser() {
+  void testEnableAppUser() {
     appUserService.enableAppUser("user@example.com");
 
     verify(appUserRepository, times(1)).enableAppUser("user@example.com");

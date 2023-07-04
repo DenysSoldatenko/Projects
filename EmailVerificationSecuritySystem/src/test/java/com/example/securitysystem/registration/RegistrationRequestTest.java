@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the RegistrationRequest class.
  */
-public class RegistrationRequestTest {
+class RegistrationRequestTest {
 
   @Test
-  public void testConstructorAndGetterMethods() {
+  void testConstructorAndGetterMethods() {
     RegistrationRequest request
         = new RegistrationRequest("John", "Doe", "john@example.com", "password123");
 
@@ -21,7 +21,7 @@ public class RegistrationRequestTest {
   }
 
   @Test
-  public void testEquality() {
+  void testEquality() {
     RegistrationRequest request1
         = new RegistrationRequest("John", "Doe", "john@example.com", "password123");
     RegistrationRequest request2
@@ -31,7 +31,7 @@ public class RegistrationRequestTest {
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     RegistrationRequest request
         = new RegistrationRequest("John", "Doe", "john@example.com", "password123");
     String expectedToString = "RegistrationRequest[firstName=John, lastName=Doe, "

@@ -23,7 +23,7 @@ import org.mockito.Mock;
 /**
  * Unit tests for the RegistrationService class.
  */
-public class RegistrationServiceTest {
+class RegistrationServiceTest {
 
   @Mock
   private AppUserService appUserService;
@@ -49,7 +49,7 @@ public class RegistrationServiceTest {
   }
 
   @Test
-  public void testRegisterValidEmail() {
+  void testRegisterValidEmail() {
     RegistrationRequest request
         = new RegistrationRequest("John", "Doe", "john@example.com", "password123");
     when(emailValidator.test("john@example.com")).thenReturn(true);
@@ -62,7 +62,7 @@ public class RegistrationServiceTest {
   }
 
   @Test
-  public void testRegisterInvalidEmail() {
+  void testRegisterInvalidEmail() {
     RegistrationRequest request
         = new RegistrationRequest("John", "Doe", "invalid-email", "password123");
     when(emailValidator.test("invalid-email")).thenReturn(false);
@@ -72,7 +72,7 @@ public class RegistrationServiceTest {
   }
 
   @Test
-  public void testConfirmTokenNotFound() {
+  void testConfirmTokenNotFound() {
     String token = "non-existent-token";
     when(confirmationTokenService.getToken(token)).thenReturn(Optional.empty());
 
@@ -82,7 +82,7 @@ public class RegistrationServiceTest {
   }
 
   @Test
-  public void testConfirmTokenAlreadyConfirmed() {
+  void testConfirmTokenAlreadyConfirmed() {
     String token = "token123";
     ConfirmationToken confirmationToken = new ConfirmationToken(
         token,
@@ -100,7 +100,7 @@ public class RegistrationServiceTest {
   }
 
   @Test
-  public void testConfirmTokenExpired() {
+  void testConfirmTokenExpired() {
     String token = "token123";
     ConfirmationToken confirmationToken = new ConfirmationToken(
         token,

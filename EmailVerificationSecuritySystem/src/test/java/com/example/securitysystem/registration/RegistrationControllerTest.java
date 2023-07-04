@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
  * Unit tests for the RegistrationController class.
  */
 @ExtendWith(SpringExtension.class)
-public class RegistrationControllerTest {
+class RegistrationControllerTest {
 
   @Mock
   private RegistrationService registrationService;
@@ -32,7 +32,7 @@ public class RegistrationControllerTest {
   }
 
   @Test
-  public void testRegister() throws Exception {
+  void testRegister() throws Exception {
     RegistrationRequest request
         = new RegistrationRequest("John", "Doe", "john@example.com", "password123");
 
@@ -47,7 +47,7 @@ public class RegistrationControllerTest {
   }
 
   @Test
-  public void testConfirm() throws Exception {
+  void testConfirm() throws Exception {
     String token = "token123";
 
     when(registrationService.confirmToken(token)).thenReturn("Confirmation successful");
@@ -59,7 +59,7 @@ public class RegistrationControllerTest {
   }
 
   @Test
-  public void testIndex() throws Exception {
+  void testIndex() throws Exception {
     mockMvc.perform(get("/api/v1/registration/index"))
     .andExpect(status().isOk())
         .andExpect(content().string("Hello user!"));

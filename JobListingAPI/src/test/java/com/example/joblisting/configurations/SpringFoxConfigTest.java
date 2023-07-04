@@ -9,10 +9,10 @@ import springfox.documentation.spring.web.plugins.Docket;
 /**
  * Unit tests for the SpringFoxConfig class.
  */
-public class SpringFoxConfigTest {
+class SpringFoxConfigTest {
 
   @Test
-  public void testSwaggerDocketConfiguration() {
+  void testSwaggerDocketConfiguration() {
     SpringFoxConfig springFoxConfig = new SpringFoxConfig();
     Docket docket = springFoxConfig.api();
 

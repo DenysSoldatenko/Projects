@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the Post class.
  */
-public class PostTest {
+class PostTest {
 
   @Test
-  public void testGettersAndSetters() {
+  void testGettersAndSetters() {
     Post post = new Post();
 
     post.setId("123");

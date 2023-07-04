@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the EmailBuilder class.
  */
-public class EmailBuilderTest {
+class EmailBuilderTest {
 
   @Test
-  public void testBuildEmail() {
+  void testBuildEmail() {
     EmailBuilder emailBuilder = new EmailBuilder();
 
     String name = "John Doe";

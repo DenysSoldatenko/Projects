@@ -28,7 +28,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
  * Unit tests for the PostController class.
  */
 @ExtendWith(MockitoExtension.class)
-public class PostControllerTest {
+class PostControllerTest {
 
   @InjectMocks
   private PostController postController;
@@ -47,14 +47,14 @@ public class PostControllerTest {
   }
 
   @Test
-  public void testHello() throws Exception {
+  void testHello() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.get("/example")
     .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
   }
 
   @Test
-  public void testGetAllPosts() {
+  void testGetAllPosts() {
     List<Post> posts = Collections.singletonList(new Post());
 
     when(postRepository.findAll()).thenReturn(posts);
@@ -67,7 +67,7 @@ public class PostControllerTest {
   }
 
   @Test
-  public void testAddPost() {
+  void testAddPost() {
     Post post = new Post();
 
     when(postRepository.save(any(Post.class))).thenReturn(post);
@@ -79,7 +79,7 @@ public class PostControllerTest {
   }
 
   @Test
-  public void testUpdatePost() {
+  void testUpdatePost() {
     Post post = new Post();
 
     when(postRepository.save(any(Post.class))).thenReturn(post);
@@ -91,7 +91,7 @@ public class PostControllerTest {
   }
 
   @Test
-  public void testSearch() {
+  void testSearch() {
     List<Post> posts = Collections.singletonList(new Post());
 
     when(searchRepository.findByText(anyString())).thenReturn(posts);
@@ -104,7 +104,7 @@ public class PostControllerTest {
   }
 
   @Test
-  public void testSearchByPattern() {
+  void testSearchByPattern() {
     List<Post> posts = Collections.singletonList(new Post());
 
     when(searchRepository.findByPattern(anyString())).thenReturn(posts);
@@ -117,7 +117,7 @@ public class PostControllerTest {
   }
 
   @Test
-  public void testCountByExperience() {
+  void testCountByExperience() {
     List<org.bson.Document> documents = Collections.singletonList(new org.bson.Document());
 
     when(searchRepository.findCountByExperience()).thenReturn(documents);

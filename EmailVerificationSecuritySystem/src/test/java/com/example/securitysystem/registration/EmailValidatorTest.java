@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the EmailValidator class.
  */
-public class EmailValidatorTest {
+class EmailValidatorTest {
 
   private final EmailValidator emailValidator = new EmailValidator();
 
   @Test
-  public void testValidEmails() {
+  void testValidEmails() {
     assertTrue(emailValidator.test("test@example.com"));
     assertTrue(emailValidator.test("john.doe@example.co.uk"));
     assertTrue(emailValidator.test("user1234@example.subdomain.example.org"));
@@ -22,7 +22,7 @@ public class EmailValidatorTest {
   }
 
   @Test
-  public void testInvalidEmails() {
+  void testInvalidEmails() {
     assertFalse(emailValidator.test("invalidemail@"));
     assertFalse(emailValidator.test("invalidemail.com"));
     assertFalse(emailValidator.test("@example.com"));

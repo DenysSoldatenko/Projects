@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the ConfirmationToken class.
  */
-public class ConfirmationTokenTest {
+class ConfirmationTokenTest {
 
   @Test
-  public void testConstructorAndGetterMethods() {
+  void testConstructorAndGetterMethods() {
     AppUser appUser = new AppUser();
     LocalDateTime createdAt = LocalDateTime.now();
     LocalDateTime expiresAt = LocalDateTime.now().plusHours(1);
@@ -29,7 +29,7 @@ public class ConfirmationTokenTest {
   }
 
   @Test
-  public void testNoArgsConstructor() {
+  void testNoArgsConstructor() {
     ConfirmationToken confirmationToken = new ConfirmationToken();
 
     assertNull(confirmationToken.getToken());
@@ -40,7 +40,7 @@ public class ConfirmationTokenTest {
   }
 
   @Test
-  public void testId() {
+  void testId() {
     AppUser appUser = new AppUser();
     LocalDateTime createdAt = LocalDateTime.now();
     LocalDateTime expiresAt = LocalDateTime.now().plusHours(1);
@@ -53,7 +53,7 @@ public class ConfirmationTokenTest {
   }
 
   @Test
-  public void testConfirmedAt() {
+  void testConfirmedAt() {
     AppUser appUser = new AppUser();
     LocalDateTime createdAt = LocalDateTime.now();
     LocalDateTime expiresAt = LocalDateTime.now().plusHours(1);
