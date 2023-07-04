@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the Account class.
  */
-public class AccountTest {
+class AccountTest {
   private Account account;
 
   @BeforeEach
@@ -17,25 +17,25 @@ public class AccountTest {
   }
 
   @Test
-  public void testIdGetterAndSetter() {
+  void testIdGetterAndSetter() {
     account.setId(1);
     assertEquals(1, account.getId());
   }
 
   @Test
-  public void testAccountNumberGetterAndSetter() {
+  void testAccountNumberGetterAndSetter() {
     account.setAccountNumber("1234567890");
     assertEquals("1234567890", account.getAccountNumber());
   }
 
   @Test
-  public void testBalanceGetterAndSetter() {
+  void testBalanceGetterAndSetter() {
     account.setBalance(100.0f);
     assertEquals(100.0f, account.getBalance());
   }
 
   @Test
-  public void testEqualsAndHashCode() {
+  void testEqualsAndHashCode() {
     Account account1 = new Account();
     account1.setId(1);
 
@@ -47,7 +47,7 @@ public class AccountTest {
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     Account account = Account.builder()
         .id(1)
         .accountNumber("1234567890")

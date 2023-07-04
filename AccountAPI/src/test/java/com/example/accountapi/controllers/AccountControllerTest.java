@@ -26,7 +26,7 @@ import org.springframework.http.ResponseEntity;
  * Unit tests for the AccountController class.
  */
 @ExtendWith(MockitoExtension.class)
-public class AccountControllerTest {
+class AccountControllerTest {
 
   @Mock
   private AccountService accountService;
@@ -38,7 +38,7 @@ public class AccountControllerTest {
   private AccountController accountController;
 
   @Test
-  public void shouldGetAllAccounts() {
+  void shouldGetAllAccounts() {
     Account account1 = new Account();
     Account account2 = new Account();
     List<Account> accountList = Arrays.asList(account1, account2);
@@ -57,7 +57,7 @@ public class AccountControllerTest {
   }
 
   @Test
-  public void shouldGetAccountById() {
+  void shouldGetAccountById() {
     Account account = new Account();
     account.setId(1);
 
@@ -74,7 +74,7 @@ public class AccountControllerTest {
   }
 
   @Test
-  public void shouldAddAccount() {
+  void shouldAddAccount() {
     Account account = new Account();
 
     when(accountService.save(account)).thenReturn(account);
@@ -90,7 +90,7 @@ public class AccountControllerTest {
   }
 
   @Test
-  public void shouldUpdateAccount() {
+  void shouldUpdateAccount() {
     Account account = new Account();
 
     when(accountService.save(account)).thenReturn(account);
@@ -106,7 +106,7 @@ public class AccountControllerTest {
   }
 
   @Test
-  public void shouldDepositToAccount() {
+  void shouldDepositToAccount() {
     Account account = new Account();
     Amount amount = new Amount(100.0f);
 
@@ -123,7 +123,7 @@ public class AccountControllerTest {
   }
 
   @Test
-  public void shouldWithdrawFromAccount() {
+  void shouldWithdrawFromAccount() {
     Account account = new Account();
     Amount amount = new Amount(100.0f);
 
@@ -140,7 +140,7 @@ public class AccountControllerTest {
   }
 
   @Test
-  public void shouldDeleteAccount() {
+  void shouldDeleteAccount() {
     ResponseEntity<Account> response = accountController.deleteAccount(1);
 
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());

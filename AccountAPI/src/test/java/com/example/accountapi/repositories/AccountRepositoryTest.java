@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * Unit tests for the AccountRepository interface.
  */
 @SpringBootTest
-public class AccountRepositoryTest {
+class AccountRepositoryTest {
 
   private final AccountRepository accountRepository;
 
@@ -28,7 +28,7 @@ public class AccountRepositoryTest {
   }
 
   @Test
-  public void depositShouldIncreaseBalance() {
+  void depositShouldIncreaseBalance() {
     Account account = new Account();
     account.setAccountNumber("12345678");
     account.setBalance(100.0f);
@@ -44,7 +44,7 @@ public class AccountRepositoryTest {
   }
 
   @Test
-  public void withdrawShouldDecreaseBalance() {
+  void withdrawShouldDecreaseBalance() {
     Account account = new Account();
     account.setAccountNumber("12345678");
     account.setBalance(100.0f);

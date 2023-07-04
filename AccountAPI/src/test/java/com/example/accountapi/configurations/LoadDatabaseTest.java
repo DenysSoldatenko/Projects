@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * Unit tests for the LoadDatabase class.
  */
 @SpringBootTest
-public class LoadDatabaseTest {
+class LoadDatabaseTest {
 
   @Autowired
   private AccountRepository accountRepository;
@@ -29,7 +29,7 @@ public class LoadDatabaseTest {
   }
 
   @Test
-  public void shouldInsertTenAccountsIntoDatabase() throws Exception {
+  void shouldInsertTenAccountsIntoDatabase() throws Exception {
     loadDatabase.initDatabase().run((String) null);
     List<Account> accounts = accountRepository.findAll();
 

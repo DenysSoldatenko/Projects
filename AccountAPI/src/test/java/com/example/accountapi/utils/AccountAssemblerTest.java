@@ -13,7 +13,7 @@ import org.springframework.hateoas.Link;
 /**
  * Unit tests for the AccountAssembler class.
  */
-public class AccountAssemblerTest {
+class AccountAssemblerTest {
 
   private AccountAssembler accountAssembler;
 
@@ -23,7 +23,7 @@ public class AccountAssemblerTest {
   }
 
   @Test
-  public void shouldCreateEntityModelWithLinksForAccount() {
+  void shouldCreateEntityModelWithLinksForAccount() {
     Account account = new Account();
     account.setId(1);
     account.setAccountNumber("12345678");

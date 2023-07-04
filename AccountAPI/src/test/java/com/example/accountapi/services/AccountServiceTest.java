@@ -23,7 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
  * Unit tests for the AccountService class.
  */
 @ExtendWith(MockitoExtension.class)
-public class AccountServiceTest {
+class AccountServiceTest {
 
   @Mock
   private AccountRepository accountRepository;
@@ -37,7 +37,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void shouldRetrieveAllAccounts() {
+  void shouldRetrieveAllAccounts() {
     Account account1 = new Account();
     Account account2 = new Account();
     when(accountRepository.findAll()).thenReturn(List.of(account1, account2));
@@ -50,7 +50,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void shouldFindAccountById() {
+  void shouldFindAccountById() {
     Account account = new Account();
     account.setId(1);
 
@@ -62,14 +62,14 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void shouldThrowExceptionWhenAccountNotFound() {
+  void shouldThrowExceptionWhenAccountNotFound() {
     when(accountRepository.findById(1)).thenReturn(Optional.empty());
 
     assertThrows(ResponseStatusException.class, () -> accountService.findAccountById(1));
   }
 
   @Test
-  public void shouldSaveAccount() {
+  void shouldSaveAccount() {
     Account account = new Account();
 
     when(accountRepository.save(account)).thenReturn(account);
@@ -80,7 +80,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void shouldWithdrawFromAccount() {
+  void shouldWithdrawFromAccount() {
     // Prepare test data
     Account account = new Account();
     account.setId(1);
@@ -105,7 +105,7 @@ public class AccountServiceTest {
 
 
   @Test
-  public void shouldDepositToAccount() {
+  void shouldDepositToAccount() {
     // Prepare test data
     Account account = new Account();
     account.setId(1);
@@ -130,7 +130,7 @@ public class AccountServiceTest {
   }
 
   @Test
-  public void shouldDeleteAccount() {
+  void shouldDeleteAccount() {
     Account account = new Account();
     account.setId(1);
 
