@@ -23,7 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  * Unit tests for the JwtUserDetailsService class.
  */
 @ExtendWith(MockitoExtension.class)
-public class JwtUserDetailsServiceTest {
+class JwtUserDetailsServiceTest {
 
   @Mock
   private UserService userService;
@@ -36,7 +36,7 @@ public class JwtUserDetailsServiceTest {
   }
 
   @Test
-  public void testLoadUserByUsernameWhenUserExists() {
+  void testLoadUserByUsernameWhenUserExists() {
     User user = new User();
     user.setId(1L);
     user.setUsername("testUser");
@@ -62,7 +62,7 @@ public class JwtUserDetailsServiceTest {
   }
 
   @Test
-  public void testLoadUserByUsernameWhenUserDoesNotExist() {
+  void testLoadUserByUsernameWhenUserDoesNotExist() {
     Mockito.when(userService.findByUsername("nonExistentUser")).thenReturn(null);
 
     assertThrows(UsernameNotFoundException.class,

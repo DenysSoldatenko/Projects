@@ -11,13 +11,13 @@ import org.springframework.boot.test.context.SpringBootTest;
  * Unit tests for the ModelMapperConfig class.
  */
 @SpringBootTest
-public class ModelMapperConfigTest {
+class ModelMapperConfigTest {
 
   @Autowired
   private ModelMapper modelMapper;
 
   @Test
-  public void shouldProvideModelMapperBean() {
+  void shouldProvideModelMapperBean() {
     assertThat(modelMapper).isNotNull();
   }
 }

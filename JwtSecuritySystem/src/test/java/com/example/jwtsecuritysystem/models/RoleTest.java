@@ -18,7 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * Unit tests for the Role class.
  */
 @ExtendWith(MockitoExtension.class)
-public class RoleTest {
+class RoleTest {
   private Role role;
 
   @BeforeEach

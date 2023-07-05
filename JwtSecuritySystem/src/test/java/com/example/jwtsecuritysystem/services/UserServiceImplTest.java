@@ -25,7 +25,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  * Unit tests for the UserServiceImpl class.
  */
 @ExtendWith(SpringExtension.class)
-public class UserServiceImplTest {
+class UserServiceImplTest {
 
   @Mock
   private UserRepository userRepository;
@@ -44,7 +44,7 @@ public class UserServiceImplTest {
   }
 
   @Test
-  public void testRegisterUser() {
+  void testRegisterUser() {
     Role roleUser = new Role();
     roleUser.setName("ROLE_USER");
     List<Role> userRoles = new ArrayList<>();
@@ -62,7 +62,7 @@ public class UserServiceImplTest {
   }
 
   @Test
-  public void testGetAllUsers() {
+  void testGetAllUsers() {
     List<User> users = new ArrayList<>();
     when(userRepository.findAll()).thenReturn(users);
 
@@ -72,7 +72,7 @@ public class UserServiceImplTest {
   }
 
   @Test
-  public void testFindByUsername() {
+  void testFindByUsername() {
     String username = "testUser";
     User user = new User();
     user.setUsername(username);
@@ -84,7 +84,7 @@ public class UserServiceImplTest {
   }
 
   @Test
-  public void testFindByIdUserFound() {
+  void testFindByIdUserFound() {
     Long userId = 1L;
     User user = new User();
     user.setId(userId);
@@ -96,7 +96,7 @@ public class UserServiceImplTest {
   }
 
   @Test
-  public void testFindByIdUserNotFound() {
+  void testFindByIdUserNotFound() {
     Long userId = 1L;
     when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
@@ -105,7 +105,7 @@ public class UserServiceImplTest {
   }
 
   @Test
-  public void testDeleteUser() {
+  void testDeleteUser() {
     Long userId = 1L;
     userService.delete(userId);
 

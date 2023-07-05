@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +109,6 @@ public class JwtTokenProvider {
   }
 
   private List<String> getRoleNames(List<Role> userRoles) {
-    return userRoles.stream().map(Role::getName).collect(Collectors.toList());
+    return userRoles.stream().map(Role::getName).toList();
   }
 }

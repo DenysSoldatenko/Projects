@@ -17,7 +17,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 /**
  * Unit tests for the BaseEntity class.
  */
-public class BaseEntityTest {
+class BaseEntityTest {
   private BaseEntity baseEntity;
 
   @BeforeEach

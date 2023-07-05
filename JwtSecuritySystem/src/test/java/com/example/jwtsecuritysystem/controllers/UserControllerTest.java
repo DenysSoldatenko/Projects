@@ -19,7 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  * Unit tests for the UserController class.
  */
 @ExtendWith(SpringExtension.class)
-public class UserControllerTest {
+class UserControllerTest {
 
   @Mock
   private UserService userService;
@@ -33,7 +33,7 @@ public class UserControllerTest {
   }
 
   @Test
-  public void testGetUserByIdNotFound() {
+  void testGetUserByIdNotFound() {
     Long userId = 1L;
     when(userService.findById(userId)).thenReturn(null);
 

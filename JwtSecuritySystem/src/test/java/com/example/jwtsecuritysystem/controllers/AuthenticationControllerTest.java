@@ -18,7 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  * Unit tests for the AuthenticationController class.
  */
 @ExtendWith(SpringExtension.class)
-public class AuthenticationControllerTest {
+class AuthenticationControllerTest {
 
   private AuthenticationController authenticationController;
 
@@ -38,7 +38,7 @@ public class AuthenticationControllerTest {
   }
 
   @Test
-  public void testLoginWithInvalidUser() {
+  void testLoginWithInvalidUser() {
     AuthenticationRequestDto requestDto = new AuthenticationRequestDto("invalidUser", "password");
     when(userService.findByUsername("invalidUser")).thenReturn(null);
 

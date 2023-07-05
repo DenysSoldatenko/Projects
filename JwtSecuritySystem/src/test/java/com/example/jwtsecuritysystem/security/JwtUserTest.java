@@ -16,10 +16,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 /**
  * Unit tests for the JwtUser class.
  */
-public class JwtUserTest {
+class JwtUserTest {
 
   @Test
-  public void userDetailsMethodsShouldWork() {
+  void userDetailsMethodsShouldWork() {
     Collection<SimpleGrantedAuthority> authorities = Collections.singleton(
         new SimpleGrantedAuthority("ROLE_USER")
     );
@@ -42,7 +42,7 @@ public class JwtUserTest {
   }
 
   @Test
-  public void getAuthoritiesShouldWork() {
+  void getAuthoritiesShouldWork() {
     Collection<SimpleGrantedAuthority> authorities = Collections.singleton(
         new SimpleGrantedAuthority("ROLE_USER")
     );
@@ -60,7 +60,7 @@ public class JwtUserTest {
   }
 
   @Test
-  public void getUsernameShouldReturnUsername() {
+  void getUsernameShouldReturnUsername() {
     JwtUser jwtUser = JwtUser.builder()
         .id(1L)
         .username("testUser")
@@ -72,7 +72,7 @@ public class JwtUserTest {
   }
 
   @Test
-  public void idShouldReturnId() {
+  void idShouldReturnId() {
     JwtUser jwtUser = JwtUser.builder()
         .id(1L)
         .username("testUser")
@@ -84,7 +84,7 @@ public class JwtUserTest {
   }
 
   @Test
-  public void firstNameShouldReturnFirstName() {
+  void firstNameShouldReturnFirstName() {
     JwtUser jwtUser = JwtUser.builder()
         .id(1L)
         .firstName("John")
@@ -96,7 +96,7 @@ public class JwtUserTest {
   }
 
   @Test
-  public void lastNameShouldReturnLastName() {
+  void lastNameShouldReturnLastName() {
     JwtUser jwtUser = JwtUser.builder()
         .id(1L)
         .lastName("Doe")
@@ -108,7 +108,7 @@ public class JwtUserTest {
   }
 
   @Test
-  public void passwordShouldReturnPassword() {
+  void passwordShouldReturnPassword() {
     JwtUser jwtUser = JwtUser.builder()
         .id(1L)
         .password("password")
@@ -119,7 +119,7 @@ public class JwtUserTest {
   }
 
   @Test
-  public void emailShouldReturnEmail() {
+  void emailShouldReturnEmail() {
     JwtUser jwtUser = JwtUser.builder()
         .id(1L)
         .email("test@example.com")
@@ -131,7 +131,7 @@ public class JwtUserTest {
   }
 
   @Test
-  public void lastPasswordResetDateShouldReturnDate() {
+  void lastPasswordResetDateShouldReturnDate() {
     Date date = new Date();
     JwtUser jwtUser = JwtUser.builder()
         .id(1L)
@@ -144,7 +144,7 @@ public class JwtUserTest {
   }
 
   @Test
-  public void equalsAndHashcodeShouldWork() {
+  void equalsAndHashcodeShouldWork() {
     JwtUser user1 = JwtUser.builder()
         .id(1L)
         .username("testUser")

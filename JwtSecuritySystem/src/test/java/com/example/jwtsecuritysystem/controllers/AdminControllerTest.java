@@ -19,7 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  * Unit tests for the AdminController class.
  */
 @ExtendWith(SpringExtension.class)
-public class AdminControllerTest {
+class AdminControllerTest {
 
   @Mock
   private UserService userService;
@@ -35,7 +35,7 @@ public class AdminControllerTest {
   }
 
   @Test
-  public void testGetUserByIdNotFound() {
+  void testGetUserByIdNotFound() {
     Long userId = 1L;
     when(userService.findById(userId)).thenReturn(null);
 

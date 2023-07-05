@@ -21,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 /**
  * Unit tests for the JwtTokenProvider class.
  */
-public class JwtTokenProviderTest {
+class JwtTokenProviderTest {
 
   private JwtTokenProvider jwtTokenProvider;
 
@@ -32,14 +32,14 @@ public class JwtTokenProviderTest {
    * Set up the JwtTokenProvider for testing with custom configurations.
    */
   @BeforeEach
-  public void setup() {
+  void setup() {
     jwtTokenProvider = new JwtTokenProvider(userDetailsService);
     jwtTokenProvider.setSecret("mySecretKey");
     jwtTokenProvider.setValidityInMilliseconds(3600000); // Set the validity to 1 hour for testing
   }
 
   @Test
-  public void testCreateToken() {
+  void testCreateToken() {
     String username = "testUser";
     Role role = new Role();
     role.setName("ROLE_USER");
@@ -50,7 +50,7 @@ public class JwtTokenProviderTest {
   }
 
   @Test
-  public void testResolveTokenValidBearerToken() {
+  void testResolveTokenValidBearerToken() {
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getHeader("Authorization")).thenReturn("Bearer_validToken");
 
@@ -60,7 +60,7 @@ public class JwtTokenProviderTest {
   }
 
   @Test
-  public void testResolveTokenInvalidBearerToken() {
+  void testResolveTokenInvalidBearerToken() {
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getHeader("Authorization")).thenReturn("InvalidToken");
 
@@ -70,7 +70,7 @@ public class JwtTokenProviderTest {
   }
 
   @Test
-  public void testResolveTokenNoBearerToken() {
+  void testResolveTokenNoBearerToken() {
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getHeader("Authorization")).thenReturn(null);
 
@@ -80,7 +80,7 @@ public class JwtTokenProviderTest {
   }
 
   @Test
-  public void testValidateTokenWithExpiredToken() {
+  void testValidateTokenWithExpiredToken() {
     jwtTokenProvider.setValidityInMilliseconds(-1);
     String username = "testUser";
     String token = jwtTokenProvider.createToken(username, Collections.emptyList());
@@ -89,7 +89,7 @@ public class JwtTokenProviderTest {
   }
 
   @Test
-  public void testValidateTokenWithValidToken() {
+  void testValidateTokenWithValidToken() {
     String username = "testUser";
     String token = jwtTokenProvider.createToken(username, Collections.emptyList());
 
@@ -99,7 +99,7 @@ public class JwtTokenProviderTest {
   }
 
   @Test
-  public void testGetUsername() {
+  void testGetUsername() {
     String username = "testUser";
     String token = jwtTokenProvider.createToken(username, Collections.emptyList());
 
@@ -110,7 +110,7 @@ public class JwtTokenProviderTest {
 
 
   @Test
-  public void testValidateValidToken() {
+  void testValidateValidToken() {
     String username = "testUser";
     String token = jwtTokenProvider.createToken(username, Collections.emptyList());
 
@@ -120,7 +120,7 @@ public class JwtTokenProviderTest {
   }
 
   @Test
-  public void testValidateExpiredToken() {
+  void testValidateExpiredToken() {
     jwtTokenProvider.setValidityInMilliseconds(-1);
     String username = "testUser";
     String token = jwtTokenProvider.createToken(username, Collections.emptyList());

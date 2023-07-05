@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the UserDto class.
  */
-public class UserDtoTest {
+class UserDtoTest {
   private UserDto userDto;
 
   @BeforeEach

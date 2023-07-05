@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * Unit tests for the User class.
  */
 @ExtendWith(MockitoExtension.class)
-public class UserTest {
+class UserTest {
 
   private User user;
 

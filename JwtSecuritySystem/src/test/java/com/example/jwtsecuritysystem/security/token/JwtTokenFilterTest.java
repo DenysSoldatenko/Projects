@@ -17,7 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 /**
  * Unit tests for the JwtTokenFilter class.
  */
-public class JwtTokenFilterTest {
+class JwtTokenFilterTest {
 
   @Mock
   private JwtTokenProvider jwtTokenProvider;
@@ -40,7 +40,7 @@ public class JwtTokenFilterTest {
   }
 
   @Test
-  public void testDoFilterWithInvalidToken() throws IOException, ServletException {
+  void testDoFilterWithInvalidToken() throws IOException, ServletException {
     String invalidToken = "invalidToken";
     when(jwtTokenProvider.resolveToken(request)).thenReturn(invalidToken);
     when(jwtTokenProvider.validateToken(invalidToken)).thenReturn(false);
@@ -51,7 +51,7 @@ public class JwtTokenFilterTest {
   }
 
   @Test
-  public void testDoFilterWithNoToken() throws IOException, ServletException {
+  void testDoFilterWithNoToken() throws IOException, ServletException {
     when(jwtTokenProvider.resolveToken(request)).thenReturn(null);
 
     jwtTokenFilter.doFilter(request, servletResponse, filterChain);

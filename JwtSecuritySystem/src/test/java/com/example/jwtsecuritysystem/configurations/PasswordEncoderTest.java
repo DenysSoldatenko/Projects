@@ -11,13 +11,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * Unit tests for the PasswordEncoder class.
  */
 @SpringBootTest
-public class PasswordEncoderTest {
+class PasswordEncoderTest {
 
   @Autowired
   private BCryptPasswordEncoder passwordEncoder;
 
   @Test
-  public void testPasswordEncoderBean() {
+  void testPasswordEncoderBean() {
     assertNotNull(passwordEncoder);
   }
 }

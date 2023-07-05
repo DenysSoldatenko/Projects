@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the AuthenticationRequestDto class.
  */
-public class AuthenticationRequestDtoTest {
+class AuthenticationRequestDtoTest {
   private AuthenticationRequestDto authRequestDto;
 
   @BeforeEach

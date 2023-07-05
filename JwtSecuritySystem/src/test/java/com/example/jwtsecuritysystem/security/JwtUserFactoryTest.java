@@ -16,16 +16,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 /**
  * Unit tests for the JwtUserDetailsService class.
  */
-public class JwtUserFactoryTest {
+class JwtUserFactoryTest {
 
   @Test
-  public void testNoArgsConstructor() {
+  void testNoArgsConstructor() {
     JwtUserFactory jwtUserFactory = new JwtUserFactory();
     assertNotNull(jwtUserFactory);
   }
 
   @Test
-  public void testCreateJwtUserFromUser() {
+  void testCreateJwtUserFromUser() {
     User user = new User();
     user.setId(1L);
     user.setUsername("testUser");
