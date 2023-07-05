@@ -7,11 +7,11 @@ import com.example.pastebox.models.PublicStatus;
 import com.example.pastebox.repositories.PasteRepository;
 import com.example.pastebox.utils.ExpirationTimeGenerator;
 import com.example.pastebox.utils.LinkGenerator;
+import com.example.pastebox.utils.PasteNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -35,7 +35,7 @@ public class PasteServiceImpl implements PasteService {
     if (optionalPaste.isPresent()) {
       return modelMapper.map(optionalPaste.get(), PasteDto.class);
     } else {
-      throw new RuntimeException("There is no paste with this hash!");
+      throw new PasteNotFoundException("There is no paste with this hash!");
     }
   }
 
@@ -46,7 +46,7 @@ public class PasteServiceImpl implements PasteService {
 
     return publicPastes.stream()
     .map(paste -> modelMapper.map(paste, PasteDto.class))
-    .collect(Collectors.toList());
+    .toList();
   }
 
   @Override
