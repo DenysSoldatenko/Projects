@@ -61,7 +61,7 @@ public class DemoApplication {
     };
   }*/
 
-  @Bean
+  /*  @Bean
   CommandLineRunner testIndex(StudentRepository repository,
                               MongoTemplate mongoTemplate) {
     return args -> {
@@ -91,7 +91,7 @@ public class DemoApplication {
             }
           );
     };
-  }
+  }*/
 
   private static void usingMongoTemplateAndQueries(StudentRepository repository,
                                                    MongoTemplate mongoTemplate,
