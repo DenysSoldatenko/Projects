@@ -29,7 +29,7 @@ import org.modelmapper.ModelMapper;
  * Unit tests for the PasteServiceImpl class.
  */
 @ExtendWith(MockitoExtension.class)
-public class PasteServiceImplTests {
+class PasteServiceImplTests {
 
   @Mock
   private PasteRepository pasteRepository;
@@ -41,7 +41,7 @@ public class PasteServiceImplTests {
   private PasteServiceImpl pasteService;
 
   @Test
-  public void shouldGetByHashWithValidHash() {
+  void shouldGetByHashWithValidHash() {
     Paste paste = new Paste();
     paste.setShortLink("validHash");
 
@@ -57,14 +57,14 @@ public class PasteServiceImplTests {
   }
 
   @Test
-  public void shouldGetByHashWithInvalidHash() {
+  void shouldGetByHashWithInvalidHash() {
     when(pasteRepository.findByShortLink("invalidHash")).thenReturn(Optional.empty());
 
     assertThrows(RuntimeException.class, () -> pasteService.getByHash("invalidHash"));
   }
 
   @Test
-  public void shouldGetPublicPastes() {
+  void shouldGetPublicPastes() {
     Paste paste1 = new Paste();
     Paste paste2 = new Paste();
     List<Paste> pasteList = new ArrayList<>();
@@ -87,7 +87,7 @@ public class PasteServiceImplTests {
   }
 
   @Test
-  public void shouldAddPaste() {
+  void shouldAddPaste() {
     PasteDto pasteDto = new PasteDto();
     pasteDto.setContent("Test content");
     pasteDto.setCreationTime(LocalDateTime.now());
@@ -104,7 +104,7 @@ public class PasteServiceImplTests {
   }
 
   @Test
-  public void shouldRemoveExpiredPastes() {
+  void shouldRemoveExpiredPastes() {
     LocalDateTime currentTime = LocalDateTime.now();
     Paste expiredPaste1 = new Paste();
     expiredPaste1.setExpirationTime(currentTime);

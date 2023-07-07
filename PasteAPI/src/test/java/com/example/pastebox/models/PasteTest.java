@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the Paste class.
  */
-public class PasteTest {
+class PasteTest {
 
   private Paste paste;
 
@@ -20,51 +20,51 @@ public class PasteTest {
   }
 
   @Test
-  public void testIdSetterGetter() {
+  void testIdSetterGetter() {
     paste.setId(1);
     assertEquals(1, paste.getId());
   }
 
   @Test
-  public void testContentSetterGetter() {
+  void testContentSetterGetter() {
     paste.setContent("This is a test paste.");
     assertEquals("This is a test paste.", paste.getContent());
   }
 
   @Test
-  public void testCreationTimeSetterGetter() {
+  void testCreationTimeSetterGetter() {
     LocalDateTime creationTime = LocalDateTime.now();
     paste.setCreationTime(creationTime);
     assertEquals(creationTime, paste.getCreationTime());
   }
 
   @Test
-  public void testExpirationTimeSetterGetter() {
+  void testExpirationTimeSetterGetter() {
     LocalDateTime expirationTime = LocalDateTime.now().plusHours(1);
     paste.setExpirationTime(expirationTime);
     assertEquals(expirationTime, paste.getExpirationTime());
   }
 
   @Test
-  public void testExpirationDurationSetterGetter() {
+  void testExpirationDurationSetterGetter() {
     paste.setExpirationDuration(ExpirationTime._1_HOUR);
     assertEquals(ExpirationTime._1_HOUR, paste.getExpirationDuration());
   }
 
   @Test
-  public void testPublicStatusSetterGetter() {
+  void testPublicStatusSetterGetter() {
     paste.setPublicStatus(PublicStatus.PUBLIC);
     assertEquals(PublicStatus.PUBLIC, paste.getPublicStatus());
   }
 
   @Test
-  public void testShortLinkSetterGetter() {
+  void testShortLinkSetterGetter() {
     paste.setShortLink("abc123");
     assertEquals("abc123", paste.getShortLink());
   }
 
   @Test
-  public void testBuilder() {
+  void testBuilder() {
     Paste builtPaste = Paste.builder()
         .id(1)
         .content("Test content")

@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the PasteDto class.
  */
-public class PasteDtoTest {
+class PasteDtoTest {
 
   @Test
-  public void testGettersAndSetters() {
+  void testGettersAndSetters() {
     PasteDto pasteDto = new PasteDto();
 
     pasteDto.setShortLink("abc123");

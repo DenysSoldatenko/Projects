@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the ExpirationTimeGenerator class.
  */
-public class ExpirationTimeGeneratorTest {
+class ExpirationTimeGeneratorTest {
 
   @Test
-  public void shouldGenerateExpirationTime() {
+  void shouldGenerateExpirationTime() {
     LocalDateTime dateOfCreation = LocalDateTime.now();
 
     assertEquals(dateOfCreation.plusMinutes(10),

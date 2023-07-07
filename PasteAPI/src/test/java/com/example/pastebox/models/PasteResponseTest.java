@@ -7,17 +7,17 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the PasteResponse class.
  */
-public class PasteResponseTest {
+class PasteResponseTest {
 
   @Test
-  public void testConstructorAndGetters() {
+  void testConstructorAndGetters() {
     PasteResponse pasteResponse = new PasteResponse("abc123");
 
     assertEquals("abc123", pasteResponse.shortLink());
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     PasteResponse pasteResponse = new PasteResponse("abc123");
 
     assertEquals("PasteResponse[shortLink=abc123]", pasteResponse.toString());

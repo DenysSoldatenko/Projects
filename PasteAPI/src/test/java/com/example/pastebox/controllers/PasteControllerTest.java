@@ -19,7 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * Unit tests for the PasteController class.
  */
 @ExtendWith(MockitoExtension.class)
-public class PasteControllerTest {
+class PasteControllerTest {
 
   @Mock
   private PasteService pasteService;
@@ -28,7 +28,7 @@ public class PasteControllerTest {
   private PasteController pasteController;
 
   @Test
-  public void shouldGetPublicPasteList() {
+  void shouldGetPublicPasteList() {
     PasteDto paste1 = new PasteDto();
     PasteDto paste2 = new PasteDto();
     List<PasteDto> pasteList = Arrays.asList(paste1, paste2);
@@ -41,7 +41,7 @@ public class PasteControllerTest {
   }
 
   @Test
-  public void shouldGetPasteByHash() {
+  void shouldGetPasteByHash() {
     PasteDto paste = new PasteDto();
     paste.setShortLink("abcd1234");
 
@@ -53,7 +53,7 @@ public class PasteControllerTest {
   }
 
   @Test
-  public void shouldAddPaste() {
+  void shouldAddPaste() {
     PasteDto pasteDto = new PasteDto();
     PasteResponse pasteResponse = new PasteResponse("xyz7890");
 
