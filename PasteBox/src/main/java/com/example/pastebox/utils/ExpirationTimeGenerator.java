@@ -1,9 +1,8 @@
 package com.example.pastebox.utils;
 
 import com.example.pastebox.models.ExpirationTime;
-import lombok.experimental.UtilityClass;
-
 import java.time.LocalDateTime;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class ExpirationTimeGenerator {

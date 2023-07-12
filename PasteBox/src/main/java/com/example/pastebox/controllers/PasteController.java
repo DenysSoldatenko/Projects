@@ -2,7 +2,7 @@ package com.example.pastebox.controllers;
 
 import com.example.pastebox.models.PasteDto;
 import com.example.pastebox.models.PasteResponse;
-import com.example.pastebox.services.PostService;
+import com.example.pastebox.services.PasteService;
 import java.util.Collection;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
@@ -14,22 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class PasteBoxController {
+public class PasteController {
 
-  private final PostService postService;
+  private final PasteService pasteService;
 
-  @GetMapping("/")
-  public Collection<String> getPublicPasteList() {
-    return Collections.emptyList();
+  @GetMapping("/public")
+  public Collection<PasteDto> getPublicPasteList() {
+    return pasteService.getPublicPastes();
   }
 
   @GetMapping("/{hash}")
   public PasteDto getByHash(@PathVariable String hash) {
-    return postService.getByHash(hash);
+    return pasteService.getByHash(hash);
   }
 
   @PostMapping("/")
   public PasteResponse add(@RequestBody PasteDto request) {
-    return postService.add(request);
+    return pasteService.add(request);
   }
 }

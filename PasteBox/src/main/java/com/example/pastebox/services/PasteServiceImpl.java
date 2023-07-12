@@ -3,18 +3,23 @@ package com.example.pastebox.services;
 import com.example.pastebox.models.Paste;
 import com.example.pastebox.models.PasteDto;
 import com.example.pastebox.models.PasteResponse;
+import com.example.pastebox.models.PublicStatus;
 import com.example.pastebox.repositories.PasteRepository;
 import com.example.pastebox.utils.ExpirationTimeGenerator;
 import com.example.pastebox.utils.LinkGenerator;
+import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PostServiceImpl implements PostService {
+public class PasteServiceImpl implements PasteService {
 
   private final PasteRepository pasteRepository;
 
@@ -33,7 +38,12 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public List<PasteDto> getPublicPastes() {
-    return null;
+    List<Paste> publicPastes = pasteRepository
+        .findTop10ByPublicStatusOrderByCreationTimeDesc(PublicStatus.PUBLIC);
+
+    return publicPastes.stream()
+    .map(paste -> modelMapper.map(paste, PasteDto.class))
+    .collect(Collectors.toList());
   }
 
   @Override
@@ -55,4 +65,19 @@ public class PostServiceImpl implements PostService {
 
     return new PasteResponse(paste.getShortLink());
   }
+
+  @Override
+  @Scheduled(fixedRate = 600_000) // Перевірка кожні 10 хвилин (600 000 мс)
+  public void removeExpiredPastes() {
+    LocalDateTime currentTime = LocalDateTime.now();
+    List<Paste> expiredPastes = pasteRepository.findByExpirationTimeLessThanEqual(currentTime);
+
+    Iterator<Paste> iterator = expiredPastes.iterator();
+    while (iterator.hasNext()) {
+      Paste paste = iterator.next();
+      pasteRepository.delete(paste);
+      iterator.remove();
+    }
+  }
+
 }

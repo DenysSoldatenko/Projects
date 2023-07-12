@@ -1,12 +1,12 @@
 package com.example.pastebox.utils;
 
-import lombok.experimental.UtilityClass;
 import java.util.UUID;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class LinkGenerator {
 
-  public String generate(){
+  public String generate() {
     return UUID.randomUUID().toString().substring(0, 8);
   }
 }
