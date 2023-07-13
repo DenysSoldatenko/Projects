@@ -17,6 +17,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service implementation for managing paste-related operations.
+ */
 @Service
 @RequiredArgsConstructor
 public class PasteServiceImpl implements PasteService {

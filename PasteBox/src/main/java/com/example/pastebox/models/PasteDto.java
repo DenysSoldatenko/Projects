@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Data transfer object (DTO) class representing information about a paste.
+ */
 @Data
 @NoArgsConstructor
 public class PasteDto {

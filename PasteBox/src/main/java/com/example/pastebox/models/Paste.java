@@ -12,6 +12,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity class representing a paste, which can be stored in a database.
+ */
 @Data
 @Builder
 @NoArgsConstructor

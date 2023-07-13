@@ -3,6 +3,9 @@ package com.example.pastebox.models;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * Enum representing different expiration times for a paste, with associated labels.
+ */
 @Getter
 @AllArgsConstructor
 public enum ExpirationTime {
