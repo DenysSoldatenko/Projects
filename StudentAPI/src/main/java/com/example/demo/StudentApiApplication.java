@@ -22,10 +22,10 @@ import org.springframework.data.mongodb.core.query.Query;
  * This class is responsible for starting the Spring Boot application.
  */
 @SpringBootApplication
-public class DemoApplication {
+public class StudentApiApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(DemoApplication.class, args);
+    SpringApplication.run(StudentApiApplication.class, args);
   }
 
   /*  @Bean

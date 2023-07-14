@@ -10,10 +10,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>Demo</artifactId>
+    <artifactId>StudentAPI</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Demo</name>
-    <description>Demo</description>
+    <name>StudentAPI</name>
+    <description>Spring Boot MongoDB Student Service</description>
     <properties>
         <java.version>17</java.version>
     </properties>
