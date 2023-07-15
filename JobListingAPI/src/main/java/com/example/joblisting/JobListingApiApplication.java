@@ -8,9 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * This class is responsible for starting the Spring Boot application.
  */
 @SpringBootApplication
-public class JobListingApplication {
+public class JobListingApiApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(JobListingApplication.class, args);
+    SpringApplication.run(JobListingApiApplication.class, args);
   }
 }
