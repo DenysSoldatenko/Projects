@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 /**
  * Unit tests for the UserDao class.
  */
-public class UserDaoTest {
+class UserDaoTest {
 
   private UserDao userDao;
 
@@ -21,7 +21,7 @@ public class UserDaoTest {
   }
 
   @Test
-  public void shouldFindUserByEmail() {
+  void shouldFindUserByEmail() {
     String email = "john.doe@gmail.com";
     UserDetails userDetails = userDao.findUserByEmail(email);
 
@@ -31,7 +31,7 @@ public class UserDaoTest {
   }
 
   @Test
-  public void shouldThrowUsernameNotFoundExceptionForNonexistentUser() {
+  void shouldThrowUsernameNotFoundExceptionForNonexistentUser() {
     String email = "nonexistent@gmail.com";
     assertThrows(UsernameNotFoundException.class, () -> userDao.findUserByEmail(email));
   }

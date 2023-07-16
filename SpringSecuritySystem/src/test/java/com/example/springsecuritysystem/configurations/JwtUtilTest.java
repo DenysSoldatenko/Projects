@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * Unit tests for the JwtUtil class.
  */
 @ExtendWith(MockitoExtension.class)
-public class JwtUtilTest {
+class JwtUtilTest {
 
   private final String token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6W3siYX"
       + "V0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJzdWIiOiJqYW5lLmRvZUBnbWFpbC5jb20iLCJ"
@@ -30,13 +30,13 @@ public class JwtUtilTest {
   private JwtUtil jwtUtil;
 
   @Test
-  public void shouldReturnCorrectUsername() {
+  void shouldReturnCorrectUsername() {
     String username = jwtUtil.extractUsername(token);
     assertEquals("jane.doe@gmail.com", username);
   }
 
   @Test
-  public void shouldReturnCorrectExpiration() {
+  void shouldReturnCorrectExpiration() {
     LocalDateTime localDateTime = LocalDateTime.of(2023, 10, 10, 21, 43, 4);
     Date expiration = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     Date extractedExpiration = jwtUtil.extractExpiration(token);
@@ -44,19 +44,19 @@ public class JwtUtilTest {
   }
 
   @Test
-  public void shouldReturnCorrectClaimValue() {
+  void shouldReturnCorrectClaimValue() {
     String value = jwtUtil.extractClaim(token, claims -> claims.get("sub", String.class));
     assertEquals("jane.doe@gmail.com", value);
   }
 
   @Test
-  public void shouldReturnFalseForValidToken() {
+  void shouldReturnFalseForValidToken() {
     /*  boolean isExpired = jwtUtil.isTokenExpired(TOKEN);
     assertFalse(isExpired);*/
   }
 
   @Test
-  public void shouldGenerateTokenForUserDetails() {
+  void shouldGenerateTokenForUserDetails() {
     UserDetails userDetails = new User(
         "john.doe@gmail.com",
         "password",
@@ -67,7 +67,7 @@ public class JwtUtilTest {
   }
 
   @Test
-  public void shouldReturnTrueForValidToken() {
+  void shouldReturnTrueForValidToken() {
     UserDetails userDetails = new User(
         "jane.doe@gmail.com",
         "password",

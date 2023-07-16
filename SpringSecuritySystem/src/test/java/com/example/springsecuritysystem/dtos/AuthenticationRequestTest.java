@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the AuthenticationRequest class.
  */
-public class AuthenticationRequestTest {
+class AuthenticationRequestTest {
 
   @Test
-  public void testAuthenticationRequestConstructorAndGetters() {
+  void testAuthenticationRequestConstructorAndGetters() {
     String email = "test@example.com";
     String password = "testPassword";
     AuthenticationRequest authenticationRequest = new AuthenticationRequest(email, password);
@@ -21,7 +21,7 @@ public class AuthenticationRequestTest {
   }
 
   @Test
-  public void testAuthenticationRequestToString() {
+  void testAuthenticationRequestToString() {
     String email = "test@example.com";
     String password = "testPassword";
     AuthenticationRequest authenticationRequest = new AuthenticationRequest(email, password);

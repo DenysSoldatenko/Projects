@@ -23,7 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * Unit tests for the JwtAuthFilter class.
  */
 @ExtendWith(MockitoExtension.class)
-public class JwtAuthFilterTest {
+class JwtAuthFilterTest {
 
   private final String token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6W3siYXV0aG9"
       + "yaXR5IjoiUk9MRV9VU0VSIn1d"
@@ -50,7 +50,7 @@ public class JwtAuthFilterTest {
   }
 
   @Test
-  public void testDoFilterInternalWithValidToken() throws IOException, ServletException {
+  void testDoFilterInternalWithValidToken() throws IOException, ServletException {
     lenient().when(jwtUtil.extractUsername(token)).thenReturn("jane.doe@gmail.com");
 
     jwtAuthFilter.doFilterInternal(request, response, filterChain);
@@ -60,7 +60,7 @@ public class JwtAuthFilterTest {
   }
 
   @Test
-  public void testDoFilterInternalWithMissingAuthorizationHeader()
+  void testDoFilterInternalWithMissingAuthorizationHeader()
       throws IOException, ServletException {
     MockHttpServletRequest requestWithoutAuthHeader = new MockHttpServletRequest();
 
@@ -71,7 +71,7 @@ public class JwtAuthFilterTest {
   }
 
   @Test
-  public void testDoFilterInternalWithInvalidToken() throws IOException, ServletException {
+  void testDoFilterInternalWithInvalidToken() throws IOException, ServletException {
     lenient().when(jwtUtil.extractUsername(token)).thenReturn("invaliduser@gmail.com");
 
     jwtAuthFilter.doFilterInternal(request, response, filterChain);

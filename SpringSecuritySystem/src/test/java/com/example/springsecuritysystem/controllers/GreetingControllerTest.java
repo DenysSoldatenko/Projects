@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 /**
  * Unit tests for the GreetingController class.
  */
-public class GreetingControllerTest {
+class GreetingControllerTest {
 
   private GreetingController greetingController;
 
@@ -20,14 +20,14 @@ public class GreetingControllerTest {
   }
 
   @Test
-  public void shouldReturnHello() {
+  void shouldReturnHello() {
     ResponseEntity<String> response = greetingController.sayHello();
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals("Hello from API!", response.getBody());
   }
 
   @Test
-  public void shouldReturnGoodBye() {
+  void shouldReturnGoodBye() {
     ResponseEntity<String> response = greetingController.sayGoodBye();
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals("Goodbye and see you later!", response.getBody());

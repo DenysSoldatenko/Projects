@@ -26,7 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * Unit tests for the AuthenticationController class.
  */
 @SpringBootTest
-public class AuthenticationControllerTest {
+class AuthenticationControllerTest {
 
   private AuthenticationController authenticationController;
   private AuthenticationManager authenticationManager;
@@ -46,7 +46,7 @@ public class AuthenticationControllerTest {
   }
 
   @Test
-  public void testAuthenticateWithValidCredentials() {
+  void testAuthenticateWithValidCredentials() {
     AuthenticationRequest request = new AuthenticationRequest("john.doe@gmail.com", "password");
     UserDetails userDetails = new User(
         "john.doe@gmail.com",
@@ -67,7 +67,7 @@ public class AuthenticationControllerTest {
   }
 
   @Test
-  public void testAuthenticateWithInvalidCredentials() {
+  void testAuthenticateWithInvalidCredentials() {
     AuthenticationRequest request
         = new AuthenticationRequest("john.doe@gmail.com", "invalid-password");
 
@@ -81,7 +81,7 @@ public class AuthenticationControllerTest {
   }
 
   @Test
-  public void testAuthenticateWithUnknownUser() {
+  void testAuthenticateWithUnknownUser() {
     AuthenticationRequest request = new AuthenticationRequest("unknown@gmail.com", "password");
 
     when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
