@@ -9,9 +9,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @EnableScheduling
 @SpringBootApplication
-public class PasteBoxApplication {
+public class PasteApiApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(PasteBoxApplication.class, args);
+    SpringApplication.run(PasteApiApplication.class, args);
   }
 }
