@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import com.example.demo.exeptions.StudentAlreadyExistsException;
+import com.example.demo.exeptions.StudentNotFoundException;
 import com.example.demo.models.Student;
 import com.example.demo.repositories.StudentRepository;
 import java.util.List;
@@ -38,7 +40,7 @@ public class StudentService {
       studentRepository.save(student);
       return student;
     } else {
-      throw new RuntimeException("Student not found");
+      throw new StudentNotFoundException("Student not found");
     }
   }
 
@@ -53,7 +55,7 @@ public class StudentService {
     Optional<Student> existingStudentOptional = studentRepository.findById(student.getId());
 
     if (existingStudentOptional.isPresent()) {
-      throw new RuntimeException("Database already have this student!");
+      throw new StudentAlreadyExistsException("Database already have this student!");
     } else {
       studentRepository.save(student);
       return student;
@@ -72,7 +74,7 @@ public class StudentService {
     if (existingStudentOptional.isPresent()) {
       studentRepository.deleteById(id);
     } else {
-      throw new RuntimeException("Student not found");
+      throw new StudentNotFoundException("Student not found");
     }
   }
 }

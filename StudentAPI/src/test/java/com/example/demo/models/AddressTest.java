@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the Address class.
  */
-public class AddressTest {
+class AddressTest {
 
   @Test
-  public void shouldCreateAddress() {
+  void shouldCreateAddress() {
     Address address = new Address();
     address.setCountry("USA");
     address.setCity("New York");
@@ -22,7 +22,7 @@ public class AddressTest {
   }
 
   @Test
-  public void shouldCompareAddressesForEquality() {
+  void shouldCompareAddressesForEquality() {
     Address address1 = new Address();
     address1.setCountry("USA");
     address1.setCity("New York");
