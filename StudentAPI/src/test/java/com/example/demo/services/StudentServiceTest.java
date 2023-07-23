@@ -21,7 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * Unit tests for the StudentService class.
  */
 @ExtendWith(MockitoExtension.class)
-public class StudentServiceTest {
+class StudentServiceTest {
 
   @Mock
   private StudentRepository studentRepository;
@@ -44,7 +44,7 @@ public class StudentServiceTest {
   }
 
   @Test
-  public void shouldGetAllStudents() {
+  void shouldGetAllStudents() {
     when(studentRepository.findAll()).thenReturn(List.of(sampleStudent));
 
     var students = studentService.getAllStudents();
@@ -54,7 +54,7 @@ public class StudentServiceTest {
   }
 
   @Test
-  public void shouldFindStudentById() {
+  void shouldFindStudentById() {
     when(studentRepository.findById("1")).thenReturn(Optional.of(sampleStudent));
 
     var result = studentService.findStudentById("1");
@@ -64,7 +64,7 @@ public class StudentServiceTest {
   }
 
   @Test
-  public void shouldNotFindStudentById() {
+  void shouldNotFindStudentById() {
     when(studentRepository.findById("1")).thenReturn(Optional.empty());
 
     var result = studentService.findStudentById("1");
@@ -73,7 +73,7 @@ public class StudentServiceTest {
   }
 
   @Test
-  public void shouldUpdateStudentById() {
+  void shouldUpdateStudentById() {
     when(studentRepository.findById(sampleStudent.getId())).thenReturn(Optional.of(sampleStudent));
     when(studentRepository.save(sampleStudent)).thenReturn(sampleStudent);
 
@@ -83,14 +83,14 @@ public class StudentServiceTest {
   }
 
   @Test
-  public void shouldNotUpdateStudentByIdIfNotExists() {
+  void shouldNotUpdateStudentByIdIfNotExists() {
     when(studentRepository.findById(sampleStudent.getId())).thenReturn(Optional.empty());
 
     assertThrows(RuntimeException.class, () -> studentService.updateStudentById(sampleStudent));
   }
 
   @Test
-  public void shouldAddStudent() {
+  void shouldAddStudent() {
     when(studentRepository.findById(sampleStudent.getId())).thenReturn(Optional.empty());
     when(studentRepository.save(sampleStudent)).thenReturn(sampleStudent);
 
@@ -100,21 +100,21 @@ public class StudentServiceTest {
   }
 
   @Test
-  public void shouldNotAddStudentIfAlreadyExists() {
+  void shouldNotAddStudentIfAlreadyExists() {
     when(studentRepository.findById(sampleStudent.getId())).thenReturn(Optional.of(sampleStudent));
 
     assertThrows(RuntimeException.class, () -> studentService.addStudent(sampleStudent));
   }
 
   @Test
-  public void shouldDeleteStudentById() {
+  void shouldDeleteStudentById() {
     when(studentRepository.findById(sampleStudent.getId())).thenReturn(Optional.of(sampleStudent));
 
     assertDoesNotThrow(() -> studentService.deleteStudentById(sampleStudent.getId()));
   }
 
   @Test
-  public void shouldNotDeleteStudentByIdIfNotExists() {
+  void shouldNotDeleteStudentByIdIfNotExists() {
     when(studentRepository.findById(sampleStudent.getId())).thenReturn(Optional.empty());
 
     assertThrows(RuntimeException.class,

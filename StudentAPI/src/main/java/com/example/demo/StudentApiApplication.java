@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +23,7 @@ import org.springframework.data.mongodb.core.query.Query;
  * The main class for the Demo application.
  * This class is responsible for starting the Spring Boot application.
  */
+@Slf4j
 @SpringBootApplication
 public class StudentApiApplication {
 
@@ -104,10 +107,10 @@ public class StudentApiApplication {
       throw new IllegalStateException("found many students with email " + email);
     }
     if (students.isEmpty()) {
-      System.out.println("Inserting student: " + student);
+      log.info("Inserting student: " + student);
       repository.insert(student);
     } else {
-      System.out.println(student + " already exists");
+      log.info(student + " already exists");
     }
   }
 }

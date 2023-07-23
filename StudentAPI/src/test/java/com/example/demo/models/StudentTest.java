@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the Student class.
  */
-public class StudentTest {
+class StudentTest {
 
   @Test
-  public void shouldCreateStudent() {
+  void shouldCreateStudent() {
     Address address = new Address();
     address.setCountry("USA");
     address.setCity("New York");
@@ -50,7 +50,7 @@ public class StudentTest {
   }
 
   @Test
-  public void shouldCompareStudentsForEquality() {
+  void shouldCompareStudentsForEquality() {
     Address address = new Address();
     address.setCountry("USA");
     address.setCity("New York");
@@ -94,7 +94,8 @@ public class StudentTest {
         .created(timeOfCreation)
         .build();
 
-    assertThat(student1).isEqualTo(student2);
-    assertThat(student1).isNotEqualTo(student3);
+    assertThat(student1)
+        .isEqualTo(student2)
+        .isNotEqualTo(student3);
   }
 }

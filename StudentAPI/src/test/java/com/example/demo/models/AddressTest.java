@@ -38,7 +38,8 @@ class AddressTest {
     address3.setCity("Toronto");
     address3.setPostCode("M5V 1J9");
 
-    assertThat(address1).isEqualTo(address2);
-    assertThat(address1).isNotEqualTo(address3);
+    assertThat(address1)
+        .isEqualTo(address2)
+        .isNotEqualTo(address3);
   }
 }

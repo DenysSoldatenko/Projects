@@ -23,7 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * Unit tests for the StudentController class.
  */
 @ExtendWith(MockitoExtension.class)
-public class StudentControllerTest {
+class StudentControllerTest {
 
   @Mock
   private StudentService studentService;
@@ -32,7 +32,7 @@ public class StudentControllerTest {
   private StudentController studentController;
 
   @Test
-  public void shouldFetchAllStudents() {
+  void shouldFetchAllStudents() {
     List<Student> students = new ArrayList<>();
     Student student1 = Student.builder()
         .id("123")
@@ -58,7 +58,7 @@ public class StudentControllerTest {
   }
 
   @Test
-  public void shouldAddStudent() {
+  void shouldAddStudent() {
     Student student = Student.builder()
         .id("123")
         .firstName("John")
@@ -76,7 +76,7 @@ public class StudentControllerTest {
   }
 
   @Test
-  public void shouldFetchOneStudent() {
+  void shouldFetchOneStudent() {
     Student student = Student.builder()
         .id("123")
         .firstName("John")
@@ -94,7 +94,7 @@ public class StudentControllerTest {
   }
 
   @Test
-  public void shouldFetchOneStudentNotFound() {
+  void shouldFetchOneStudentNotFound() {
     when(studentService.findStudentById("1")).thenReturn(Optional.empty());
 
     try {
@@ -105,7 +105,7 @@ public class StudentControllerTest {
   }
 
   @Test
-  public void shouldUpdateOneStudent() {
+  void shouldUpdateOneStudent() {
     Student student = Student.builder()
         .id("123")
         .firstName("John")
@@ -123,7 +123,7 @@ public class StudentControllerTest {
   }
 
   @Test
-  public void shouldDeleteOneStudent() {
+  void shouldDeleteOneStudent() {
     String studentId = "1";
 
     doNothing().when(studentService).deleteStudentById(studentId);

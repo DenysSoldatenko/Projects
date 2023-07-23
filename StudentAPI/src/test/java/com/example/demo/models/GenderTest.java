@@ -7,20 +7,20 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the Gender class.
  */
-public class GenderTest {
+class GenderTest {
 
   @Test
-  public void shouldGetMaleGender() {
+  void shouldGetMaleGender() {
     assertEquals(Gender.MALE, Gender.valueOf("MALE"));
   }
 
   @Test
-  public void shouldGetFemaleGender() {
+  void shouldGetFemaleGender() {
     assertEquals(Gender.FEMALE, Gender.valueOf("FEMALE"));
   }
 
   @Test
-  public void shouldGetAllEnumValues() {
+  void shouldGetAllEnumValues() {
     Gender[] genders = Gender.values();
     assertEquals(2, genders.length);
     assertEquals(Gender.MALE, genders[0]);
