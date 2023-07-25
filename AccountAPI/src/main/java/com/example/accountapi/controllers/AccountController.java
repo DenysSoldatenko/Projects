@@ -6,10 +6,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import com.example.accountapi.models.Account;
 import com.example.accountapi.models.Amount;
 import com.example.accountapi.services.AccountService;
+import com.example.accountapi.utils.AccountAssembler;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,160 +29,56 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/accounts")
 public class AccountController {
 
-  private final AccountService accountService;
+  private final AccountService service;
+  private final AccountAssembler assembler;
 
-  @GetMapping("/")
-  public CollectionModel<Account> getAllAccounts() {
-    List<Account> list = accountService.listAll();
+  @GetMapping
+  public CollectionModel<EntityModel<Account>> getAllAccounts() {
+    List<EntityModel<Account>> accounts = service.listAll().stream()
+        .map(assembler::toModel)
+        .collect(Collectors.toList());
 
-    for (Account account : list) {
-      account.add(linkTo(
-          methodOn(AccountController.class).getAccountById(account.getId())
-      ).withSelfRel());
-
-      account.add(linkTo(
-          methodOn(AccountController.class).deposit(account.getId(), null)
-      ).withRel("deposit"));
-
-      account.add(linkTo(
-          methodOn(AccountController.class).withdraw(account.getId(), null)
-      ).withRel("withdraw"));
-
-      account.add(linkTo(
-          methodOn(AccountController.class).getAllAccounts()
-      ).withRel(IanaLinkRelations.COLLECTION));
-    }
-
-    CollectionModel<Account> collectionModel = CollectionModel.of(list);
-
-    collectionModel.add(linkTo(
-        methodOn(AccountController.class).getAllAccounts()
-    ).withSelfRel());
-
-    return collectionModel;
+    return CollectionModel.of(
+    accounts,
+    linkTo(methodOn(AccountController.class).getAllAccounts()).withRel("accounts")
+    );
   }
 
   @GetMapping("/{id}")
-  public Account getAccountById(@PathVariable("id") Integer id) {
-    Account account = accountService.findAccountById(id);
-
-    account.add(linkTo(
-        methodOn(AccountController.class).getAccountById(account.getId())
-    ).withSelfRel());
-
-    account.add(linkTo(
-        methodOn(AccountController.class).deposit(account.getId(), null)
-    ).withRel("deposit"));
-
-    account.add(linkTo(
-        methodOn(AccountController.class).withdraw(account.getId(), null)
-    ).withRel("withdraw"));
-
-    account.add(linkTo(
-        methodOn(AccountController.class).getAllAccounts()
-    ).withRel(IanaLinkRelations.COLLECTION));
-
-    return account;
+  public ResponseEntity<EntityModel<Account>> getAccountById(@PathVariable("id") Integer id) {
+    Account account = service.findAccountById(id);
+    return new ResponseEntity<>(assembler.toModel(account), HttpStatus.OK);
   }
 
   @PostMapping
-  public ResponseEntity<Account> createAccount(@RequestBody Account account) {
-    Account savedAccount = accountService.save(account);
-
-    account.add(linkTo(
-        methodOn(AccountController.class).getAccountById(savedAccount.getId())
-    ).withSelfRel());
-
-    account.add(linkTo(
-        methodOn(AccountController.class).deposit(account.getId(), null)
-    ).withRel("deposit"));
-
-    savedAccount.add(linkTo(
-        methodOn(AccountController.class).withdraw(savedAccount.getId(), null)
-    ).withRel("withdraw"));
-
-    account.add(linkTo(
-        methodOn(AccountController.class).getAllAccounts()
-    ).withRel(IanaLinkRelations.COLLECTION));
-
-    return new ResponseEntity<>(savedAccount, HttpStatus.CREATED);
+  public ResponseEntity<EntityModel<Account>> addAccount(@RequestBody Account account) {
+    Account savedAccount = service.save(account);
+    return new ResponseEntity<>(assembler.toModel(savedAccount), HttpStatus.CREATED);
   }
 
   @PutMapping
-  public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
-    Account updatedAccount = accountService.save(account);
-
-    updatedAccount.add(linkTo(
-        methodOn(AccountController.class).getAccountById(updatedAccount.getId())
-    ).withSelfRel());
-
-    updatedAccount.add(linkTo(
-        methodOn(AccountController.class).deposit(updatedAccount.getId(), null)
-    ).withRel("deposit"));
-
-    updatedAccount.add(linkTo(
-        methodOn(AccountController.class).withdraw(updatedAccount.getId(), null)
-    ).withRel("withdraw"));
-
-    updatedAccount.add(linkTo(
-        methodOn(AccountController.class).getAllAccounts()
-    ).withRel(IanaLinkRelations.COLLECTION));
-
-    return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
+  public ResponseEntity<EntityModel<Account>> updateAccount(@RequestBody Account account) {
+    Account savedAccount = service.save(account);
+    return new ResponseEntity<>(assembler.toModel(savedAccount), HttpStatus.OK);
   }
 
   @PatchMapping("/{id}/deposit")
-  public ResponseEntity<Account> deposit(@PathVariable("id") Integer id,
-                                         @RequestBody Amount amount) {
-
-    Account updatedAccount = accountService.deposit(amount.total(), id);
-
-    updatedAccount.add(linkTo(
-        methodOn(AccountController.class).getAccountById(updatedAccount.getId())
-    ).withSelfRel());
-
-    updatedAccount.add(linkTo(
-        methodOn(AccountController.class).deposit(updatedAccount.getId(), null)
-    ).withRel("deposit"));
-
-    updatedAccount.add(linkTo(
-        methodOn(AccountController.class).withdraw(updatedAccount.getId(), null)
-    ).withRel("withdraw"));
-
-    updatedAccount.add(linkTo(
-        methodOn(AccountController.class).getAllAccounts()
-    ).withRel(IanaLinkRelations.COLLECTION));
-
-    return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
+  public ResponseEntity<EntityModel<Account>> deposit(@PathVariable("id") Integer id,
+                                                      @RequestBody Amount amount) {
+    Account updatedAccount = service.deposit(amount.total(), id);
+    return new ResponseEntity<>(assembler.toModel(updatedAccount), HttpStatus.OK);
   }
 
   @PatchMapping("/{id}/withdraw")
-  public ResponseEntity<Account> withdraw(@PathVariable("id") Integer id,
-                                          @RequestBody Amount amount) {
-    Account updatedAccount = accountService.withdraw(amount.total(), id);
-
-    updatedAccount.add(linkTo(
-        methodOn(AccountController.class).getAccountById(updatedAccount.getId())
-    ).withSelfRel());
-
-    updatedAccount.add(linkTo(
-        methodOn(AccountController.class).deposit(updatedAccount.getId(), null)
-    ).withRel("deposit"));
-
-    updatedAccount.add(linkTo(
-        methodOn(AccountController.class).withdraw(updatedAccount.getId(), null)
-    ).withRel("withdraw"));
-
-    updatedAccount.add(linkTo(
-        methodOn(AccountController.class).getAllAccounts()
-    ).withRel(IanaLinkRelations.COLLECTION));
-
-    return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
+  public ResponseEntity<EntityModel<Account>> withdraw(@PathVariable("id") Integer id,
+                                                       @RequestBody Amount amount) {
+    Account updatedAccount = service.withdraw(amount.total(), id);
+    return new ResponseEntity<>(assembler.toModel(updatedAccount), HttpStatus.OK);
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Account> deleteAccount(@PathVariable("id") Integer id) {
-    accountService.delete(id);
+    service.delete(id);
     return ResponseEntity.noContent().build();
   }
 }
