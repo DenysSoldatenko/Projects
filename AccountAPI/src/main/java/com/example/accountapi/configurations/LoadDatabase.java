@@ -11,10 +11,18 @@ import org.springframework.context.annotation.Bean;
 
 /*@AllArgsConstructor
 @Configuration*/
+/**
+ * Configuration class for initializing the database with sample data.
+ */
 public class LoadDatabase {
 
   private AccountRepository accountRepository;
 
+  /**
+   * Initializes the database with sample account records.
+   *
+   * @return A CommandLineRunner that inserts sample data into the database.
+   */
   @Bean
   public CommandLineRunner initDatabase() {
     return args -> {

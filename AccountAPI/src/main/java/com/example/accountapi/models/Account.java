@@ -12,6 +12,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
+/**
+ * Represents an account entity.
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Builder

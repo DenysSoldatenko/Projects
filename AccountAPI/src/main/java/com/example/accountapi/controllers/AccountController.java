@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class for managing account-related HTTP endpoints.
+ */
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/accounts")
@@ -32,6 +35,11 @@ public class AccountController {
   private final AccountService service;
   private final AccountAssembler assembler;
 
+  /**
+   * Retrieves a collection of all accounts.
+   *
+   * @return A collection of all accounts.
+   */
   @GetMapping
   public CollectionModel<EntityModel<Account>> getAllAccounts() {
     List<EntityModel<Account>> accounts = service.listAll().stream()
