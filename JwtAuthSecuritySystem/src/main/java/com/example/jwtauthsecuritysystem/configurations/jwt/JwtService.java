@@ -1,28 +1,26 @@
-package com.example.jwtauthsecuritysystem.configurations;
+package com.example.jwtauthsecuritysystem.configurations.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
-import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import javax.crypto.SecretKey;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 @Service
 public class JwtService {
 
-  private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F442847"
-  + "2B4B6250645367566B5970";
+  @Value("${jwt.secret-key}")
+  private String secretKey;
 
-  public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-    final Claims claims = extractAllClaims(token);
-    return claimsResolver.apply(claims);
-  }
+  @Value("${jwt.token-expiration-duration-ms}")
+  private long tokenExpirationDurationMs;
 
   public String generateToken(UserDetails userDetails) {
     return generateToken(new HashMap<>(), userDetails);
@@ -33,9 +31,14 @@ public class JwtService {
     .claims(extraClaims)
     .subject(userDetails.getUsername())
     .issuedAt(new Date(System.currentTimeMillis()))
-    .expiration(new Date(System.currentTimeMillis() + 1_000 * 60 * 24))
+    .expiration(new Date(System.currentTimeMillis() + tokenExpirationDurationMs))
     .signWith(getSignInKey())
     .compact();
+  }
+
+  public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    final Claims claims = extractAllClaims(token);
+    return claimsResolver.apply(claims);
   }
 
   public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -64,7 +67,7 @@ public class JwtService {
   }
 
   private SecretKey getSignInKey() {
-    byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+    byte[] keyBytes = Decoders.BASE64.decode(secretKey);
     return Keys.hmacShaKeyFor(keyBytes);
   }
 }
