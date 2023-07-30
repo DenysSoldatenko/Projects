@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for handling JWT (JSON Web Token) operations,
+ * such as token generation, extraction, and validation.
+ */
 @Service
 public class JwtService {
 
@@ -26,6 +30,13 @@ public class JwtService {
     return generateToken(new HashMap<>(), userDetails);
   }
 
+  /**
+   * Generates a JWT token for the provided UserDetails and additional claims.
+   *
+   * @param extraClaims   Additional claims to include in the JWT payload.
+   * @param userDetails   The UserDetails representing the user.
+   * @return The generated JWT token.
+   */
   public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
     return Jwts.builder()
     .claims(extraClaims)

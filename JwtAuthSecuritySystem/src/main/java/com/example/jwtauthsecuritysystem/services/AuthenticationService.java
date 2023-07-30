@@ -12,6 +12,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service class for handling user authentication and registration.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -21,6 +24,12 @@ public class AuthenticationService {
   private final JwtService jwtService;
   private final UserFactory userFactory;
 
+  /**
+   * Registers a new user based on the provided registration request.
+   *
+   * @param request The registration request containing user details.
+   * @return AuthenticationResponse containing the JWT token.
+   */
   public AuthenticationResponse registerUser(RegisterRequest request) {
     User user = userFactory.createUserFromRequest(request);
     userRepository.save(user);
@@ -28,6 +37,12 @@ public class AuthenticationService {
     return createAuthenticationResponse(user);
   }
 
+  /**
+   * Authenticates a user based on the provided authentication request.
+   *
+   * @param request The authentication request containing user credentials.
+   * @return AuthenticationResponse containing the JWT token.
+   */
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
     authenticateUser(request);
 
