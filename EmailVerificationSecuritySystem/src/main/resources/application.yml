@@ -5,10 +5,11 @@ server:
 
 spring:
   datasource:
-    password:
+    password: postgres
     url: jdbc:postgresql://localhost:5432/paste_box
-    username:
+    username: postgres
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: create-drop
     properties:
