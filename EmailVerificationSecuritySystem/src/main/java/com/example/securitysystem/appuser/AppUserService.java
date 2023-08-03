@@ -1,5 +1,9 @@
 package com.example.securitysystem.appuser;
 
+import com.example.securitysystem.registration.token.ConfirmationToken;
+import com.example.securitysystem.registration.token.ConfirmationTokenService;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +19,7 @@ public class AppUserService implements UserDetailsService {
 
   private final AppUserRepository appUserRepository;
   private final BCryptPasswordEncoder passwordEncoder;
-
+  private final ConfirmationTokenService confirmationTokenService;
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -26,22 +30,31 @@ public class AppUserService implements UserDetailsService {
   }
 
   public String signUpUser(AppUser appUser) {
-    boolean userExists = appUserRepository
-        .findByEmail(appUser.getEmail())
-        .isPresent();
+    boolean userExists = appUserRepository.findByEmail(appUser.getEmail()).isPresent();
 
     if (userExists) {
-      throw new IllegalStateException("email already taken");
+      throw new IllegalStateException("Email already taken!");
     }
 
     String encodedPassword = passwordEncoder.encode(appUser.getPassword());
-
     appUser.setPassword(encodedPassword);
-
     appUserRepository.save(appUser);
 
-    // TODO: Send confirmation token
+    String token = UUID.randomUUID().toString();
+    ConfirmationToken confirmationToken = new ConfirmationToken(
+        token,
+        LocalDateTime.now(),
+        LocalDateTime.now().plusMinutes(15),
+        appUser
+    );
+    confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-    return "it works";
+    // TODO: SEND EMAIL
+
+    return token;
+  }
+
+  public void enableAppUser(String email) {
+    appUserRepository.enableAppUser(email);
   }
 }
