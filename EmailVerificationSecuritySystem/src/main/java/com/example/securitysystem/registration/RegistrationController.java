@@ -15,12 +15,17 @@ public class RegistrationController {
 
   private final RegistrationService registrationService;
 
+  @GetMapping("/index")
+  public String index() {
+    return "Hello user!";
+  }
+
   @PostMapping
   public String register(@RequestBody RegistrationRequest request) {
     return registrationService.register(request);
   }
 
-  @GetMapping(path = "confirm")
+  @GetMapping("confirm")
   public String confirm(@RequestParam("token") String token) {
     return registrationService.confirmToken(token);
   }

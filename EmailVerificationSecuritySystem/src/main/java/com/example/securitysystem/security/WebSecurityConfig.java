@@ -1,7 +1,5 @@
 package com.example.securitysystem.security;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 import com.example.securitysystem.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -47,7 +45,7 @@ public class WebSecurityConfig {
             .requestMatchers("/api/v*/registration/**").permitAll()
             .anyRequest().authenticated()
         )
-        .formLogin(withDefaults());
+        .formLogin(formLogin -> formLogin.defaultSuccessUrl("/api/v1/registration/index", true));
 
     return http.build();
   }

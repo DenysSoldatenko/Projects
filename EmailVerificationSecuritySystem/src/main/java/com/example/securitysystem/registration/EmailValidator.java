@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailValidator implements Predicate<String> {
+
+  private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
+
   @Override
-  public boolean test(String s) {
-    // TODO: Regex to validate email
-    return true;
+  public boolean test(String email) {
+    return email.matches(EMAIL_REGEX);
   }
 }

@@ -1,8 +1,11 @@
 package com.example.securitysystem.appuser;
 
+import com.example.securitysystem.email.EmailBuilder;
+import com.example.securitysystem.email.EmailSender;
 import com.example.securitysystem.registration.token.ConfirmationToken;
 import com.example.securitysystem.registration.token.ConfirmationTokenService;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,29 +23,43 @@ public class AppUserService implements UserDetailsService {
   private final AppUserRepository appUserRepository;
   private final BCryptPasswordEncoder passwordEncoder;
   private final ConfirmationTokenService confirmationTokenService;
+  private final EmailSender emailSender;
+  private final EmailBuilder emailBuilder;
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     return appUserRepository.findByEmail(email)
-      .orElseThrow(
-        () -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email))
-      );
+    .orElseThrow(
+      () -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email))
+    );
   }
 
   public String signUpUser(AppUser appUser) {
-    boolean userExists = appUserRepository.findByEmail(appUser.getEmail()).isPresent();
+    Optional<AppUser> existingUser = appUserRepository.findByEmail(appUser.getEmail());
 
-    if (userExists) {
-      // TODO check of attributes are the same and
-      // TODO if email not confirmed send confirmation email.
+    if (existingUser.isPresent()) {
+      return handleExistingUser(existingUser.get());
+    } else {
+      String encodedPassword = passwordEncoder.encode(appUser.getPassword());
+      appUser.setPassword(encodedPassword);
+      appUserRepository.save(appUser);
 
-      throw new IllegalStateException("Email is already taken!");
+      return createAndSaveToken(appUser);
     }
+  }
 
-    String encodedPassword = passwordEncoder.encode(appUser.getPassword());
-    appUser.setPassword(encodedPassword);
-    appUserRepository.save(appUser);
+  private String handleExistingUser(AppUser existingUser) {
+    Optional<ConfirmationToken> confirmationToken = confirmationTokenService
+        .findNonExpiredToken(existingUser);
 
+    if (confirmationToken.isPresent()) {
+      throw new IllegalStateException("User is already confirmed!");
+    } else {
+      return createAndSaveToken(existingUser);
+    }
+  }
+
+  private String createAndSaveToken(AppUser appUser) {
     String token = UUID.randomUUID().toString();
     ConfirmationToken confirmationToken = new ConfirmationToken(
         token,
@@ -50,10 +67,11 @@ public class AppUserService implements UserDetailsService {
         LocalDateTime.now().plusMinutes(15),
         appUser
     );
+
     confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-    // TODO: SEND EMAIL
-
+    String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
+    emailSender.send(appUser.getEmail(), emailBuilder.build(appUser.getFirstName(), link));
     return token;
   }
 

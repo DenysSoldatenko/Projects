@@ -1,5 +1,6 @@
 package com.example.securitysystem.registration.token;
 
+import com.example.securitysystem.appuser.AppUser;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +21,6 @@ public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationT
   @Query("UPDATE ConfirmationToken c SET c.confirmedAt = :confirmedAt WHERE c.token = :token")
   void updateConfirmedAt(@Param("token") String token,
                          @Param("confirmedAt") LocalDateTime confirmedAt);
+
+  Optional<ConfirmationToken> findFirstByAppUserAndConfirmedAtIsNotNull(AppUser appUser);
 }
