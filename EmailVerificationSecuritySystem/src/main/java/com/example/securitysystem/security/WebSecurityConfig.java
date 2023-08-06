@@ -13,6 +13,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Configuration class for setting up web security.
+ */
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
@@ -27,6 +30,11 @@ public class WebSecurityConfig {
     return configuration.getAuthenticationManager();
   }
 
+  /**
+   * Creates a DaoAuthenticationProvider bean for password authentication.
+   *
+   * @return The configured DaoAuthenticationProvider.
+   */
   @Bean
   public DaoAuthenticationProvider daoAuthenticationProvider() {
     DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -35,6 +43,13 @@ public class WebSecurityConfig {
     return provider;
   }
 
+  /**
+   * Configures the default security filter chain.
+   *
+   * @param http The HttpSecurity object to configure.
+   * @return The configured SecurityFilterChain.
+   * @throws Exception if an error occurs while configuring the security filter chain.
+   */
   @Bean
   public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
     http

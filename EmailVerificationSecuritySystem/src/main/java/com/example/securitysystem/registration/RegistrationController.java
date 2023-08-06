@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class for handling user registration and confirmation.
+ */
 @RestController
 @RequestMapping(path = "api/v1/registration")
 @AllArgsConstructor

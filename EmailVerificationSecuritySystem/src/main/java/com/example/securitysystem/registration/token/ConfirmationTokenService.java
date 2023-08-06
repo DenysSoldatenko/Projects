@@ -6,6 +6,9 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service class for managing confirmation tokens and token-related operations.
+ */
 @Service
 @AllArgsConstructor
 public class ConfirmationTokenService {

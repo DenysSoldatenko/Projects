@@ -14,6 +14,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ * Represents an application user entity.
+ */
 @Data
 @NoArgsConstructor
 @Entity
@@ -38,6 +41,15 @@ public class AppUser implements UserDetails {
 
   private Boolean enabled = false;
 
+  /**
+   * Constructs a new AppUser with the specified user details.
+   *
+   * @param firstName   the first name of the user
+   * @param lastName    the last name of the user
+   * @param email       the email address of the user
+   * @param password    the password of the user
+   * @param appUserRole the role of the user (USER or ADMIN)
+   */
   public AppUser(String firstName, String lastName, String email,
                  String password, AppUserRole appUserRole) {
     this.firstName = firstName;

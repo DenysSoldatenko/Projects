@@ -14,6 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service class for managing application users and user-related operations.
+ */
 @Service
 @AllArgsConstructor
 public class AppUserService implements UserDetailsService {
@@ -34,6 +37,12 @@ public class AppUserService implements UserDetailsService {
     );
   }
 
+  /**
+   * Registers a new user.
+   *
+   * @param appUser The user to be registered.
+   * @return The confirmation token generated for the user.
+   */
   public String signUpUser(AppUser appUser) {
     Optional<AppUser> existingUser = appUserRepository.findByEmail(appUser.getEmail());
 

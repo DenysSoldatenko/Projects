@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service class for handling user registration and confirmation.
+ */
 @Service
 @AllArgsConstructor
 public class RegistrationService {
@@ -18,6 +21,13 @@ public class RegistrationService {
   private final EmailValidator emailValidator;
   private final ConfirmationTokenService confirmationTokenService;
 
+  /**
+   * Registers a new user based on the registration request.
+   *
+   * @param request The registration request containing user details.
+   * @return A confirmation message.
+   * @throws IllegalStateException if the email is not valid.
+   */
   public String register(RegistrationRequest request) {
     boolean isValidEmail = emailValidator.test(request.email());
 
@@ -36,6 +46,13 @@ public class RegistrationService {
     );
   }
 
+  /**
+   * Confirms a user's registration token.
+   *
+   * @param token The registration token to confirm.
+   * @return A confirmation message.
+   * @throws IllegalStateException if the token is not found, already confirmed, or expired.
+   */
   @Transactional
   public String confirmToken(String token) {
     ConfirmationToken confirmationToken = confirmationTokenService

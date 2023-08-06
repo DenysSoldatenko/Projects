@@ -10,6 +10,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Repository interface for managing confirmation tokens.
+ */
 @Repository
 @Transactional(readOnly = true)
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Long> {

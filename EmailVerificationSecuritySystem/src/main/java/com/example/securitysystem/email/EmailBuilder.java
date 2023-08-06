@@ -2,8 +2,19 @@ package com.example.securitysystem.email;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Component for building email content.
+ */
 @Component
 public class EmailBuilder {
+
+  /**
+   * Build an email message with the provided name and activation link.
+   *
+   * @param name The recipient's name.
+   * @param link The activation link.
+   * @return The constructed email message.
+   */
   public String build(String name, String link) {
     return "<div style=\"font-family:Helvetica,Arial,sans-serif;"
       + "    font-size:16px;margin:0;color:#0b0c0c\">\n"
