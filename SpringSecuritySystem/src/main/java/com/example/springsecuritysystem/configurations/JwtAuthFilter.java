@@ -2,6 +2,7 @@ package com.example.springsecuritysystem.configurations;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
+import com.example.springsecuritysystem.dao.UserDao;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,7 +12,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -20,7 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @AllArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-  private UserDetailsService userDetailsService;
+  private final UserDao userDao;
   private final JwtUtil jwtUtil;
 
   @Override
@@ -40,7 +40,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     userEmail = jwtUtil.extractUsername(jwtToken);
 
     if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+      UserDetails userDetails = userDao.findUserByEmail(userEmail);
       if (jwtUtil.validateToken(jwtToken, userDetails)) {
         UsernamePasswordAuthenticationToken authenticationToken
             = new UsernamePasswordAuthenticationToken(

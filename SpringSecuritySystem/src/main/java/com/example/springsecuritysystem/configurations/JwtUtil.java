@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtUtil {
 
-  private final String secretKey = "secret";
+  private final String secretKey = "eyJhbGciOiJIUzI1NiJ9eyJSb2xlIjoiQWRtaW"
+      + "4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY5NjI"
+      + "0Mjg1NywiaWF0IjoxNjk2MjQyODU3fQ";
 
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);
@@ -29,7 +31,10 @@ public class JwtUtil {
   }
 
   private Claims extractAllClaims(String token) {
-    return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+    return Jwts.parser()
+    .setSigningKey(secretKey)
+    .parseClaimsJws(token)
+    .getBody();
   }
 
   private Boolean isTokenExpired(String token) {
@@ -38,6 +43,7 @@ public class JwtUtil {
 
   public String generateToken(UserDetails userDetails) {
     Map<String, Object> claims = new HashMap<>();
+    claims.put("roles", userDetails.getAuthorities());
     return createToken(claims, userDetails.getUsername());
   }
 

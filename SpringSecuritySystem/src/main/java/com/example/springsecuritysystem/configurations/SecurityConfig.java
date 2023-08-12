@@ -1,8 +1,6 @@
 package com.example.springsecuritysystem.configurations;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import com.example.springsecuritysystem.dao.UserDao;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,13 +10,11 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -27,30 +23,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig {
-
   private final JwtAuthFilter jwtAuthFilter;
-  private static final List<UserDetails> APPLICATION_USERS = Arrays.asList(
-    new User(
-      "john.doe@gmail.com",
-      "password",
-      Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"))
-    ),
-
-    new User(
-      "jane.doe@gmail.com",
-      "password",
-      Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
-    )
-  );
+  private final UserDao userDao;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
-    .authorizeHttpRequests((requests) -> requests.anyRequest().authenticated())
+    .csrf(AbstractHttpConfigurer::disable)
+    .authorizeHttpRequests(
+      authorizeRequests ->
+        authorizeRequests
+        .requestMatchers("/api/v*/auth/**").permitAll()
+        .anyRequest().authenticated()
+    )
     .authenticationProvider(authenticationProvider())
     .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-    .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-        .formLogin(formLogin -> formLogin.defaultSuccessUrl("/api/vi/greetings/say-hello", true));
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }
@@ -65,20 +53,17 @@ public class SecurityConfig {
 
   @Bean
   public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
+    return NoOpPasswordEncoder.getInstance();
   }
 
-
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
+      throws Exception {
     return config.getAuthenticationManager();
   }
 
   @Bean
   public UserDetailsService userDetailsService() {
-    return email -> APPLICATION_USERS.stream()
-    .filter(u -> u.getUsername().equals(email))
-    .findFirst()
-    .orElseThrow(() -> new UsernameNotFoundException("No user was found!"));
+    return userDao::findUserByEmail;
   }
 }
