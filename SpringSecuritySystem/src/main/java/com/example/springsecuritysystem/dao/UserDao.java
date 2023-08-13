@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Repository for managing application users.
+ */
 @Repository
 public class UserDao {
   private static final List<UserDetails> APPLICATION_USERS = Arrays.asList(
@@ -25,6 +28,13 @@ public class UserDao {
     )
   );
 
+  /**
+   * Find a user by their email address.
+   *
+   * @param email The email address of the user to find.
+   * @return The UserDetails of the found user.
+   * @throws UsernameNotFoundException If no user is found with the given email address.
+   */
   public UserDetails findUserByEmail(String email) {
     return APPLICATION_USERS.stream()
     .filter(u -> u.getUsername().equals(email))

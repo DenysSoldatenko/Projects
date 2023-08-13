@@ -16,6 +16,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+/**
+ * Filter for authenticating requests using JWT (JSON Web Tokens).
+ */
 @Component
 @AllArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {

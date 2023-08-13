@@ -10,6 +10,9 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+/**
+ * Utility class for working with JSON Web Tokens (JWTs).
+ */
 @Service
 public class JwtUtil {
 
@@ -41,6 +44,12 @@ public class JwtUtil {
     return extractExpiration(token).before(new Date());
   }
 
+  /**
+   * Generates a JWT token for a user with the specified claims.
+   *
+   * @param userDetails The user details.
+   * @return The generated JWT token.
+   */
   public String generateToken(UserDetails userDetails) {
     Map<String, Object> claims = new HashMap<>();
     claims.put("roles", userDetails.getAuthorities());

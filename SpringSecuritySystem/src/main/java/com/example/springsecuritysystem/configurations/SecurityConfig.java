@@ -13,12 +13,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Configuration class for Spring Security.
+ */
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
@@ -26,6 +28,13 @@ public class SecurityConfig {
   private final JwtAuthFilter jwtAuthFilter;
   private final UserDao userDao;
 
+  /**
+   * Configures the security filter chain.
+   *
+   * @param http The HttpSecurity object to configure.
+   * @return The configured SecurityFilterChain.
+   * @throws Exception If configuration fails.
+   */
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
@@ -43,6 +52,11 @@ public class SecurityConfig {
     return http.build();
   }
 
+  /**
+   * Configures the authentication provider.
+   *
+   * @return The configured AuthenticationProvider.
+   */
   @Bean
   public AuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
