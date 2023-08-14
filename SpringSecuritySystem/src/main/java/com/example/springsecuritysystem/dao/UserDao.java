@@ -17,13 +17,13 @@ public class UserDao {
   private static final List<UserDetails> APPLICATION_USERS = Arrays.asList(
     new User(
       "john.doe@gmail.com",
-      "password",
+      "$2a$12$5eQY3spQwagdeevqjouf7.5em7Vx4Hvp.oJ4Na0Jc.nhjlRZhJTJ2",
       Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"))
     ),
 
     new User(
       "jane.doe@gmail.com",
-      "password",
+      "$2a$12$5eQY3spQwagdeevqjouf7.5em7Vx4Hvp.oJ4Na0Jc.nhjlRZhJTJ2",
       Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
     )
   );
