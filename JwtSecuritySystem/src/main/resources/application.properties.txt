@@ -1,0 +1,15 @@
+server.port=8080
+spring.jpa.open-in-view=false
+
+spring.datasource.url=
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.username=
+spring.datasource.password=
+
+spring.liquibase.change-log=classpath:db/changelog/db.changelog-primary.xml
+spring.liquibase.url=
+spring.liquibase.user=
+spring.liquibase.password=
+
+jwt.token.secret=jwtapplication
+jwt.token.expired=3600000
