@@ -1,4 +1,4 @@
-package com.example.jwtsecuritysystem.configurations;
+package com.example.jwtsecuritysystem.security;
 
 import com.example.jwtsecuritysystem.models.User;
 import com.example.jwtsecuritysystem.services.UserService;

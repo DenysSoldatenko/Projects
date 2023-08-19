@@ -1,4 +1,4 @@
-package com.example.jwtsecuritysystem.configurations;
+package com.example.jwtsecuritysystem.security;
 
 import com.example.jwtsecuritysystem.models.Role;
 import com.example.jwtsecuritysystem.models.Status;

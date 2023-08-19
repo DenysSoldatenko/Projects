@@ -1,4 +1,4 @@
-package com.example.jwtsecuritysystem.configurations;
+package com.example.jwtsecuritysystem.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
@@ -21,14 +21,12 @@ public class JwtUser implements UserDetails {
 
   private final String lastName;
 
-  @JsonIgnore
   private final String password;
 
   private final String email;
 
   private final boolean enabled;
 
-  @JsonIgnore
   private final Date lastPasswordResetDate;
 
   private final Collection<? extends GrantedAuthority> authorities;
