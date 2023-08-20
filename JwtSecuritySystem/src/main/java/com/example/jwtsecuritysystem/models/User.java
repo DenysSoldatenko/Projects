@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -32,6 +33,7 @@ public class User extends BaseEntity {
   @Column(name = "password")
   private String password;
 
+  @ToString.Exclude
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles",
       joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
