@@ -16,17 +16,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class for handling user authentication operations.
+ */
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/api/v1/auth/")
 public class AuthenticationController {
 
   private final AuthenticationManager authenticationManager;
-
   private final JwtTokenProvider jwtTokenProvider;
-
   private final UserService userService;
 
+  /**
+   * Endpoint for user authentication and token generation.
+   *
+   * @param requestDto The authentication request containing username and password.
+   * @return A ResponseEntity containing the username and authentication token.
+   */
   @PostMapping("login")
   public ResponseEntity<Map<Object, Object>> login(
       @RequestBody AuthenticationRequestDto requestDto

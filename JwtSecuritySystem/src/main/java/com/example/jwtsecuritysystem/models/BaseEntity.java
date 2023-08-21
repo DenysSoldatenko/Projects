@@ -12,6 +12,9 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+/**
+ * A base entity class representing common fields for other entities.
+ */
 @Data
 @MappedSuperclass
 public class BaseEntity {

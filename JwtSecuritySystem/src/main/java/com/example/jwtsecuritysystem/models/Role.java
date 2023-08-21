@@ -9,6 +9,9 @@ import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Represents a role entity for user permissions.
+ */
 @Data
 @Entity
 @Table(name = "roles")

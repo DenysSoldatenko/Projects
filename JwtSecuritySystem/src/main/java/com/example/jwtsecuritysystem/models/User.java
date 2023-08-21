@@ -12,6 +12,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Represents a user entity.
+ */
 @Data
 @Entity
 @Table(name = "users")

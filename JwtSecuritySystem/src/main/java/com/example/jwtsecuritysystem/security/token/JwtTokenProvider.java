@@ -21,6 +21,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+/**
+ * Provides utility methods for working with JWT tokens.
+ */
 @Component
 public class JwtTokenProvider {
 
@@ -42,6 +45,13 @@ public class JwtTokenProvider {
     secret = Base64.getEncoder().encodeToString(secret.getBytes());
   }
 
+  /**
+   * Creates a JWT token for the given username and roles.
+   *
+   * @param username The username for which the token is created.
+   * @param roles    The roles associated with the user.
+   * @return A JWT token as a String.
+   */
   public String createToken(String username, List<Role> roles) {
 
     Claims claims = Jwts.claims().setSubject(username);
@@ -63,6 +73,12 @@ public class JwtTokenProvider {
     return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
   }
 
+  /**
+   * Retrieves the username from a JWT token.
+   *
+   * @param token The JWT token as a String.
+   * @return The username extracted from the token.
+   */
   public String getUsername(String token) {
     return Jwts.parser()
     .setSigningKey(secret)
@@ -71,6 +87,12 @@ public class JwtTokenProvider {
     .getSubject();
   }
 
+  /**
+   * Resolves a JWT token from the request.
+   *
+   * @param req The HttpServletRequest object.
+   * @return The JWT token as a String, or null if not found.
+   */
   public String resolveToken(HttpServletRequest req) {
     String bearerToken = req.getHeader("Authorization");
     if (bearerToken != null && bearerToken.startsWith("Bearer_")) {

@@ -8,6 +8,9 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ * Represents a user for JWT authentication.
+ */
 @Data
 @Builder
 public class JwtUser implements UserDetails {
