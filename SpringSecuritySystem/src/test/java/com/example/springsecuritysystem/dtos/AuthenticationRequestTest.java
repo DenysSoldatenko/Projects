@@ -1,4 +1,31 @@
-import static org.junit.jupiter.api.Assertions.*;
-class AuthenticationRequestTest {
-  
+package com.example.springsecuritysystem.dtos;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+/**
+ * Unit tests for the AuthenticationRequest class.
+ */
+public class AuthenticationRequestTest {
+
+  @Test
+  public void testAuthenticationRequestConstructorAndGetters() {
+    String email = "test@example.com";
+    String password = "testPassword";
+    AuthenticationRequest authenticationRequest = new AuthenticationRequest(email, password);
+
+    assertEquals(email, authenticationRequest.email());
+    assertEquals(password, authenticationRequest.password());
+  }
+
+  @Test
+  public void testAuthenticationRequestToString() {
+    String email = "test@example.com";
+    String password = "testPassword";
+    AuthenticationRequest authenticationRequest = new AuthenticationRequest(email, password);
+
+    assertNotNull(authenticationRequest.toString());
+  }
 }
