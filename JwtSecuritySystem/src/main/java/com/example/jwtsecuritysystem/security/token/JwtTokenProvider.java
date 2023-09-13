@@ -12,6 +12,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.Data;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Component;
 /**
  * Provides utility methods for working with JWT tokens.
  */
+@Data
 @Component
 public class JwtTokenProvider {
 

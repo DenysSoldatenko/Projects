@@ -65,6 +65,7 @@ public class JwtUserDetailsServiceTest {
   public void testLoadUserByUsernameWhenUserDoesNotExist() {
     Mockito.when(userService.findByUsername("nonExistentUser")).thenReturn(null);
 
-    assertThrows(UsernameNotFoundException.class, () -> userDetailsService.loadUserByUsername("nonExistentUser"));
+    assertThrows(UsernameNotFoundException.class,
+        () -> userDetailsService.loadUserByUsername("nonExistentUser"));
   }
 }
