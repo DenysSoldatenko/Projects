@@ -1,14 +1,13 @@
 package com.example.jwtauthsecuritysystem.models;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import java.util.Collection;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Collection;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 class UserTest {
 
@@ -21,13 +20,13 @@ class UserTest {
   @Test
   void testUserFields() {
     User user = User.builder()
-    .id(1)
-    .firstname("John")
-    .lastname("Doe")
-    .email("john.doe@example.com")
-    .password("password123")
-    .role(Role.USER)
-    .build();
+        .id(1)
+        .firstname("John")
+        .lastname("Doe")
+        .email("john.doe@example.com")
+        .password("password123")
+        .role(Role.USER)
+        .build();
 
     assertEquals(1, user.getId());
     assertEquals("John", user.getFirstname());
@@ -40,13 +39,13 @@ class UserTest {
   @Test
   void testUserAuthorities() {
     User user = User.builder()
-    .id(1)
-    .firstname("John")
-    .lastname("Doe")
-    .email("john.doe@example.com")
-    .password("password123")
-    .role(Role.USER)
-    .build();
+        .id(1)
+        .firstname("John")
+        .lastname("Doe")
+        .email("john.doe@example.com")
+        .password("password123")
+        .role(Role.USER)
+        .build();
 
     Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
 
@@ -58,13 +57,13 @@ class UserTest {
   @Test
   void testUserDetailsMethods() {
     User user = User.builder()
-    .id(1)
-    .firstname("John")
-    .lastname("Doe")
-    .email("john.doe@example.com")
-    .password("password123")
-    .role(Role.USER)
-    .build();
+        .id(1)
+        .firstname("John")
+        .lastname("Doe")
+        .email("john.doe@example.com")
+        .password("password123")
+        .role(Role.USER)
+        .build();
 
     // Check UserDetails methods
     assertEquals("john.doe@example.com", user.getUsername());
@@ -78,15 +77,16 @@ class UserTest {
   @Test
   void testUserToString() {
     User user = User.builder()
-    .id(1)
-    .firstname("John")
-    .lastname("Doe")
-    .email("john.doe@example.com")
-    .password("password123")
-    .role(Role.USER)
-    .build();
+        .id(1)
+        .firstname("John")
+        .lastname("Doe")
+        .email("john.doe@example.com")
+        .password("password123")
+        .role(Role.USER)
+        .build();
 
-    String expectedToString = "User(id=1, firstname=John, lastname=Doe, email=john.doe@example.com, password=password123, role=USER)";
+    String expectedToString = "User(id=1, firstname=John, lastname=Doe, "
+        + "email=john.doe@example.com, password=password123, role=USER)";
     assertEquals(expectedToString, user.toString());
   }
 }
