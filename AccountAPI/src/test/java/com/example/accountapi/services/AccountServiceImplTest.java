@@ -11,6 +11,8 @@ import com.example.accountapi.models.Account;
 import com.example.accountapi.repositories.AccountRepository;
 import java.util.List;
 import java.util.Optional;
+
+import com.example.accountapi.services.impl.AccountServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,16 +22,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
 
 /**
- * Unit tests for the AccountService class.
+ * Unit tests for the AccountServiceImpl class.
  */
 @ExtendWith(MockitoExtension.class)
-class AccountServiceTest {
+class AccountServiceImplTest {
 
   @Mock
   private AccountRepository accountRepository;
 
   @InjectMocks
-  private AccountService accountService;
+  private AccountServiceImpl accountServiceImpl;
 
   @BeforeEach
   public void setUp() {
@@ -42,7 +44,7 @@ class AccountServiceTest {
     Account account2 = new Account();
     when(accountRepository.findAll()).thenReturn(List.of(account1, account2));
 
-    List<Account> accounts = accountService.listAll();
+    List<Account> accounts = accountServiceImpl.getAllAccounts();
 
     assertEquals(2, accounts.size());
     assertEquals(account1, accounts.get(0));
@@ -56,7 +58,7 @@ class AccountServiceTest {
 
     when(accountRepository.findById(1)).thenReturn(Optional.of(account));
 
-    Account foundAccount = accountService.findAccountById(1);
+    Account foundAccount = accountServiceImpl.getAccountById(1);
 
     assertEquals(account, foundAccount);
   }
@@ -65,7 +67,7 @@ class AccountServiceTest {
   void shouldThrowExceptionWhenAccountNotFound() {
     when(accountRepository.findById(1)).thenReturn(Optional.empty());
 
-    assertThrows(ResponseStatusException.class, () -> accountService.findAccountById(1));
+    assertThrows(ResponseStatusException.class, () -> accountServiceImpl.getAccountById(1));
   }
 
   @Test
@@ -74,7 +76,7 @@ class AccountServiceTest {
 
     when(accountRepository.save(account)).thenReturn(account);
 
-    Account savedAccount = accountService.save(account);
+    Account savedAccount = accountServiceImpl.createAccount(account);
 
     assertEquals(account, savedAccount);
   }
@@ -97,7 +99,7 @@ class AccountServiceTest {
     }).when(accountRepository).withdraw(100.0f, 1);
 
     // Call the withdrawal method
-    Account updatedAccount = accountService.withdraw(100.0f, 1);
+    Account updatedAccount = accountServiceImpl.withdrawFunds(100.0f, 1);
 
     assertEquals(account, updatedAccount);
     assertEquals(0.0f, updatedAccount.getBalance());
@@ -122,7 +124,7 @@ class AccountServiceTest {
     }).when(accountRepository).deposit(100.0f, 1);
 
     // Call the deposit method
-    Account updatedAccount = accountService.deposit(100.0f, 1);
+    Account updatedAccount = accountServiceImpl.addFunds(100.0f, 1);
 
     // Assert the result
     assertEquals(account, updatedAccount);
@@ -134,7 +136,7 @@ class AccountServiceTest {
     Account account = new Account();
     account.setId(1);
 
-    accountService.delete(1);
+    accountServiceImpl.removeAccount(1);
 
     verify(accountRepository, times(1)).deleteById(1);
   }

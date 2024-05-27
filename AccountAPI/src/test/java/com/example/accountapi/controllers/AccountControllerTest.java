@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 
 import com.example.accountapi.models.Account;
 import com.example.accountapi.models.Amount;
-import com.example.accountapi.services.AccountService;
+import com.example.accountapi.services.impl.AccountServiceImpl;
 import com.example.accountapi.utils.AccountAssembler;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +29,7 @@ import org.springframework.http.ResponseEntity;
 class AccountControllerTest {
 
   @Mock
-  private AccountService accountService;
+  private AccountServiceImpl accountServiceImpl;
 
   @Mock
   private AccountAssembler accountAssembler;
@@ -43,7 +43,7 @@ class AccountControllerTest {
     Account account2 = new Account();
     List<Account> accountList = Arrays.asList(account1, account2);
 
-    when(accountService.listAll()).thenReturn(accountList);
+    when(accountServiceImpl.getAllAccounts()).thenReturn(accountList);
 
     EntityModel<Account> entityModel1 = EntityModel.of(account1);
     EntityModel<Account> entityModel2 = EntityModel.of(account2);
@@ -61,7 +61,7 @@ class AccountControllerTest {
     Account account = new Account();
     account.setId(1);
 
-    when(accountService.findAccountById(1)).thenReturn(account);
+    when(accountServiceImpl.getAccountById(1)).thenReturn(account);
 
     EntityModel<Account> entityModel = EntityModel.of(account);
 
@@ -77,7 +77,7 @@ class AccountControllerTest {
   void shouldAddAccount() {
     Account account = new Account();
 
-    when(accountService.save(account)).thenReturn(account);
+    when(accountServiceImpl.createAccount(account)).thenReturn(account);
 
     EntityModel<Account> entityModel = EntityModel.of(account);
 
@@ -93,7 +93,7 @@ class AccountControllerTest {
   void shouldUpdateAccount() {
     Account account = new Account();
 
-    when(accountService.save(account)).thenReturn(account);
+    when(accountServiceImpl.createAccount(account)).thenReturn(account);
 
     EntityModel<Account> entityModel = EntityModel.of(account);
 
@@ -110,7 +110,7 @@ class AccountControllerTest {
     Account account = new Account();
     Amount amount = new Amount(100.0f);
 
-    when(accountService.deposit(amount.total(), 1)).thenReturn(account);
+    when(accountServiceImpl.addFunds(amount.total(), 1)).thenReturn(account);
 
     EntityModel<Account> entityModel = EntityModel.of(account);
 
@@ -127,7 +127,7 @@ class AccountControllerTest {
     Account account = new Account();
     Amount amount = new Amount(100.0f);
 
-    when(accountService.withdraw(amount.total(), 1)).thenReturn(account);
+    when(accountServiceImpl.withdrawFunds(amount.total(), 1)).thenReturn(account);
 
     EntityModel<Account> entityModel = EntityModel.of(account);
 
@@ -144,6 +144,6 @@ class AccountControllerTest {
     ResponseEntity<Account> response = accountController.deleteAccount(1);
 
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-    verify(accountService, times(1)).delete(1);
+    verify(accountServiceImpl, times(1)).removeAccount(1);
   }
 }

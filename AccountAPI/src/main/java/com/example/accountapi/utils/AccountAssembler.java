@@ -17,37 +17,39 @@ import org.springframework.stereotype.Component;
  * A utility class for assembling representations of Account entities into EntityModel objects.
  */
 @Component
-public class AccountAssembler
-    implements RepresentationModelAssembler<Account, EntityModel<Account>> {
+public class AccountAssembler implements RepresentationModelAssembler<Account, EntityModel<Account>> {
 
   @Override
   public @NonNull EntityModel<Account> toModel(@NonNull Account entity) {
     EntityModel<Account> accountModel = EntityModel.of(entity);
-
     accountModel.add(createSelfLink(entity));
     accountModel.add(createDepositLink(entity));
     accountModel.add(createWithdrawLink(entity));
     accountModel.add(createCollectionLink());
-
     return accountModel;
   }
 
   private Link createSelfLink(Account entity) {
-    return linkTo(methodOn(AccountController.class).getAccountById(entity.getId())).withSelfRel();
+    return linkTo(methodOn(AccountController.class)
+      .getAccountById(entity.getId()))
+      .withSelfRel();
   }
 
   private Link createDepositLink(Account entity) {
-    return linkTo(methodOn(AccountController.class).deposit(entity.getId(), new Amount(0)))
-    .withRel("deposit");
+    return linkTo(methodOn(AccountController.class)
+      .deposit(entity.getId(), new Amount(0)))
+      .withRel("deposit");
   }
 
   private Link createWithdrawLink(Account entity) {
-    return linkTo(methodOn(AccountController.class).withdraw(entity.getId(), new Amount(0)))
-    .withRel("withdraw");
+    return linkTo(methodOn(AccountController.class)
+      .withdraw(entity.getId(), new Amount(0)))
+      .withRel("withdraw");
   }
 
   private Link createCollectionLink() {
-    return linkTo(methodOn(AccountController.class).getAllAccounts())
-    .withRel(IanaLinkRelations.COLLECTION);
+    return linkTo(methodOn(AccountController.class)
+      .getAllAccounts())
+      .withRel(IanaLinkRelations.COLLECTION);
   }
 }
