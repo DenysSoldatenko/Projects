@@ -77,7 +77,7 @@ class AccountControllerTest {
   void shouldAddAccount() {
     Account account = new Account();
 
-    when(accountServiceImpl.createAccount(account)).thenReturn(account);
+    when(accountServiceImpl.createOrUpdateAccount(account)).thenReturn(account);
 
     EntityModel<Account> entityModel = EntityModel.of(account);
 
@@ -93,7 +93,7 @@ class AccountControllerTest {
   void shouldUpdateAccount() {
     Account account = new Account();
 
-    when(accountServiceImpl.createAccount(account)).thenReturn(account);
+    when(accountServiceImpl.createOrUpdateAccount(account)).thenReturn(account);
 
     EntityModel<Account> entityModel = EntityModel.of(account);
 
@@ -116,7 +116,7 @@ class AccountControllerTest {
 
     when(accountAssembler.toModel(account)).thenReturn(entityModel);
 
-    ResponseEntity<EntityModel<Account>> response = accountController.deposit(1, amount);
+    ResponseEntity<EntityModel<Account>> response = accountController.depositFunds(1, amount);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(account, Objects.requireNonNull(response.getBody()).getContent());
@@ -133,7 +133,7 @@ class AccountControllerTest {
 
     when(accountAssembler.toModel(account)).thenReturn(entityModel);
 
-    ResponseEntity<EntityModel<Account>> response = accountController.withdraw(1, amount);
+    ResponseEntity<EntityModel<Account>> response = accountController.withdrawFunds(1, amount);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(account, Objects.requireNonNull(response.getBody()).getContent());

@@ -76,7 +76,7 @@ class AccountServiceImplTest {
 
     when(accountRepository.save(account)).thenReturn(account);
 
-    Account savedAccount = accountServiceImpl.createAccount(account);
+    Account savedAccount = accountServiceImpl.createOrUpdateAccount(account);
 
     assertEquals(account, savedAccount);
   }

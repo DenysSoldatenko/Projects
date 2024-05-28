@@ -37,13 +37,13 @@ public class AccountAssembler implements RepresentationModelAssembler<Account, E
 
   private Link createDepositLink(Account entity) {
     return linkTo(methodOn(AccountController.class)
-      .deposit(entity.getId(), new Amount(0)))
+      .depositFunds(entity.getId(), new Amount(0)))
       .withRel("deposit");
   }
 
   private Link createWithdrawLink(Account entity) {
     return linkTo(methodOn(AccountController.class)
-      .withdraw(entity.getId(), new Amount(0)))
+      .withdrawFunds(entity.getId(), new Amount(0)))
       .withRel("withdraw");
   }
 

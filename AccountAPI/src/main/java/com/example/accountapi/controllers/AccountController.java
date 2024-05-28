@@ -1,7 +1,11 @@
 package com.example.accountapi.controllers;
 
+import static org.springframework.hateoas.CollectionModel.of;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.ResponseEntity.noContent;
 
 import com.example.accountapi.models.Account;
 import com.example.accountapi.models.Amount;
@@ -11,7 +15,6 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controller class for managing account-related HTTP endpoints.
+ * Controller for managing account-related operations.
  */
 @RestController
 @AllArgsConstructor
@@ -32,7 +35,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
 
   private final AccountService accountService;
-  private final AccountAssembler assembler;
+  private final AccountAssembler accountAssembler;
+
+  @PostMapping("/initialize")
+  public ResponseEntity<String> initializeData() {
+    return new ResponseEntity<>(accountService.initializeData(), CREATED);
+  }
 
   /**
    * Retrieves a collection of all accounts.
@@ -42,50 +50,47 @@ public class AccountController {
   @GetMapping
   public CollectionModel<EntityModel<Account>> getAllAccounts() {
     List<EntityModel<Account>> accounts = accountService.getAllAccounts().stream()
-        .map(assembler::toModel)
+        .map(accountAssembler::toModel)
         .toList();
 
-    return CollectionModel.of(
-    accounts,
-    linkTo(methodOn(AccountController.class).getAllAccounts()).withRel("accounts")
-    );
+    return of(accounts, linkTo(methodOn(AccountController.class).getAllAccounts()).withRel("accounts"));
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<EntityModel<Account>> getAccountById(@PathVariable("id") Integer id) {
     Account account = accountService.getAccountById(id);
-    return new ResponseEntity<>(assembler.toModel(account), HttpStatus.OK);
+    return new ResponseEntity<>(accountAssembler.toModel(account), OK);
   }
 
   @PostMapping
   public ResponseEntity<EntityModel<Account>> addAccount(@RequestBody Account account) {
-    Account savedAccount = accountService.createAccount(account);
-    return new ResponseEntity<>(assembler.toModel(savedAccount), HttpStatus.CREATED);
+    Account savedAccount = accountService.createOrUpdateAccount(account);
+    return new ResponseEntity<>(accountAssembler.toModel(savedAccount), CREATED);
   }
 
   @PutMapping
   public ResponseEntity<EntityModel<Account>> updateAccount(@RequestBody Account account) {
-    Account savedAccount = accountService.createAccount(account);
-    return new ResponseEntity<>(assembler.toModel(savedAccount), HttpStatus.OK);
+    Account updatedAccount = accountService.createOrUpdateAccount(account);
+    return new ResponseEntity<>(accountAssembler.toModel(updatedAccount), OK);
   }
 
   @PatchMapping("/{id}/deposit")
-  public ResponseEntity<EntityModel<Account>> deposit(@PathVariable("id") Integer id,
-                                                      @RequestBody Amount amount) {
+  public ResponseEntity<EntityModel<Account>> depositFunds(@PathVariable("id") Integer id,
+                                                           @RequestBody Amount amount) {
     Account updatedAccount = accountService.addFunds(amount.total(), id);
-    return new ResponseEntity<>(assembler.toModel(updatedAccount), HttpStatus.OK);
+    return new ResponseEntity<>(accountAssembler.toModel(updatedAccount), OK);
   }
 
   @PatchMapping("/{id}/withdraw")
-  public ResponseEntity<EntityModel<Account>> withdraw(@PathVariable("id") Integer id,
-                                                       @RequestBody Amount amount) {
+  public ResponseEntity<EntityModel<Account>> withdrawFunds(@PathVariable("id") Integer id,
+                                                            @RequestBody Amount amount) {
     Account updatedAccount = accountService.withdrawFunds(amount.total(), id);
-    return new ResponseEntity<>(assembler.toModel(updatedAccount), HttpStatus.OK);
+    return new ResponseEntity<>(accountAssembler.toModel(updatedAccount), OK);
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Account> deleteAccount(@PathVariable("id") Integer id) {
     accountService.removeAccount(id);
-    return ResponseEntity.noContent().build();
+    return noContent().build();
   }
 }

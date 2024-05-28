@@ -2,28 +2,27 @@ package com.example.accountapi.services.impl;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import com.example.accountapi.initializers.DatabaseInitializer;
 import com.example.accountapi.models.Account;
 import com.example.accountapi.repositories.AccountRepository;
-import java.util.List;
-
 import com.example.accountapi.services.AccountService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-/**
- * Service class for managing account-related operations.
- */
 @Service
-@AllArgsConstructor
 @Transactional
+@AllArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
-  private final AccountRepository repository;
+  private final AccountRepository accountRepository;
+  private final DatabaseInitializer databaseInitializer;
 
+  @Override
   public List<Account> getAllAccounts() {
-    return repository.findAll();
+    return accountRepository.findAll();
   }
 
   /**
@@ -34,26 +33,36 @@ public class AccountServiceImpl implements AccountService {
    * @throws ResponseStatusException If the account is not found,
    *     a NOT_FOUND response status exception is thrown.
    */
+  @Override
   public Account getAccountById(Integer id) {
-    return repository.findById(id)
+    return accountRepository.findById(id)
       .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Account not found with ID: " + id));
   }
 
-  public Account createAccount(Account account) {
-    return repository.save(account);
+  @Override
+  public Account createOrUpdateAccount(Account account) {
+    return accountRepository.save(account);
   }
 
+  @Override
   public Account addFunds(float amount, Integer id) {
-    repository.deposit(amount, id);
+    accountRepository.deposit(amount, id);
     return getAccountById(id);
   }
 
+  @Override
   public Account withdrawFunds(float amount, Integer id) {
-    repository.withdraw(amount, id);
+    accountRepository.withdraw(amount, id);
     return getAccountById(id);
   }
 
+  @Override
   public void removeAccount(Integer id) {
-    repository.deleteById(id);
+    accountRepository.deleteById(id);
+  }
+
+  @Override
+  public String initializeData() {
+    return databaseInitializer.initDatabase();
   }
 }
