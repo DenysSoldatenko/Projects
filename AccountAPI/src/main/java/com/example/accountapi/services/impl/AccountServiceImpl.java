@@ -12,6 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * Implementation of the {@link AccountService} interface for managing {@link Account} entities.
+ *
+ * <p>This service handles CRUD operations for accounts and performs actions such as adding or
+ * withdrawing funds, and initializing the database with sample data.</p>
+ */
 @Service
 @Transactional
 @AllArgsConstructor

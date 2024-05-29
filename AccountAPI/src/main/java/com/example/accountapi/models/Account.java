@@ -1,5 +1,7 @@
 package com.example.accountapi.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,19 +17,23 @@ import org.springframework.hateoas.RepresentationModel;
 /**
  * Represents an account entity.
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
+@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@EqualsAndHashCode(callSuper = true)
+@Tag(name = "Account", description = "Operations related to account management")
 public class Account extends RepresentationModel<Account> {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Schema(description = "Unique identifier of the account", example = "1")
   private Integer id;
 
   @Column(nullable = false, unique = true, length = 20)
+  @Schema(description = "Unique account number", example = "94667f86")
   private String accountNumber;
 
+  @Schema(description = "Current balance of the account", example = "1000.50")
   private float balance;
 }
