@@ -1,13 +1,8 @@
-server:
-  error:
-    include-message: always
-    include-binding-errors: always
-
 spring:
   datasource:
-    password: postgres
-    url: jdbc:postgresql://localhost:5432/paste_box
-    username: postgres
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:5432/${DATABASE_NAME:example_database}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
   jpa:
     open-in-view: false
     hibernate:
@@ -36,3 +31,7 @@ spring:
           timeout: 3000
           writetimeout: 5000
 
+server:
+  error:
+    include-message: always
+    include-binding-errors: always

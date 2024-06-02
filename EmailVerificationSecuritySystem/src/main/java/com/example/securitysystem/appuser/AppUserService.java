@@ -2,7 +2,8 @@ package com.example.securitysystem.appuser;
 
 import com.example.securitysystem.email.EmailBuilder;
 import com.example.securitysystem.email.EmailSender;
-import com.example.securitysystem.registration.token.ConfirmationToken;
+import com.example.securitysystem.entities.User;
+import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.registration.token.ConfirmationTokenService;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -43,8 +44,8 @@ public class AppUserService implements UserDetailsService {
    * @param appUser The user to be registered.
    * @return The confirmation token generated for the user.
    */
-  public String signUpUser(AppUser appUser) {
-    Optional<AppUser> existingUser = appUserRepository.findByEmail(appUser.getEmail());
+  public String signUpUser(User appUser) {
+    Optional<User> existingUser = appUserRepository.findByEmail(appUser.getEmail());
 
     if (existingUser.isPresent()) {
       return handleExistingUser(existingUser.get());
@@ -57,7 +58,7 @@ public class AppUserService implements UserDetailsService {
     }
   }
 
-  private String handleExistingUser(AppUser existingUser) {
+  private String handleExistingUser(User existingUser) {
     Optional<ConfirmationToken> confirmationToken = confirmationTokenService
         .findNonExpiredToken(existingUser);
 
@@ -68,7 +69,7 @@ public class AppUserService implements UserDetailsService {
     }
   }
 
-  private String createAndSaveToken(AppUser appUser) {
+  private String createAndSaveToken(User appUser) {
     String token = UUID.randomUUID().toString();
     ConfirmationToken confirmationToken = new ConfirmationToken(
         token,

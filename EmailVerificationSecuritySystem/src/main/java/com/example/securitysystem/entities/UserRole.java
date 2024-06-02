@@ -1,10 +1,9 @@
-package com.example.securitysystem.appuser;
+package com.example.securitysystem.entities;
 
 /**
  * An enumeration representing the roles that an application user can have,
  * including USER and ADMIN.
  */
-public enum AppUserRole {
-    USER,
-    ADMIN
+public enum UserRole {
+    USER, ADMIN
 }

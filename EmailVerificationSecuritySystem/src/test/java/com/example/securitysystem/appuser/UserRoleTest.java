@@ -2,23 +2,24 @@ package com.example.securitysystem.appuser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.example.securitysystem.entities.UserRole;
 import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for the EmailBuilder class.
  */
-class AppUserRoleTest {
+class UserRoleTest {
 
   @Test
   void testUserEnumValue() {
-    AppUserRole userRole = AppUserRole.USER;
+    UserRole userRole = UserRole.USER;
     assertEquals("USER", userRole.name());
     assertEquals(0, userRole.ordinal());
   }
 
   @Test
   void testAdminEnumValue() {
-    AppUserRole adminRole = AppUserRole.ADMIN;
+    UserRole adminRole = UserRole.ADMIN;
     assertEquals("ADMIN", adminRole.name());
     assertEquals(1, adminRole.ordinal());
   }

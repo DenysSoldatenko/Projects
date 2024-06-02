@@ -10,9 +10,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.example.securitysystem.appuser.AppUser;
+import com.example.securitysystem.entities.User;
 import com.example.securitysystem.appuser.AppUserService;
-import com.example.securitysystem.registration.token.ConfirmationToken;
+import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.registration.token.ConfirmationTokenService;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -53,12 +53,12 @@ class RegistrationServiceTest {
     RegistrationRequest request
         = new RegistrationRequest("John", "Doe", "john@example.com", "password123");
     when(emailValidator.test("john@example.com")).thenReturn(true);
-    when(appUserService.signUpUser(any(AppUser.class))).thenReturn("Registration successful");
+    when(appUserService.signUpUser(any(User.class))).thenReturn("Registration successful");
 
     String result = registrationService.register(request);
 
     assertEquals("Registration successful", result);
-    verify(appUserService, times(1)).signUpUser(any(AppUser.class));
+    verify(appUserService, times(1)).signUpUser(any(User.class));
   }
 
   @Test
@@ -68,7 +68,7 @@ class RegistrationServiceTest {
     when(emailValidator.test("invalid-email")).thenReturn(false);
 
     assertThrows(IllegalStateException.class, () -> registrationService.register(request));
-    verify(appUserService, never()).signUpUser(any(AppUser.class));
+    verify(appUserService, never()).signUpUser(any(User.class));
   }
 
   @Test
@@ -88,7 +88,7 @@ class RegistrationServiceTest {
         token,
         LocalDateTime.now(),
         LocalDateTime.now().plusHours(1),
-        new AppUser()
+        new User()
     );
     confirmationToken.setConfirmedAt(LocalDateTime.now());
 
@@ -106,7 +106,7 @@ class RegistrationServiceTest {
         token,
         LocalDateTime.now(),
         LocalDateTime.now().minusMinutes(1),
-        new AppUser()
+        new User()
     );
 
     when(confirmationTokenService.getToken(token)).thenReturn(Optional.of(confirmationToken));

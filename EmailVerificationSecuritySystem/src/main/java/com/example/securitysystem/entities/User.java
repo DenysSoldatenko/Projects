@@ -1,7 +1,8 @@
-package com.example.securitysystem.appuser;
+package com.example.securitysystem.entities;
+
+import static jakarta.persistence.EnumType.STRING;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,9 +19,9 @@ import org.springframework.security.core.userdetails.UserDetails;
  * Represents an application user entity.
  */
 @Data
-@NoArgsConstructor
 @Entity
-public class AppUser implements UserDetails {
+@NoArgsConstructor
+public class User implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +35,8 @@ public class AppUser implements UserDetails {
 
   private String password;
 
-  @Enumerated(EnumType.STRING)
-  private AppUserRole appUserRole;
+  @Enumerated(STRING)
+  private UserRole userRole;
 
   private Boolean locked = false;
 
@@ -48,20 +49,20 @@ public class AppUser implements UserDetails {
    * @param lastName    the last name of the user
    * @param email       the email address of the user
    * @param password    the password of the user
-   * @param appUserRole the role of the user (USER or ADMIN)
+   * @param userRole the role of the user (USER or ADMIN)
    */
-  public AppUser(String firstName, String lastName, String email,
-                 String password, AppUserRole appUserRole) {
+  public User(String firstName, String lastName, String email,
+                 String password, UserRole userRole) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.password = password;
-    this.appUserRole = appUserRole;
+    this.userRole = userRole;
   }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
+    SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
     return Collections.singletonList(authority);
   }
 

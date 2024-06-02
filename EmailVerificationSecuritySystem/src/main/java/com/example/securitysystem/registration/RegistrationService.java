@@ -1,9 +1,9 @@
 package com.example.securitysystem.registration;
 
-import com.example.securitysystem.appuser.AppUser;
-import com.example.securitysystem.appuser.AppUserRole;
+import com.example.securitysystem.entities.User;
+import com.example.securitysystem.entities.UserRole;
 import com.example.securitysystem.appuser.AppUserService;
-import com.example.securitysystem.registration.token.ConfirmationToken;
+import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.registration.token.ConfirmationTokenService;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -36,12 +36,12 @@ public class RegistrationService {
     }
 
     return appUserService.signUpUser(
-      new AppUser(
+      new User(
           request.firstName(),
           request.lastName(),
           request.email(),
           request.password(),
-          AppUserRole.USER
+          UserRole.USER
       )
     );
   }

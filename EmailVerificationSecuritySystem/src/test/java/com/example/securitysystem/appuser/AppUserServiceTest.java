@@ -11,7 +11,8 @@ import static org.mockito.Mockito.when;
 
 import com.example.securitysystem.email.EmailBuilder;
 import com.example.securitysystem.email.EmailSender;
-import com.example.securitysystem.registration.token.ConfirmationToken;
+import com.example.securitysystem.entities.User;
+import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.registration.token.ConfirmationTokenService;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,7 +55,7 @@ class AppUserServiceTest {
 
   @Test
   void testLoadUserByUsername_UserExists() {
-    AppUser user = new AppUser();
+    User user = new User();
     user.setEmail("test@example.com");
     when(appUserRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
 
@@ -74,7 +75,7 @@ class AppUserServiceTest {
 
   @Test
   void testSignUpUser_UserAlreadyExists() {
-    AppUser existingUser = new AppUser();
+    User existingUser = new User();
     existingUser.setEmail("existing@example.com");
     when(appUserRepository.findByEmail("existing@example.com"))
         .thenReturn(Optional.of(existingUser));
@@ -84,7 +85,7 @@ class AppUserServiceTest {
 
   @Test
   void testSignUpUser_NewUser() {
-    AppUser newUser = new AppUser();
+    User newUser = new User();
     newUser.setEmail("new@example.com");
     newUser.setPassword("password");
     when(appUserRepository.findByEmail("new@example.com")).thenReturn(Optional.empty());

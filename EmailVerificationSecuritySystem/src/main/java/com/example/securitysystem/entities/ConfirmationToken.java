@@ -1,6 +1,5 @@
-package com.example.securitysystem.registration.token;
+package com.example.securitysystem.entities;
 
-import com.example.securitysystem.appuser.AppUser;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,8 +15,8 @@ import lombok.NoArgsConstructor;
  * Represents a confirmation token associated with a user registration.
  */
 @Data
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
 public class ConfirmationToken {
 
   @Id
@@ -36,8 +35,8 @@ public class ConfirmationToken {
   private LocalDateTime confirmedAt;
 
   @ManyToOne
-  @JoinColumn(nullable = false, name = "app_user_id")
-  private AppUser appUser;
+  @JoinColumn(nullable = false, name = "user_id")
+  private User user;
 
   /**
    * Constructs a new ConfirmationToken with the specified details.
@@ -48,10 +47,10 @@ public class ConfirmationToken {
    * @param appUser    the user associated with this token
    */
   public ConfirmationToken(String token, LocalDateTime createdAt,
-                           LocalDateTime expiresAt, AppUser appUser) {
+                           LocalDateTime expiresAt, User appUser) {
     this.token = token;
     this.createdAt = createdAt;
     this.expiresAt = expiresAt;
-    this.appUser = appUser;
+    this.user = appUser;
   }
 }

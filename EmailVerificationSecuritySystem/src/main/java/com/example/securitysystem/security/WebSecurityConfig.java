@@ -17,16 +17,15 @@ import org.springframework.security.web.SecurityFilterChain;
  * Configuration class for setting up web security.
  */
 @Configuration
-@AllArgsConstructor
 @EnableWebSecurity
+@AllArgsConstructor
 public class WebSecurityConfig {
 
   private final AppUserService appUserService;
   private final BCryptPasswordEncoder passwordEncoder;
 
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
-      throws Exception {
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
     return configuration.getAuthenticationManager();
   }
 
@@ -56,11 +55,15 @@ public class WebSecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeRequests(
           authorizeRequests ->
-          authorizeRequests
-            .requestMatchers("/api/v*/registration/**").permitAll()
-            .anyRequest().authenticated()
+            authorizeRequests
+              .requestMatchers("/api/v*/registration/**").permitAll()
+              .anyRequest().authenticated()
         )
-        .formLogin(formLogin -> formLogin.defaultSuccessUrl("/api/v1/registration/index", true));
+        .formLogin(
+          formLogin ->
+            formLogin
+              .defaultSuccessUrl("/api/v1/registration/index", true)
+        );
 
     return http.build();
   }

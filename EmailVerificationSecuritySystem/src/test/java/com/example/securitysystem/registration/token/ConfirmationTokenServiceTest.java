@@ -4,7 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.example.securitysystem.appuser.AppUser;
+import com.example.securitysystem.entities.ConfirmationToken;
+import com.example.securitysystem.entities.User;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +36,7 @@ class ConfirmationTokenServiceTest {
         "token123",
         LocalDateTime.now(),
         LocalDateTime.now().plusHours(1),
-        new AppUser()
+        new User()
     );
     confirmationTokenService.saveConfirmationToken(token);
 
@@ -49,7 +50,7 @@ class ConfirmationTokenServiceTest {
         tokenValue,
         LocalDateTime.now(),
         LocalDateTime.now().plusHours(1),
-        new AppUser()
+        new User()
     );
     Mockito.when(confirmationTokenRepository.findByToken(tokenValue))
         .thenReturn(Optional.of(token));
@@ -62,7 +63,7 @@ class ConfirmationTokenServiceTest {
 
   @Test
   void testFindNonExpiredToken() {
-    AppUser appUser = new AppUser();
+    User appUser = new User();
     LocalDateTime createdAt = LocalDateTime.now().minusMinutes(30);
     LocalDateTime expiresAt = LocalDateTime.now().plusHours(1);
     ConfirmationToken token = new ConfirmationToken("token123", createdAt, expiresAt, appUser);
@@ -81,7 +82,7 @@ class ConfirmationTokenServiceTest {
   void testSetConfirmedAt() {
     String tokenValue = "token123";
     ConfirmationToken token = new ConfirmationToken(tokenValue, LocalDateTime.now(),
-        LocalDateTime.now().plusHours(1), new AppUser());
+        LocalDateTime.now().plusHours(1), new User());
 
     confirmationTokenService.setConfirmedAt(tokenValue);
 

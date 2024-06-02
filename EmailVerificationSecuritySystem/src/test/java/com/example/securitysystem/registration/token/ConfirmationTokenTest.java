@@ -3,7 +3,8 @@ package com.example.securitysystem.registration.token;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import com.example.securitysystem.appuser.AppUser;
+import com.example.securitysystem.entities.ConfirmationToken;
+import com.example.securitysystem.entities.User;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ class ConfirmationTokenTest {
 
   @Test
   void testConstructorAndGetterMethods() {
-    AppUser appUser = new AppUser();
+    User appUser = new User();
     LocalDateTime createdAt = LocalDateTime.now();
     LocalDateTime expiresAt = LocalDateTime.now().plusHours(1);
 
@@ -41,7 +42,7 @@ class ConfirmationTokenTest {
 
   @Test
   void testId() {
-    AppUser appUser = new AppUser();
+    User appUser = new User();
     LocalDateTime createdAt = LocalDateTime.now();
     LocalDateTime expiresAt = LocalDateTime.now().plusHours(1);
 
@@ -54,7 +55,7 @@ class ConfirmationTokenTest {
 
   @Test
   void testConfirmedAt() {
-    AppUser appUser = new AppUser();
+    User appUser = new User();
     LocalDateTime createdAt = LocalDateTime.now();
     LocalDateTime expiresAt = LocalDateTime.now().plusHours(1);
     LocalDateTime confirmedAt = LocalDateTime.now();

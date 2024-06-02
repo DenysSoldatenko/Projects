@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collection;
+
+import com.example.securitysystem.entities.User;
+import com.example.securitysystem.entities.UserRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +19,7 @@ class AppUserTest {
 
   @Test
   void testGetAuthorities() {
-    AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
+    User user = new User("John", "Doe", "john@example.com", "password", UserRole.USER);
 
     Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
 
@@ -25,14 +28,14 @@ class AppUserTest {
 
   @Test
   void testIsAccountNonExpired() {
-    AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
+    User user = new User("John", "Doe", "john@example.com", "password", UserRole.USER);
 
     assertTrue(user.isAccountNonExpired());
   }
 
   @Test
   void testIsAccountNonLocked() {
-    AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
+    User user = new User("John", "Doe", "john@example.com", "password", UserRole.USER);
     user.setLocked(true);
 
     assertFalse(user.isAccountNonLocked());
@@ -40,14 +43,14 @@ class AppUserTest {
 
   @Test
   void testIsCredentialsNonExpired() {
-    AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
+    User user = new User("John", "Doe", "john@example.com", "password", UserRole.USER);
 
     assertTrue(user.isCredentialsNonExpired());
   }
 
   @Test
   void testIsEnabled() {
-    AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
+    User user = new User("John", "Doe", "john@example.com", "password", UserRole.USER);
     user.setEnabled(true);
 
     assertTrue(user.isEnabled());
@@ -55,21 +58,21 @@ class AppUserTest {
 
   @Test
   void testIsUsername() {
-    AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
+    User user = new User("John", "Doe", "john@example.com", "password", UserRole.USER);
 
     assertEquals("john@example.com", user.getUsername());
   }
 
   @Test
   void testIsPassword() {
-    AppUser user = new AppUser("John", "Doe", "john@example.com", "password", AppUserRole.USER);
+    User user = new User("John", "Doe", "john@example.com", "password", UserRole.USER);
 
     assertEquals("password", user.getPassword());
   }
 
   @Test
   void testIdGetter() {
-    AppUser user = new AppUser();
+    User user = new User();
     user.setId(1L);
 
     assertEquals(1L, user.getId());
@@ -77,7 +80,7 @@ class AppUserTest {
 
   @Test
   void testFirstNameGetter() {
-    AppUser user = new AppUser();
+    User user = new User();
     user.setFirstName("John");
 
     assertEquals("John", user.getFirstName());
@@ -85,7 +88,7 @@ class AppUserTest {
 
   @Test
   void testLastNameGetter() {
-    AppUser user = new AppUser();
+    User user = new User();
     user.setLastName("Doe");
 
     assertEquals("Doe", user.getLastName());
@@ -93,7 +96,7 @@ class AppUserTest {
 
   @Test
   void testEmailGetter() {
-    AppUser user = new AppUser();
+    User user = new User();
     user.setEmail("john@example.com");
 
     assertEquals("john@example.com", user.getEmail());
@@ -101,7 +104,7 @@ class AppUserTest {
 
   @Test
   void testPasswordGetter() {
-    AppUser user = new AppUser();
+    User user = new User();
     user.setPassword("password123");
 
     assertEquals("password123", user.getPassword());
@@ -109,9 +112,9 @@ class AppUserTest {
 
   @Test
   void testAppUserRoleGetter() {
-    AppUser user = new AppUser();
-    user.setAppUserRole(AppUserRole.USER);
+    User user = new User();
+    user.setUserRole(UserRole.USER);
 
-    assertEquals(AppUserRole.USER, user.getAppUserRole());
+    assertEquals(UserRole.USER, user.getUserRole());
   }
 }

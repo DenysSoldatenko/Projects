@@ -1,6 +1,7 @@
 package com.example.securitysystem.registration.token;
 
-import com.example.securitysystem.appuser.AppUser;
+import com.example.securitysystem.entities.ConfirmationToken;
+import com.example.securitysystem.entities.User;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,5 +26,5 @@ public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationT
   void updateConfirmedAt(@Param("token") String token,
                          @Param("confirmedAt") LocalDateTime confirmedAt);
 
-  Optional<ConfirmationToken> findFirstByAppUserAndConfirmedAtIsNotNull(AppUser appUser);
+  Optional<ConfirmationToken> findFirstByAppUserAndConfirmedAtIsNotNull(User appUser);
 }

@@ -1,6 +1,8 @@
 package com.example.securitysystem.appuser;
 
 import java.util.Optional;
+
+import com.example.securitysystem.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional(readOnly = true)
-public interface AppUserRepository extends JpaRepository<AppUser, Long> {
+public interface AppUserRepository extends JpaRepository<User, Long> {
 
-  Optional<AppUser> findByEmail(String email);
+  Optional<User> findByEmail(String email);
 
   @Transactional
   @Modifying
-  @Query("UPDATE AppUser u SET u.enabled = true WHERE u.email = :email")
+  @Query("UPDATE User u SET u.enabled = true WHERE u.email = :email")
   void enableAppUser(String email);
 }

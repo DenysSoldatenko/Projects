@@ -1,6 +1,7 @@
 package com.example.securitysystem.registration.token;
 
-import com.example.securitysystem.appuser.AppUser;
+import com.example.securitysystem.entities.ConfirmationToken;
+import com.example.securitysystem.entities.User;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class ConfirmationTokenService {
     return confirmationTokenRepository.findByToken(token);
   }
 
-  public Optional<ConfirmationToken> findNonExpiredToken(AppUser appUser) {
+  public Optional<ConfirmationToken> findNonExpiredToken(User appUser) {
     return confirmationTokenRepository.findFirstByAppUserAndConfirmedAtIsNotNull(appUser);
   }
 
