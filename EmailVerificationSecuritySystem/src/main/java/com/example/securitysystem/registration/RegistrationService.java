@@ -70,7 +70,7 @@ public class RegistrationService {
     }
 
     confirmationTokenService.setConfirmedAt(token);
-    appUserService.enableAppUser(confirmationToken.getAppUser().getEmail());
+    appUserService.enableAppUser(confirmationToken.getUser().getEmail());
 
     return "Confirmed!";
   }

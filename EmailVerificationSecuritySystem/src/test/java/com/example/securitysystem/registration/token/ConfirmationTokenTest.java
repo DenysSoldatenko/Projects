@@ -26,7 +26,7 @@ class ConfirmationTokenTest {
     assertEquals(createdAt, confirmationToken.getCreatedAt());
     assertEquals(expiresAt, confirmationToken.getExpiresAt());
     assertNull(confirmationToken.getConfirmedAt());
-    assertEquals(appUser, confirmationToken.getAppUser());
+    assertEquals(appUser, confirmationToken.getUser());
   }
 
   @Test
@@ -37,7 +37,7 @@ class ConfirmationTokenTest {
     assertNull(confirmationToken.getCreatedAt());
     assertNull(confirmationToken.getExpiresAt());
     assertNull(confirmationToken.getConfirmedAt());
-    assertNull(confirmationToken.getAppUser());
+    assertNull(confirmationToken.getUser());
   }
 
   @Test

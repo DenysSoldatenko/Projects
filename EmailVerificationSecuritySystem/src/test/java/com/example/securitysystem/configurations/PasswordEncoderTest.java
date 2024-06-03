@@ -1,4 +1,4 @@
-package com.example.securitysystem.security;
+package com.example.securitysystem.configurations;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
