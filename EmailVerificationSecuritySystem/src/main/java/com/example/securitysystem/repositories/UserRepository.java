@@ -1,4 +1,4 @@
-package com.example.securitysystem.appuser;
+package com.example.securitysystem.repositories;
 
 import java.util.Optional;
 
@@ -14,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional(readOnly = true)
-public interface AppUserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
   Optional<User> findByEmail(String email);
 
-  @Transactional
   @Modifying
+  @Transactional
   @Query("UPDATE User u SET u.enabled = true WHERE u.email = :email")
   void enableAppUser(String email);
 }

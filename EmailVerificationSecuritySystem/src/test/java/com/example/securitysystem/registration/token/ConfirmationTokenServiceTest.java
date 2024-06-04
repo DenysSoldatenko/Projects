@@ -8,6 +8,8 @@ import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.entities.User;
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import com.example.securitysystem.repositories.ConfirmationTokenRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -68,7 +70,7 @@ class ConfirmationTokenServiceTest {
     LocalDateTime expiresAt = LocalDateTime.now().plusHours(1);
     ConfirmationToken token = new ConfirmationToken("token123", createdAt, expiresAt, appUser);
 
-    Mockito.when(confirmationTokenRepository.findFirstByAppUserAndConfirmedAtIsNotNull(appUser))
+    Mockito.when(confirmationTokenRepository.findFirstByUserAndConfirmedAtIsNotNull(appUser))
         .thenReturn(Optional.of(token));
 
     Optional<ConfirmationToken> nonExpiredToken

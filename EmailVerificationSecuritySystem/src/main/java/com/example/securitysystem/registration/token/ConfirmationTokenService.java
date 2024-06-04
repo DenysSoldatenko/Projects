@@ -4,6 +4,8 @@ import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.entities.User;
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import com.example.securitysystem.repositories.ConfirmationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class ConfirmationTokenService {
   }
 
   public Optional<ConfirmationToken> findNonExpiredToken(User appUser) {
-    return confirmationTokenRepository.findFirstByAppUserAndConfirmedAtIsNotNull(appUser);
+    return confirmationTokenRepository.findFirstByUserAndConfirmedAtIsNotNull(appUser);
   }
 
   public void setConfirmedAt(String token) {

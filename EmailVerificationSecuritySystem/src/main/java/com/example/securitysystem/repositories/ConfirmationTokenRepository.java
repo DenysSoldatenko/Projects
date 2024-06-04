@@ -1,4 +1,4 @@
-package com.example.securitysystem.registration.token;
+package com.example.securitysystem.repositories;
 
 import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.entities.User;
@@ -20,11 +20,11 @@ public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationT
 
   Optional<ConfirmationToken> findByToken(String token);
 
-  @Transactional
   @Modifying
+  @Transactional
   @Query("UPDATE ConfirmationToken c SET c.confirmedAt = :confirmedAt WHERE c.token = :token")
   void updateConfirmedAt(@Param("token") String token,
                          @Param("confirmedAt") LocalDateTime confirmedAt);
 
-  Optional<ConfirmationToken> findFirstByAppUserAndConfirmedAtIsNotNull(User appUser);
+  Optional<ConfirmationToken> findFirstByUserAndConfirmedAtIsNotNull(User appUser);
 }

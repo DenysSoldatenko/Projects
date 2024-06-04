@@ -15,6 +15,8 @@ import com.example.securitysystem.entities.User;
 import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.registration.token.ConfirmationTokenService;
 import java.util.Optional;
+
+import com.example.securitysystem.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +33,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 class AppUserServiceTest {
 
   @Mock
-  private AppUserRepository appUserRepository;
+  private UserRepository userRepository;
 
   @Mock
   private BCryptPasswordEncoder passwordEncoder;
@@ -49,7 +51,7 @@ class AppUserServiceTest {
 
   @BeforeEach
   public void setUp() {
-    appUserService = new AppUserService(appUserRepository, passwordEncoder,
+    appUserService = new AppUserService(userRepository, passwordEncoder,
       confirmationTokenService, emailSender, emailBuilder);
   }
 
@@ -57,7 +59,7 @@ class AppUserServiceTest {
   void testLoadUserByUsername_UserExists() {
     User user = new User();
     user.setEmail("test@example.com");
-    when(appUserRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
+    when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
 
     UserDetails userDetails = appUserService.loadUserByUsername("test@example.com");
 
@@ -67,7 +69,7 @@ class AppUserServiceTest {
 
   @Test
   void testLoadUserByUsername_UserNotFound() {
-    when(appUserRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
+    when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
 
     assertThrows(UsernameNotFoundException.class,
         () -> appUserService.loadUserByUsername("nonexistent@example.com"));
@@ -77,10 +79,10 @@ class AppUserServiceTest {
   void testSignUpUser_UserAlreadyExists() {
     User existingUser = new User();
     existingUser.setEmail("existing@example.com");
-    when(appUserRepository.findByEmail("existing@example.com"))
+    when(userRepository.findByEmail("existing@example.com"))
         .thenReturn(Optional.of(existingUser));
 
-    verify(appUserRepository, never()).save(any());
+    verify(userRepository, never()).save(any());
   }
 
   @Test
@@ -88,9 +90,9 @@ class AppUserServiceTest {
     User newUser = new User();
     newUser.setEmail("new@example.com");
     newUser.setPassword("password");
-    when(appUserRepository.findByEmail("new@example.com")).thenReturn(Optional.empty());
+    when(userRepository.findByEmail("new@example.com")).thenReturn(Optional.empty());
     when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
-    when(appUserRepository.save(newUser)).thenReturn(newUser);
+    when(userRepository.save(newUser)).thenReturn(newUser);
 
     String token = appUserService.signUpUser(newUser);
 
@@ -103,6 +105,6 @@ class AppUserServiceTest {
   void testEnableAppUser() {
     appUserService.enableAppUser("user@example.com");
 
-    verify(appUserRepository, times(1)).enableAppUser("user@example.com");
+    verify(userRepository, times(1)).enableAppUser("user@example.com");
   }
 }

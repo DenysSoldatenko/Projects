@@ -8,6 +8,8 @@ import com.example.securitysystem.registration.token.ConfirmationTokenService;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
+
+import com.example.securitysystem.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,7 +26,7 @@ public class AppUserService implements UserDetailsService {
 
   private static final String USER_NOT_FOUND_MSG = "User with email %s not found";
 
-  private final AppUserRepository appUserRepository;
+  private final UserRepository userRepository;
   private final BCryptPasswordEncoder passwordEncoder;
   private final ConfirmationTokenService confirmationTokenService;
   private final EmailSender emailSender;
@@ -32,7 +34,7 @@ public class AppUserService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    return appUserRepository.findByEmail(email)
+    return userRepository.findByEmail(email)
     .orElseThrow(
       () -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email))
     );
@@ -45,14 +47,14 @@ public class AppUserService implements UserDetailsService {
    * @return The confirmation token generated for the user.
    */
   public String signUpUser(User appUser) {
-    Optional<User> existingUser = appUserRepository.findByEmail(appUser.getEmail());
+    Optional<User> existingUser = userRepository.findByEmail(appUser.getEmail());
 
     if (existingUser.isPresent()) {
       return handleExistingUser(existingUser.get());
     } else {
       String encodedPassword = passwordEncoder.encode(appUser.getPassword());
       appUser.setPassword(encodedPassword);
-      appUserRepository.save(appUser);
+      userRepository.save(appUser);
 
       return createAndSaveToken(appUser);
     }
@@ -86,6 +88,6 @@ public class AppUserService implements UserDetailsService {
   }
 
   public void enableAppUser(String email) {
-    appUserRepository.enableAppUser(email);
+    userRepository.enableAppUser(email);
   }
 }
