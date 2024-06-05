@@ -2,9 +2,9 @@ package com.example.securitysystem.registration;
 
 import com.example.securitysystem.entities.User;
 import com.example.securitysystem.entities.UserRole;
-import com.example.securitysystem.appuser.AppUserService;
+import com.example.securitysystem.services.UserService;
 import com.example.securitysystem.entities.ConfirmationToken;
-import com.example.securitysystem.registration.token.ConfirmationTokenService;
+import com.example.securitysystem.services.impl.ConfirmationTokenServiceImpl;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -17,9 +17,9 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class RegistrationService {
 
-  private final AppUserService appUserService;
+  private final UserService userService;
   private final EmailValidator emailValidator;
-  private final ConfirmationTokenService confirmationTokenService;
+  private final ConfirmationTokenServiceImpl confirmationTokenServiceImpl;
 
   /**
    * Registers a new user based on the registration request.
@@ -35,7 +35,7 @@ public class RegistrationService {
       throw new IllegalStateException("Email is not valid!");
     }
 
-    return appUserService.signUpUser(
+    return userService.signUp(
       new User(
           request.firstName(),
           request.lastName(),
@@ -55,8 +55,8 @@ public class RegistrationService {
    */
   @Transactional
   public String confirmToken(String token) {
-    ConfirmationToken confirmationToken = confirmationTokenService
-        .getToken(token)
+    ConfirmationToken confirmationToken = confirmationTokenServiceImpl
+        .findByToken(token)
         .orElseThrow(() -> new IllegalStateException("Token is not found!"));
 
     if (confirmationToken.getConfirmedAt() != null) {
@@ -69,8 +69,8 @@ public class RegistrationService {
       throw new IllegalStateException("Token is expired!");
     }
 
-    confirmationTokenService.setConfirmedAt(token);
-    appUserService.enableAppUser(confirmationToken.getUser().getEmail());
+    confirmationTokenServiceImpl.confirmToken(token);
+    userService.enableUser(confirmationToken.getUser().getEmail());
 
     return "Confirmed!";
   }

@@ -1,4 +1,4 @@
-package com.example.securitysystem.appuser;
+package com.example.securitysystem.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

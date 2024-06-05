@@ -1,6 +1,6 @@
 package com.example.securitysystem.configurations;
 
-import com.example.securitysystem.appuser.AppUserService;
+import com.example.securitysystem.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @AllArgsConstructor
 public class WebSecurityConfig {
 
-  private final AppUserService appUserService;
+  private final UserService userService;
   private final BCryptPasswordEncoder passwordEncoder;
 
   @Bean
@@ -38,7 +38,7 @@ public class WebSecurityConfig {
   public DaoAuthenticationProvider daoAuthenticationProvider() {
     DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
     provider.setPasswordEncoder(passwordEncoder);
-    provider.setUserDetailsService(appUserService);
+    provider.setUserDetailsService(userService);
     return provider;
   }
 

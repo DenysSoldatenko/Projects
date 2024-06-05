@@ -1,4 +1,4 @@
-package com.example.securitysystem.appuser;
+package com.example.securitysystem.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -10,13 +10,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.example.securitysystem.email.EmailBuilder;
-import com.example.securitysystem.email.EmailSender;
 import com.example.securitysystem.entities.User;
 import com.example.securitysystem.entities.ConfirmationToken;
-import com.example.securitysystem.registration.token.ConfirmationTokenService;
+import com.example.securitysystem.services.impl.ConfirmationTokenServiceImpl;
 import java.util.Optional;
 
 import com.example.securitysystem.repositories.UserRepository;
+import com.example.securitysystem.services.impl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,10 +27,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
- * Unit tests for the AppUserService class.
+ * Unit tests for the UserService class.
  */
 @ExtendWith(SpringExtension.class)
-class AppUserServiceTest {
+class UserServiceTest {
 
   @Mock
   private UserRepository userRepository;
@@ -39,20 +39,20 @@ class AppUserServiceTest {
   private BCryptPasswordEncoder passwordEncoder;
 
   @Mock
-  private ConfirmationTokenService confirmationTokenService;
+  private ConfirmationTokenServiceImpl confirmationTokenServiceImpl;
 
   @Mock
-  private EmailSender emailSender;
+  private EmailService emailService;
 
   @Mock
   private EmailBuilder emailBuilder;
 
-  private AppUserService appUserService;
+  private UserServiceImpl userService;
 
   @BeforeEach
   public void setUp() {
-    appUserService = new AppUserService(userRepository, passwordEncoder,
-      confirmationTokenService, emailSender, emailBuilder);
+    userService = new UserServiceImpl(userRepository, passwordEncoder,
+      confirmationTokenServiceImpl, emailService, emailBuilder);
   }
 
   @Test
@@ -61,7 +61,7 @@ class AppUserServiceTest {
     user.setEmail("test@example.com");
     when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
 
-    UserDetails userDetails = appUserService.loadUserByUsername("test@example.com");
+    UserDetails userDetails = userService.loadUserByUsername("test@example.com");
 
     assertNotNull(userDetails);
     assertEquals("test@example.com", userDetails.getUsername());
@@ -72,11 +72,11 @@ class AppUserServiceTest {
     when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
 
     assertThrows(UsernameNotFoundException.class,
-        () -> appUserService.loadUserByUsername("nonexistent@example.com"));
+        () -> userService.loadUserByUsername("nonexistent@example.com"));
   }
 
   @Test
-  void testSignUpUser_UserAlreadyExists() {
+  void testSignUpUser_AlreadyExists() {
     User existingUser = new User();
     existingUser.setEmail("existing@example.com");
     when(userRepository.findByEmail("existing@example.com"))
@@ -86,7 +86,7 @@ class AppUserServiceTest {
   }
 
   @Test
-  void testSignUpUser_NewUser() {
+  void testSignUpUser_New() {
     User newUser = new User();
     newUser.setEmail("new@example.com");
     newUser.setPassword("password");
@@ -94,16 +94,16 @@ class AppUserServiceTest {
     when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
     when(userRepository.save(newUser)).thenReturn(newUser);
 
-    String token = appUserService.signUpUser(newUser);
+    String token = userService.signUp(newUser);
 
     assertNotNull(token);
     assertEquals("encodedPassword", newUser.getPassword());
-    verify(confirmationTokenService, times(1)).saveConfirmationToken(any(ConfirmationToken.class));
+    verify(confirmationTokenServiceImpl, times(1)).saveToken(any(ConfirmationToken.class));
   }
 
   @Test
-  void testEnableAppUser() {
-    appUserService.enableAppUser("user@example.com");
+  void testEnableUser() {
+    userService.enableUser("user@example.com");
 
     verify(userRepository, times(1)).enableAppUser("user@example.com");
   }

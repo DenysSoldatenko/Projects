@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import com.example.securitysystem.repositories.ConfirmationTokenRepository;
+import com.example.securitysystem.services.impl.ConfirmationTokenServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,35 +19,35 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
- * Unit tests for the ConfirmationTokenService class.
+ * Unit tests for the ConfirmationTokenServiceImpl class.
  */
 @ExtendWith(MockitoExtension.class)
-class ConfirmationTokenServiceTest {
+class ConfirmationTokenServiceImplTest {
 
   @Mock
   private ConfirmationTokenRepository confirmationTokenRepository;
-  private ConfirmationTokenService confirmationTokenService;
+  private ConfirmationTokenServiceImpl confirmationTokenServiceImpl;
 
   @BeforeEach
   public void setUp() {
-    confirmationTokenService = new ConfirmationTokenService(confirmationTokenRepository);
+    confirmationTokenServiceImpl = new ConfirmationTokenServiceImpl(confirmationTokenRepository);
   }
 
   @Test
-  void testSaveConfirmationToken() {
+  void testSaveToken() {
     ConfirmationToken token = new ConfirmationToken(
         "token123",
         LocalDateTime.now(),
         LocalDateTime.now().plusHours(1),
         new User()
     );
-    confirmationTokenService.saveConfirmationToken(token);
+    confirmationTokenServiceImpl.saveToken(token);
 
     Mockito.verify(confirmationTokenRepository).save(token);
   }
 
   @Test
-  void testGetToken() {
+  void testFindByToken() {
     String tokenValue = "token123";
     ConfirmationToken token = new ConfirmationToken(
         tokenValue,
@@ -57,14 +58,14 @@ class ConfirmationTokenServiceTest {
     Mockito.when(confirmationTokenRepository.findByToken(tokenValue))
         .thenReturn(Optional.of(token));
 
-    Optional<ConfirmationToken> retrievedToken = confirmationTokenService.getToken(tokenValue);
+    Optional<ConfirmationToken> retrievedToken = confirmationTokenServiceImpl.findByToken(tokenValue);
 
     assertTrue(retrievedToken.isPresent());
     assertEquals(tokenValue, retrievedToken.get().getToken());
   }
 
   @Test
-  void testFindNonExpiredToken() {
+  void testFindValidToken() {
     User appUser = new User();
     LocalDateTime createdAt = LocalDateTime.now().minusMinutes(30);
     LocalDateTime expiresAt = LocalDateTime.now().plusHours(1);
@@ -74,19 +75,19 @@ class ConfirmationTokenServiceTest {
         .thenReturn(Optional.of(token));
 
     Optional<ConfirmationToken> nonExpiredToken
-        = confirmationTokenService.findNonExpiredToken(appUser);
+        = confirmationTokenServiceImpl.findValidToken(appUser);
 
     assertTrue(nonExpiredToken.isPresent());
     assertEquals("token123", nonExpiredToken.get().getToken());
   }
 
   @Test
-  void testSetConfirmedAt() {
+  void testConfirmToken() {
     String tokenValue = "token123";
     ConfirmationToken token = new ConfirmationToken(tokenValue, LocalDateTime.now(),
         LocalDateTime.now().plusHours(1), new User());
 
-    confirmationTokenService.setConfirmedAt(tokenValue);
+    confirmationTokenServiceImpl.confirmToken(tokenValue);
 
     assertNull(token.getConfirmedAt());
   }

@@ -1,15 +1,16 @@
-package com.example.securitysystem.appuser;
+package com.example.securitysystem.services.impl;
 
 import com.example.securitysystem.email.EmailBuilder;
-import com.example.securitysystem.email.EmailSender;
 import com.example.securitysystem.entities.User;
 import com.example.securitysystem.entities.ConfirmationToken;
-import com.example.securitysystem.registration.token.ConfirmationTokenService;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
 import com.example.securitysystem.repositories.UserRepository;
+import com.example.securitysystem.services.EmailService;
+import com.example.securitysystem.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,27 +18,22 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-/**
- * Service class for managing application users and user-related operations.
- */
 @Service
 @AllArgsConstructor
-public class AppUserService implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService, UserService {
 
   private static final String USER_NOT_FOUND_MSG = "User with email %s not found";
 
   private final UserRepository userRepository;
   private final BCryptPasswordEncoder passwordEncoder;
-  private final ConfirmationTokenService confirmationTokenService;
-  private final EmailSender emailSender;
+  private final ConfirmationTokenServiceImpl confirmationTokenServiceImpl;
+  private final EmailService emailService;
   private final EmailBuilder emailBuilder;
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     return userRepository.findByEmail(email)
-    .orElseThrow(
-      () -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email))
-    );
+      .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
   }
 
   /**
@@ -46,7 +42,8 @@ public class AppUserService implements UserDetailsService {
    * @param appUser The user to be registered.
    * @return The confirmation token generated for the user.
    */
-  public String signUpUser(User appUser) {
+  @Override
+  public String signUp(User appUser) {
     Optional<User> existingUser = userRepository.findByEmail(appUser.getEmail());
 
     if (existingUser.isPresent()) {
@@ -56,38 +53,36 @@ public class AppUserService implements UserDetailsService {
       appUser.setPassword(encodedPassword);
       userRepository.save(appUser);
 
-      return createAndSaveToken(appUser);
+      return saveToken(appUser);
     }
   }
 
   private String handleExistingUser(User existingUser) {
-    Optional<ConfirmationToken> confirmationToken = confirmationTokenService
-        .findNonExpiredToken(existingUser);
+    Optional<ConfirmationToken> confirmationToken = confirmationTokenServiceImpl.findValidToken(existingUser);
 
     if (confirmationToken.isPresent()) {
       throw new IllegalStateException("User is already confirmed!");
     } else {
-      return createAndSaveToken(existingUser);
+      return saveToken(existingUser);
     }
   }
 
-  private String createAndSaveToken(User appUser) {
+  @Override
+  public String saveToken(User user) {
     String token = UUID.randomUUID().toString();
     ConfirmationToken confirmationToken = new ConfirmationToken(
-        token,
-        LocalDateTime.now(),
-        LocalDateTime.now().plusMinutes(15),
-        appUser
+        token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user
     );
 
-    confirmationTokenService.saveConfirmationToken(confirmationToken);
+    confirmationTokenServiceImpl.saveToken(confirmationToken);
 
     String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
-    emailSender.send(appUser.getEmail(), emailBuilder.build(appUser.getFirstName(), link));
+    emailService.sendEmail(user.getEmail(), emailBuilder.build(user.getFirstName(), link));
     return token;
   }
 
-  public void enableAppUser(String email) {
+  @Override
+  public void enableUser(String email) {
     userRepository.enableAppUser(email);
   }
 }

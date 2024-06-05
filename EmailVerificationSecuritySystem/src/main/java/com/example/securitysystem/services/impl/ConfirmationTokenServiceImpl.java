@@ -1,4 +1,4 @@
-package com.example.securitysystem.registration.token;
+package com.example.securitysystem.services.impl;
 
 import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.entities.User;
@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import com.example.securitysystem.repositories.ConfirmationTokenRepository;
+import com.example.securitysystem.services.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,23 +15,27 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class ConfirmationTokenService {
+public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
 
   private final ConfirmationTokenRepository confirmationTokenRepository;
 
-  public void saveConfirmationToken(ConfirmationToken token) {
+  @Override
+  public void saveToken(ConfirmationToken token) {
     confirmationTokenRepository.save(token);
   }
 
-  public Optional<ConfirmationToken> getToken(String token) {
+  @Override
+  public Optional<ConfirmationToken> findByToken(String token) {
     return confirmationTokenRepository.findByToken(token);
   }
 
-  public Optional<ConfirmationToken> findNonExpiredToken(User appUser) {
+  @Override
+  public Optional<ConfirmationToken> findValidToken(User appUser) {
     return confirmationTokenRepository.findFirstByUserAndConfirmedAtIsNotNull(appUser);
   }
 
-  public void setConfirmedAt(String token) {
+  @Override
+  public void confirmToken(String token) {
     confirmationTokenRepository.updateConfirmedAt(token, LocalDateTime.now());
   }
 }

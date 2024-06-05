@@ -11,11 +11,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.example.securitysystem.entities.User;
-import com.example.securitysystem.appuser.AppUserService;
+import com.example.securitysystem.services.impl.ConfirmationTokenServiceImpl;
+import com.example.securitysystem.services.UserService;
 import com.example.securitysystem.entities.ConfirmationToken;
-import com.example.securitysystem.registration.token.ConfirmationTokenService;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -26,13 +28,13 @@ import org.mockito.Mock;
 class RegistrationServiceTest {
 
   @Mock
-  private AppUserService appUserService;
+  private UserService userService;
 
   @Mock
   private EmailValidator emailValidator;
 
   @Mock
-  private ConfirmationTokenService confirmationTokenService;
+  private ConfirmationTokenServiceImpl confirmationTokenServiceImpl;
 
   private RegistrationService registrationService;
 
@@ -41,11 +43,11 @@ class RegistrationServiceTest {
    */
   @BeforeEach
   public void setUp() {
-    appUserService = mock(AppUserService.class);
+    userService = mock(UserService.class);
     emailValidator = mock(EmailValidator.class);
-    confirmationTokenService = mock(ConfirmationTokenService.class);
+    confirmationTokenServiceImpl = mock(ConfirmationTokenServiceImpl.class);
     registrationService
-        = new RegistrationService(appUserService, emailValidator, confirmationTokenService);
+        = new RegistrationService(userService, emailValidator, confirmationTokenServiceImpl);
   }
 
   @Test
@@ -53,12 +55,12 @@ class RegistrationServiceTest {
     RegistrationRequest request
         = new RegistrationRequest("John", "Doe", "john@example.com", "password123");
     when(emailValidator.test("john@example.com")).thenReturn(true);
-    when(appUserService.signUpUser(any(User.class))).thenReturn("Registration successful");
+    when(userService.signUp(any(User.class))).thenReturn("Registration successful");
 
     String result = registrationService.register(request);
 
     assertEquals("Registration successful", result);
-    verify(appUserService, times(1)).signUpUser(any(User.class));
+    verify(userService, times(1)).signUp(any(User.class));
   }
 
   @Test
@@ -68,17 +70,17 @@ class RegistrationServiceTest {
     when(emailValidator.test("invalid-email")).thenReturn(false);
 
     assertThrows(IllegalStateException.class, () -> registrationService.register(request));
-    verify(appUserService, never()).signUpUser(any(User.class));
+    verify(userService, never()).signUp(any(User.class));
   }
 
   @Test
   void testConfirmTokenNotFound() {
     String token = "non-existent-token";
-    when(confirmationTokenService.getToken(token)).thenReturn(Optional.empty());
+    when(confirmationTokenServiceImpl.findByToken(token)).thenReturn(Optional.empty());
 
     assertThrows(IllegalStateException.class, () -> registrationService.confirmToken(token));
-    verify(confirmationTokenService, never()).setConfirmedAt(token);
-    verify(appUserService, never()).enableAppUser(anyString());
+    verify(confirmationTokenServiceImpl, never()).confirmToken(token);
+    verify(userService, never()).enableUser(anyString());
   }
 
   @Test
@@ -92,11 +94,11 @@ class RegistrationServiceTest {
     );
     confirmationToken.setConfirmedAt(LocalDateTime.now());
 
-    when(confirmationTokenService.getToken(token)).thenReturn(Optional.of(confirmationToken));
+    when(confirmationTokenServiceImpl.findByToken(token)).thenReturn(Optional.of(confirmationToken));
 
     assertThrows(IllegalStateException.class, () -> registrationService.confirmToken(token));
-    verify(confirmationTokenService, never()).setConfirmedAt(token);
-    verify(appUserService, never()).enableAppUser(anyString());
+    verify(confirmationTokenServiceImpl, never()).confirmToken(token);
+    verify(userService, never()).enableUser(anyString());
   }
 
   @Test
@@ -109,10 +111,10 @@ class RegistrationServiceTest {
         new User()
     );
 
-    when(confirmationTokenService.getToken(token)).thenReturn(Optional.of(confirmationToken));
+    when(confirmationTokenServiceImpl.findByToken(token)).thenReturn(Optional.of(confirmationToken));
 
     assertThrows(IllegalStateException.class, () -> registrationService.confirmToken(token));
-    verify(confirmationTokenService, never()).setConfirmedAt(token);
-    verify(appUserService, never()).enableAppUser(anyString());
+    verify(confirmationTokenServiceImpl, never()).confirmToken(token);
+    verify(userService, never()).enableUser(anyString());
   }
 }
