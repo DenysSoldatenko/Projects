@@ -1,4 +1,4 @@
-package com.example.securitysystem.email;
+package com.example.securitysystem.utils;
 
 import org.springframework.stereotype.Component;
 

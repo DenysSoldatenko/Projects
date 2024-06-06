@@ -1,4 +1,4 @@
-package com.example.securitysystem.email;
+package com.example.securitysystem.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

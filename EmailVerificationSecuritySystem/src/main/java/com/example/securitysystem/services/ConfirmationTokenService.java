@@ -6,6 +6,7 @@ import com.example.securitysystem.entities.User;
 import java.util.Optional;
 
 public interface ConfirmationTokenService {
+
   void saveToken(ConfirmationToken token);
 
   Optional<ConfirmationToken> findByToken(String token);

@@ -1,4 +1,4 @@
-package com.example.securitysystem.registration;
+package com.example.securitysystem.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -10,14 +10,16 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.example.securitysystem.dtos.RegistrationRequest;
 import com.example.securitysystem.entities.User;
 import com.example.securitysystem.services.impl.ConfirmationTokenServiceImpl;
-import com.example.securitysystem.services.UserService;
 import com.example.securitysystem.entities.ConfirmationToken;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import com.example.securitysystem.services.impl.RegistrationServiceImpl;
+import com.example.securitysystem.utils.EmailValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -25,7 +27,7 @@ import org.mockito.Mock;
 /**
  * Unit tests for the RegistrationService class.
  */
-class RegistrationServiceTest {
+class RegistrationServiceImplTest {
 
   @Mock
   private UserService userService;
@@ -36,7 +38,7 @@ class RegistrationServiceTest {
   @Mock
   private ConfirmationTokenServiceImpl confirmationTokenServiceImpl;
 
-  private RegistrationService registrationService;
+  private RegistrationServiceImpl registrationService;
 
   /**
    * Set up the necessary components for testing the RegistrationService.
@@ -47,7 +49,7 @@ class RegistrationServiceTest {
     emailValidator = mock(EmailValidator.class);
     confirmationTokenServiceImpl = mock(ConfirmationTokenServiceImpl.class);
     registrationService
-        = new RegistrationService(userService, emailValidator, confirmationTokenServiceImpl);
+        = new RegistrationServiceImpl(userService, emailValidator, confirmationTokenServiceImpl);
   }
 
   @Test

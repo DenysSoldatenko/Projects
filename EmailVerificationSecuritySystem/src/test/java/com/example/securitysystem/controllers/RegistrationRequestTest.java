@@ -1,7 +1,8 @@
-package com.example.securitysystem.registration;
+package com.example.securitysystem.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.example.securitysystem.dtos.RegistrationRequest;
 import org.junit.jupiter.api.Test;
 
 /**

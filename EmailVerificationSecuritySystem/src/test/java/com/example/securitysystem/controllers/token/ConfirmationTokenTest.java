@@ -1,4 +1,4 @@
-package com.example.securitysystem.registration.token;
+package com.example.securitysystem.controllers.token;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;

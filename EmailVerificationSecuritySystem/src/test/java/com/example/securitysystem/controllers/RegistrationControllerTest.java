@@ -1,4 +1,4 @@
-package com.example.securitysystem.registration;
+package com.example.securitysystem.controllers;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -6,6 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.securitysystem.dtos.RegistrationRequest;
+import com.example.securitysystem.services.impl.RegistrationServiceImpl;
+import com.example.securitysystem.services.impl.RegistrationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 class RegistrationControllerTest {
 
   @Mock
-  private RegistrationService registrationService;
+  private RegistrationServiceImpl registrationService;
 
   private MockMvc mockMvc;
 

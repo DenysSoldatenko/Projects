@@ -1,6 +1,6 @@
 package com.example.securitysystem.configurations;
 
-import com.example.securitysystem.services.UserService;
+import com.example.securitysystem.services.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @AllArgsConstructor
 public class WebSecurityConfig {
 
-  private final UserService userService;
+  private final UserServiceImpl userService;
   private final BCryptPasswordEncoder passwordEncoder;
 
   @Bean

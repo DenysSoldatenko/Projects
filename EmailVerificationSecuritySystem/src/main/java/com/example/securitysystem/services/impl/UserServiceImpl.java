@@ -1,6 +1,7 @@
 package com.example.securitysystem.services.impl;
 
-import com.example.securitysystem.email.EmailBuilder;
+import com.example.securitysystem.services.ConfirmationTokenService;
+import com.example.securitysystem.utils.EmailBuilder;
 import com.example.securitysystem.entities.User;
 import com.example.securitysystem.entities.ConfirmationToken;
 
@@ -18,17 +19,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static java.time.LocalDateTime.now;
+
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserDetailsService, UserService {
 
   private static final String USER_NOT_FOUND_MSG = "User with email %s not found";
 
-  private final UserRepository userRepository;
-  private final BCryptPasswordEncoder passwordEncoder;
-  private final ConfirmationTokenServiceImpl confirmationTokenServiceImpl;
   private final EmailService emailService;
   private final EmailBuilder emailBuilder;
+  private final UserRepository userRepository;
+  private final BCryptPasswordEncoder passwordEncoder;
+  private final ConfirmationTokenService confirmationTokenService;
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -52,29 +55,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
       String encodedPassword = passwordEncoder.encode(appUser.getPassword());
       appUser.setPassword(encodedPassword);
       userRepository.save(appUser);
-
       return saveToken(appUser);
-    }
-  }
-
-  private String handleExistingUser(User existingUser) {
-    Optional<ConfirmationToken> confirmationToken = confirmationTokenServiceImpl.findValidToken(existingUser);
-
-    if (confirmationToken.isPresent()) {
-      throw new IllegalStateException("User is already confirmed!");
-    } else {
-      return saveToken(existingUser);
     }
   }
 
   @Override
   public String saveToken(User user) {
     String token = UUID.randomUUID().toString();
-    ConfirmationToken confirmationToken = new ConfirmationToken(
-        token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user
-    );
-
-    confirmationTokenServiceImpl.saveToken(confirmationToken);
+    ConfirmationToken confirmationToken = new ConfirmationToken(token, now(), now().plusMinutes(15), user);
+    confirmationTokenService.saveToken(confirmationToken);
 
     String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
     emailService.sendEmail(user.getEmail(), emailBuilder.build(user.getFirstName(), link));
@@ -84,5 +73,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
   @Override
   public void enableUser(String email) {
     userRepository.enableAppUser(email);
+  }
+
+  private String handleExistingUser(User existingUser) {
+    Optional<ConfirmationToken> confirmationToken = confirmationTokenService.findValidToken(existingUser);
+
+    if (confirmationToken.isPresent()) {
+      throw new IllegalStateException("User is already confirmed!");
+    } else {
+      return saveToken(existingUser);
+    }
   }
 }

@@ -9,7 +9,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.example.securitysystem.email.EmailBuilder;
+import com.example.securitysystem.utils.EmailBuilder;
 import com.example.securitysystem.entities.User;
 import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.services.impl.ConfirmationTokenServiceImpl;
@@ -30,7 +30,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  * Unit tests for the UserService class.
  */
 @ExtendWith(SpringExtension.class)
-class UserServiceTest {
+class UserServiceImplTest {
 
   @Mock
   private UserRepository userRepository;
@@ -51,8 +51,11 @@ class UserServiceTest {
 
   @BeforeEach
   public void setUp() {
-    userService = new UserServiceImpl(userRepository, passwordEncoder,
-      confirmationTokenServiceImpl, emailService, emailBuilder);
+    userService = new UserServiceImpl(
+      emailService, emailBuilder,
+      userRepository, passwordEncoder,
+      confirmationTokenServiceImpl
+    );
   }
 
   @Test

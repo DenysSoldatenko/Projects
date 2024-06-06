@@ -1,25 +1,31 @@
-package com.example.securitysystem.registration;
+package com.example.securitysystem.services.impl;
 
+import com.example.securitysystem.dtos.RegistrationRequest;
 import com.example.securitysystem.entities.User;
 import com.example.securitysystem.entities.UserRole;
+import com.example.securitysystem.services.ConfirmationTokenService;
+import com.example.securitysystem.services.RegistrationService;
 import com.example.securitysystem.services.UserService;
 import com.example.securitysystem.entities.ConfirmationToken;
-import com.example.securitysystem.services.impl.ConfirmationTokenServiceImpl;
+import com.example.securitysystem.utils.EmailValidator;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static com.example.securitysystem.entities.UserRole.USER;
+import static java.time.LocalDateTime.now;
 
 /**
  * Service class for handling user registration and confirmation.
  */
 @Service
 @AllArgsConstructor
-public class RegistrationService {
+public class RegistrationServiceImpl implements RegistrationService {
 
   private final UserService userService;
   private final EmailValidator emailValidator;
-  private final ConfirmationTokenServiceImpl confirmationTokenServiceImpl;
+  private final ConfirmationTokenService confirmationTokenService;
 
   /**
    * Registers a new user based on the registration request.
@@ -28,6 +34,7 @@ public class RegistrationService {
    * @return A confirmation message.
    * @throws IllegalStateException if the email is not valid.
    */
+  @Override
   public String register(RegistrationRequest request) {
     boolean isValidEmail = emailValidator.test(request.email());
 
@@ -41,7 +48,7 @@ public class RegistrationService {
           request.lastName(),
           request.email(),
           request.password(),
-          UserRole.USER
+          USER
       )
     );
   }
@@ -53,10 +60,10 @@ public class RegistrationService {
    * @return A confirmation message.
    * @throws IllegalStateException if the token is not found, already confirmed, or expired.
    */
+  @Override
   @Transactional
   public String confirmToken(String token) {
-    ConfirmationToken confirmationToken = confirmationTokenServiceImpl
-        .findByToken(token)
+    ConfirmationToken confirmationToken = confirmationTokenService.findByToken(token)
         .orElseThrow(() -> new IllegalStateException("Token is not found!"));
 
     if (confirmationToken.getConfirmedAt() != null) {
@@ -65,11 +72,11 @@ public class RegistrationService {
 
     LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
-    if (expiredAt.isBefore(LocalDateTime.now())) {
+    if (expiredAt.isBefore(now())) {
       throw new IllegalStateException("Token is expired!");
     }
 
-    confirmationTokenServiceImpl.confirmToken(token);
+    confirmationTokenService.confirmToken(token);
     userService.enableUser(confirmationToken.getUser().getEmail());
 
     return "Confirmed!";
