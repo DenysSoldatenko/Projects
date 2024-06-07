@@ -42,20 +42,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
   /**
    * Registers a new user.
    *
-   * @param appUser The user to be registered.
+   * @param user The user to be registered.
    * @return The confirmation token generated for the user.
    */
   @Override
-  public String signUp(User appUser) {
-    Optional<User> existingUser = userRepository.findByEmail(appUser.getEmail());
+  public String signUp(User user) {
+    Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
 
     if (existingUser.isPresent()) {
       return handleExistingUser(existingUser.get());
     } else {
-      String encodedPassword = passwordEncoder.encode(appUser.getPassword());
-      appUser.setPassword(encodedPassword);
-      userRepository.save(appUser);
-      return saveToken(appUser);
+      String encodedPassword = passwordEncoder.encode(user.getPassword());
+      user.setPassword(encodedPassword);
+      userRepository.save(user);
+      return saveToken(user);
     }
   }
 

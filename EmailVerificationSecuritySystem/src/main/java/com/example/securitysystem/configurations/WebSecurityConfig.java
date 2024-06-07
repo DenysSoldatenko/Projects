@@ -24,6 +24,16 @@ public class WebSecurityConfig {
   private final UserServiceImpl userService;
   private final BCryptPasswordEncoder passwordEncoder;
 
+  private static final String[] PUBLIC_ROUTES = {
+    "/api/v*/registration/**",
+    "/v3/api-docs/**",
+    "/swagger-ui/**",
+    "/swagger-resources/**",
+    "/swagger-ui.html",
+    "/webjars/**",
+    "/graphiql"
+  };
+
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
     return configuration.getAuthenticationManager();
@@ -53,10 +63,10 @@ public class WebSecurityConfig {
   public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
     http
         .csrf(AbstractHttpConfigurer::disable)
-        .authorizeRequests(
+        .authorizeHttpRequests(
           authorizeRequests ->
             authorizeRequests
-              .requestMatchers("/api/v*/registration/**").permitAll()
+              .requestMatchers(PUBLIC_ROUTES).permitAll()
               .anyRequest().authenticated()
         )
         .formLogin(

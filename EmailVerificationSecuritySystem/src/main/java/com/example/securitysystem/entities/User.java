@@ -2,11 +2,8 @@ package com.example.securitysystem.entities;
 
 import static jakarta.persistence.EnumType.STRING;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 import java.util.Collection;
 import java.util.Collections;
 import lombok.Data;
@@ -21,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Data
 @Entity
 @NoArgsConstructor
+@Table(name = "users")
 public class User implements UserDetails {
 
   @Id

@@ -2,7 +2,6 @@ package com.example.securitysystem.services.impl;
 
 import com.example.securitysystem.dtos.RegistrationRequest;
 import com.example.securitysystem.entities.User;
-import com.example.securitysystem.entities.UserRole;
 import com.example.securitysystem.services.ConfirmationTokenService;
 import com.example.securitysystem.services.RegistrationService;
 import com.example.securitysystem.services.UserService;
@@ -43,13 +42,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     return userService.signUp(
-      new User(
-          request.firstName(),
-          request.lastName(),
-          request.email(),
-          request.password(),
-          USER
-      )
+      new User(request.firstName(), request.lastName(), request.email(), request.password(), USER)
     );
   }
 
