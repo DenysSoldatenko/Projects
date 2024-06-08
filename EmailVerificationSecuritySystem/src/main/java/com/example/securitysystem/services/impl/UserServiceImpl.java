@@ -1,17 +1,16 @@
 package com.example.securitysystem.services.impl;
 
-import com.example.securitysystem.services.ConfirmationTokenService;
-import com.example.securitysystem.utils.EmailBuilder;
-import com.example.securitysystem.entities.User;
+import static java.time.LocalDateTime.now;
+
 import com.example.securitysystem.entities.ConfirmationToken;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.UUID;
-
+import com.example.securitysystem.entities.User;
 import com.example.securitysystem.repositories.UserRepository;
+import com.example.securitysystem.services.ConfirmationTokenService;
 import com.example.securitysystem.services.EmailService;
 import com.example.securitysystem.services.UserService;
+import com.example.securitysystem.utils.EmailBuilder;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,8 +18,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static java.time.LocalDateTime.now;
-
+/**
+ * Implementation of the {@link UserService} and {@link UserDetailsService} interfaces.
+ *
+ * <p>This service handles user registration, token generation, and user enablement. It also
+ * provides user authentication details for Spring Security.</p>
+ */
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserDetailsService, UserService {

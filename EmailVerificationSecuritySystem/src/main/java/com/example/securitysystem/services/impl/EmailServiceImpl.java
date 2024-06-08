@@ -9,6 +9,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of the {@link EmailService} interface.
+ *
+ * <p>This service handles the sending of emails using the {@link JavaMailSender}.</p>
+ */
 @Service
 @AllArgsConstructor
 public class EmailServiceImpl implements EmailService {

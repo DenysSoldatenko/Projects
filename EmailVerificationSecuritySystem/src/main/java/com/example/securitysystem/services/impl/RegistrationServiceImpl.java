@@ -1,22 +1,25 @@
 package com.example.securitysystem.services.impl;
 
+import static com.example.securitysystem.entities.UserRole.USER;
+import static java.time.LocalDateTime.now;
+
 import com.example.securitysystem.dtos.RegistrationRequest;
+import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.entities.User;
 import com.example.securitysystem.services.ConfirmationTokenService;
 import com.example.securitysystem.services.RegistrationService;
 import com.example.securitysystem.services.UserService;
-import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.utils.EmailValidator;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.example.securitysystem.entities.UserRole.USER;
-import static java.time.LocalDateTime.now;
-
 /**
  * Service class for handling user registration and confirmation.
+ *
+ * <p>This service handles the registration of new users and the confirmation
+ * of their email addresses using tokens.</p>
  */
 @Service
 @AllArgsConstructor

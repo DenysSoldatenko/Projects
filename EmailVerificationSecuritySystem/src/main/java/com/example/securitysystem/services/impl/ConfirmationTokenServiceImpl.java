@@ -2,16 +2,18 @@ package com.example.securitysystem.services.impl;
 
 import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.entities.User;
-import java.time.LocalDateTime;
-import java.util.Optional;
-
 import com.example.securitysystem.repositories.ConfirmationTokenRepository;
 import com.example.securitysystem.services.ConfirmationTokenService;
+import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
- * Service class for managing confirmation tokens and token-related operations.
+ * Implementation of the {@link ConfirmationTokenService} interface.
+ *
+ * <p>This service manages operations related to {@link ConfirmationToken} entities, such as
+ * saving tokens, retrieving them by their value, finding valid tokens, and confirming tokens.</p>
  */
 @Service
 @AllArgsConstructor

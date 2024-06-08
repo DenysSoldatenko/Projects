@@ -1,7 +1,6 @@
 package com.example.securitysystem.utils;
 
 import java.util.function.Predicate;
-
 import org.springframework.stereotype.Component;
 
 /**
