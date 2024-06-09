@@ -30,8 +30,7 @@ public class WebSecurityConfig {
     "/swagger-ui/**",
     "/swagger-resources/**",
     "/swagger-ui.html",
-    "/webjars/**",
-    "/graphiql"
+    "/webjars/**"
   };
 
   @Bean
