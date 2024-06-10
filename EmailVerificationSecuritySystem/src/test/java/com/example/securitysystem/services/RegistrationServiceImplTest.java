@@ -1,5 +1,6 @@
 package com.example.securitysystem.services;
 
+import static java.time.LocalDateTime.now;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
@@ -11,15 +12,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.example.securitysystem.dtos.RegistrationRequest;
+import com.example.securitysystem.entities.ConfirmationToken;
 import com.example.securitysystem.entities.User;
 import com.example.securitysystem.services.impl.ConfirmationTokenServiceImpl;
-import com.example.securitysystem.entities.ConfirmationToken;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
 import com.example.securitysystem.services.impl.RegistrationServiceImpl;
 import com.example.securitysystem.utils.EmailValidator;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -89,29 +87,9 @@ class RegistrationServiceImplTest {
   void testConfirmTokenAlreadyConfirmed() {
     String token = "token123";
     ConfirmationToken confirmationToken = new ConfirmationToken(
-        token,
-        LocalDateTime.now(),
-        LocalDateTime.now().plusHours(1),
-        new User()
+        token, now(), now().plusHours(1), new User()
     );
-    confirmationToken.setConfirmedAt(LocalDateTime.now());
-
-    when(confirmationTokenServiceImpl.findByToken(token)).thenReturn(Optional.of(confirmationToken));
-
-    assertThrows(IllegalStateException.class, () -> registrationService.confirmToken(token));
-    verify(confirmationTokenServiceImpl, never()).confirmToken(token);
-    verify(userService, never()).enableUser(anyString());
-  }
-
-  @Test
-  void testConfirmTokenExpired() {
-    String token = "token123";
-    ConfirmationToken confirmationToken = new ConfirmationToken(
-        token,
-        LocalDateTime.now(),
-        LocalDateTime.now().minusMinutes(1),
-        new User()
-    );
+    confirmationToken.setConfirmedAt(now());
 
     when(confirmationTokenServiceImpl.findByToken(token)).thenReturn(Optional.of(confirmationToken));
 

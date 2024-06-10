@@ -9,14 +9,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.example.securitysystem.utils.EmailBuilder;
-import com.example.securitysystem.entities.User;
 import com.example.securitysystem.entities.ConfirmationToken;
-import com.example.securitysystem.services.impl.ConfirmationTokenServiceImpl;
-import java.util.Optional;
-
+import com.example.securitysystem.entities.User;
 import com.example.securitysystem.repositories.UserRepository;
+import com.example.securitysystem.services.impl.ConfirmationTokenServiceImpl;
 import com.example.securitysystem.services.impl.UserServiceImpl;
+import com.example.securitysystem.utils.EmailBuilder;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -82,9 +81,7 @@ class UserServiceImplTest {
   void testSignUpUser_AlreadyExists() {
     User existingUser = new User();
     existingUser.setEmail("existing@example.com");
-    when(userRepository.findByEmail("existing@example.com"))
-        .thenReturn(Optional.of(existingUser));
-
+    when(userRepository.findByEmail("existing@example.com")).thenReturn(Optional.of(existingUser));
     verify(userRepository, never()).save(any());
   }
 
@@ -107,7 +104,6 @@ class UserServiceImplTest {
   @Test
   void testEnableUser() {
     userService.enableUser("user@example.com");
-
     verify(userRepository, times(1)).enableAppUser("user@example.com");
   }
 }
