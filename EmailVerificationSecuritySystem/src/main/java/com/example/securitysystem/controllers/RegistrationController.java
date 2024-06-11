@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @AllArgsConstructor
+@Tag(
+    name = "Registration Controller",
+    description = "Operations related to user registration and account verification"
+)
 @RequestMapping(path = "api/v1/registration")
 public class RegistrationController {
 

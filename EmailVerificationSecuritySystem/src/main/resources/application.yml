@@ -14,7 +14,7 @@ spring:
     show-sql: true
 
   mail:
-    host: localhost
+    host: ${MAIL_HOST:localhost}
     port: 1025
     username: hello
     password: hello
