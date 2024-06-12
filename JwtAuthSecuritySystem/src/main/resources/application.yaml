@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/paste_box
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:5432/${DATABASE_NAME:example_database}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
