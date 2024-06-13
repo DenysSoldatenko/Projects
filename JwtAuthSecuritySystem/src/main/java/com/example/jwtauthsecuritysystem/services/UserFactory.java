@@ -1,7 +1,8 @@
 package com.example.jwtauthsecuritysystem.services;
 
+import static com.example.jwtauthsecuritysystem.models.Role.USER;
+
 import com.example.jwtauthsecuritysystem.dtos.RegisterRequest;
-import com.example.jwtauthsecuritysystem.models.Role;
 import com.example.jwtauthsecuritysystem.models.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,7 +29,7 @@ public class UserFactory {
     .lastname(request.lastname())
     .email(request.email())
     .password(passwordEncoder.encode(request.password()))
-    .role(Role.USER)
+    .role(USER)
     .build();
   }
 }

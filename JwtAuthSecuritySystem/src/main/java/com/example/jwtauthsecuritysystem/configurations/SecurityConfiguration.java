@@ -21,6 +21,15 @@ public class SecurityConfiguration {
 
   private final JwtAuthenticationFilter jwtAuthFilter;
 
+  private static final String[] PUBLIC_ROUTES = {
+    "/api/v1/auth/**",
+    "/v3/api-docs/**",
+    "/swagger-ui/**",
+    "/swagger-resources/**",
+    "/swagger-ui.html",
+    "/webjars/**"
+  };
+
   /**
    * Configures the security filter chain.
    *
@@ -35,7 +44,7 @@ public class SecurityConfiguration {
     .authorizeHttpRequests(
       authorizeRequests ->
         authorizeRequests
-        .requestMatchers("/api/v1/auth/**").permitAll()
+        .requestMatchers(PUBLIC_ROUTES).permitAll()
         .anyRequest().authenticated()
     )
     .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

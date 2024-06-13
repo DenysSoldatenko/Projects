@@ -21,10 +21,10 @@ import org.springframework.security.core.userdetails.UserDetails;
  * Entity representing a user in the system.
  */
 @Data
+@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "users")
 public class User implements UserDetails {
 
