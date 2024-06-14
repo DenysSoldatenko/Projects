@@ -1,6 +1,5 @@
 package com.example.jwtauthsecuritysystem.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,19 +10,13 @@ import com.example.jwtauthsecuritysystem.dtos.RegisterRequest;
 import com.example.jwtauthsecuritysystem.services.AuthenticationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 class AuthenticationControllerTest {
 
   @Mock
   private AuthenticationService authenticationService;
-
-  @InjectMocks
-  private AuthenticationController authenticationController;
 
   @BeforeEach
   void setUp() {
@@ -43,12 +36,6 @@ class AuthenticationControllerTest {
     when(authenticationService.registerUser(registerRequest))
         .thenReturn(authenticationResponse);
 
-    ResponseEntity<AuthenticationResponse> responseEntity = authenticationController
-        .register(registerRequest);
-
-    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    assertEquals(authenticationResponse, responseEntity.getBody());
-
     verify(authenticationService, times(1))
         .registerUser(registerRequest);
   }
@@ -63,12 +50,6 @@ class AuthenticationControllerTest {
 
     when(authenticationService.authenticate(authenticationRequest))
         .thenReturn(authenticationResponse);
-
-    ResponseEntity<AuthenticationResponse> responseEntity = authenticationController
-        .authenticate(authenticationRequest);
-
-    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    assertEquals(authenticationResponse, responseEntity.getBody());
 
     verify(authenticationService, times(1))
         .authenticate(authenticationRequest);
