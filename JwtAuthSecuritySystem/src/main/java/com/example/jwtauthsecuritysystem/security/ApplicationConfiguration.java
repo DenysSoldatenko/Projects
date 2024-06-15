@@ -1,4 +1,4 @@
-package com.example.jwtauthsecuritysystem.configurations;
+package com.example.jwtauthsecuritysystem.security;
 
 import com.example.jwtauthsecuritysystem.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

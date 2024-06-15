@@ -10,12 +10,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.example.jwtauthsecuritysystem.configurations.jwt.JwtService;
+import com.example.jwtauthsecuritysystem.security.JwtService;
 import com.example.jwtauthsecuritysystem.dtos.AuthenticationRequest;
 import com.example.jwtauthsecuritysystem.dtos.AuthenticationResponse;
 import com.example.jwtauthsecuritysystem.dtos.RegisterRequest;
 import com.example.jwtauthsecuritysystem.models.User;
 import com.example.jwtauthsecuritysystem.repositories.UserRepository;
+import com.example.jwtauthsecuritysystem.utils.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

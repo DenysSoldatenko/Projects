@@ -1,4 +1,4 @@
-package com.example.jwtauthsecuritysystem.services;
+package com.example.jwtauthsecuritysystem.utils;
 
 import static com.example.jwtauthsecuritysystem.models.Role.USER;
 

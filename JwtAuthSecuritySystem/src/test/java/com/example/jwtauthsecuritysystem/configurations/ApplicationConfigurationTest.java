@@ -3,6 +3,7 @@ package com.example.jwtauthsecuritysystem.configurations;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.example.jwtauthsecuritysystem.repositories.UserRepository;
+import com.example.jwtauthsecuritysystem.security.ApplicationConfiguration;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.security.authentication.AuthenticationProvider;

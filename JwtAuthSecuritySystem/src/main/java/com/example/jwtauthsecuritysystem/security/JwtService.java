@@ -1,9 +1,11 @@
-package com.example.jwtauthsecuritysystem.configurations.jwt;
+package com.example.jwtauthsecuritysystem.security;
+
+import static io.jsonwebtoken.io.Decoders.BASE64;
+import static io.jsonwebtoken.security.Keys.hmacShaKeyFor;
+import static java.lang.System.currentTimeMillis;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,8 +43,8 @@ public class JwtService {
     return Jwts.builder()
     .claims(extraClaims)
     .subject(userDetails.getUsername())
-    .issuedAt(new Date(System.currentTimeMillis()))
-    .expiration(new Date(System.currentTimeMillis() + tokenExpirationDurationMs))
+    .issuedAt(new Date(currentTimeMillis()))
+    .expiration(new Date(currentTimeMillis() + tokenExpirationDurationMs))
     .signWith(getSignInKey())
     .compact();
   }
@@ -78,7 +80,7 @@ public class JwtService {
   }
 
   private SecretKey getSignInKey() {
-    byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-    return Keys.hmacShaKeyFor(keyBytes);
+    byte[] keyBytes = BASE64.decode(secretKey);
+    return hmacShaKeyFor(keyBytes);
   }
 }
