@@ -10,12 +10,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.example.jwtauthsecuritysystem.security.JwtService;
 import com.example.jwtauthsecuritysystem.dtos.AuthenticationRequest;
 import com.example.jwtauthsecuritysystem.dtos.AuthenticationResponse;
 import com.example.jwtauthsecuritysystem.dtos.RegisterRequest;
 import com.example.jwtauthsecuritysystem.models.User;
 import com.example.jwtauthsecuritysystem.repositories.UserRepository;
+import com.example.jwtauthsecuritysystem.security.JwtService;
+import com.example.jwtauthsecuritysystem.services.impl.AuthenticationServiceImpl;
 import com.example.jwtauthsecuritysystem.utils.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-class AuthenticationServiceTest {
+class AuthenticationServiceImplTest {
 
   @Mock
   private AuthenticationManager authenticationManager;
@@ -40,7 +41,7 @@ class AuthenticationServiceTest {
   private UserFactory userFactory;
 
   @InjectMocks
-  private AuthenticationService authenticationService;
+  private AuthenticationServiceImpl authenticationService;
 
   @BeforeEach
   void setUp() {
@@ -49,8 +50,7 @@ class AuthenticationServiceTest {
 
   @Test
   void testRegisterUser() {
-    RegisterRequest registerRequest
-        = new RegisterRequest("John", "Doe", "john@example.com", "password");
+    RegisterRequest registerRequest = new RegisterRequest("John", "Doe", "john@example.com", "password");
     User mockedUser = mock(User.class);
     when(userFactory.createUserFromRequest(registerRequest)).thenReturn(mockedUser);
 
@@ -63,8 +63,7 @@ class AuthenticationServiceTest {
 
   @Test
   void testAuthenticateUser_Success() {
-    AuthenticationRequest authenticationRequest
-        = new AuthenticationRequest("john@example.com", "password");
+    AuthenticationRequest authenticationRequest = new AuthenticationRequest("john@example.com", "password");
     User mockedUser = mock(User.class);
     when(userRepository.findByEmail(authenticationRequest.email()))
         .thenReturn(java.util.Optional.of(mockedUser));
@@ -80,15 +79,12 @@ class AuthenticationServiceTest {
 
   @Test
   void testAuthenticateUser_UserNotFound() {
-    AuthenticationRequest authenticationRequest
-        = new AuthenticationRequest("nonexistent@example.com", "password");
+    AuthenticationRequest authenticationRequest = new AuthenticationRequest("nonexistent@example.com", "password");
     when(userRepository.findByEmail(authenticationRequest.email()))
         .thenReturn(java.util.Optional.empty());
 
-    assertThrows(UsernameNotFoundException.class,
-        () -> authenticationService.authenticate(authenticationRequest));
-    verify(authenticationManager,
-        times(1)).authenticate(any());
+    assertThrows(UsernameNotFoundException.class, () -> authenticationService.authenticate(authenticationRequest));
+    verify(authenticationManager, times(1)).authenticate(any());
     verify(jwtService, never()).generateToken(any());
   }
 }

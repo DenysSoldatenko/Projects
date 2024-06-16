@@ -1,12 +1,10 @@
-package com.example.jwtauthsecuritysystem.configurations.jwt;
+package com.example.jwtauthsecuritysystem.security;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import com.example.jwtauthsecuritysystem.security.JwtService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
