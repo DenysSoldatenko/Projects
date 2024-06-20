@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/api/v1/auth/")
+@RequestMapping(value = "/api/v1/auth")
 public class AuthenticationController {
 
   private final AuthenticationManager authenticationManager;
@@ -34,7 +34,7 @@ public class AuthenticationController {
    * @param requestDto The authentication request containing username and password.
    * @return A ResponseEntity containing the username and authentication token.
    */
-  @PostMapping("login")
+  @PostMapping("/login")
   public ResponseEntity<Map<Object, Object>> login(
       @RequestBody AuthenticationRequestDto requestDto
   ) {
@@ -42,12 +42,8 @@ public class AuthenticationController {
     authenticationManager.authenticate(
       new UsernamePasswordAuthenticationToken(username, requestDto.password())
     );
-    User user = userService.findByUsername(username);
 
-    if (user == null) {
-      throw new UsernameNotFoundException("User with username: " + username + " not found");
-    }
-
+    User user = userService.getByUsername(username);
     String token = jwtTokenProvider.createToken(username, user.getRoles());
 
     Map<Object, Object> response = new HashMap<>();

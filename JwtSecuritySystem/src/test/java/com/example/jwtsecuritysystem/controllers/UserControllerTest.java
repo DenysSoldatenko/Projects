@@ -37,7 +37,7 @@ class UserControllerTest {
     Long userId = 1L;
     when(userService.findById(userId)).thenReturn(null);
 
-    ResponseEntity<UserDto> response = userController.getUserById(userId);
+    UserDto response = userController.getUserById(userId);
 
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     assertNull(response.getBody());

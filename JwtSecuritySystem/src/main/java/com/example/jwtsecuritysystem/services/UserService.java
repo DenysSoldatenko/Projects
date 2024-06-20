@@ -1,5 +1,7 @@
 package com.example.jwtsecuritysystem.services;
 
+import com.example.jwtsecuritysystem.dto.AdminDto;
+import com.example.jwtsecuritysystem.dto.UserDto;
 import com.example.jwtsecuritysystem.models.User;
 import java.util.List;
 
@@ -8,13 +10,15 @@ import java.util.List;
  */
 public interface UserService {
 
-  User register(User user);
+  UserDto createUser(User user);
 
-  List<User> getAll();
+  User getByUsername(String username);
 
-  User findByUsername(String username);
+  UserDto getById(Long id);
 
-  User findById(Long id);
+  AdminDto getAdminById(Long id);
 
-  void delete(Long id);
+  void removeUser(Long id);
+
+  AdminDto createAdmin(User user);
 }

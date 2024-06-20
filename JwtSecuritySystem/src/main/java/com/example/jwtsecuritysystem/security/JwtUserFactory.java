@@ -1,7 +1,8 @@
 package com.example.jwtsecuritysystem.security;
 
+import static com.example.jwtsecuritysystem.models.Status.ACTIVE;
+
 import com.example.jwtsecuritysystem.models.Role;
-import com.example.jwtsecuritysystem.models.Status;
 import com.example.jwtsecuritysystem.models.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public final class JwtUserFactory {
     .email(user.getEmail())
     .password(user.getPassword())
     .authorities(mapToGrantedAuthorities(new ArrayList<>(user.getRoles())))
-    .enabled(user.getStatus().equals(Status.ACTIVE))
+    .enabled(user.getStatus().equals(ACTIVE))
     .lastPasswordResetDate(user.getUpdated())
     .build();
   }
