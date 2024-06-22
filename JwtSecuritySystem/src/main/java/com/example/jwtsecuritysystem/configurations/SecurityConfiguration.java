@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * Configuration class for setting up security in the Spring Security System.
  */
 @Configuration
-public class SecurityConfig {
+public class SecurityConfiguration {
 
   private final JwtTokenFilter jwtTokenFilter;
 
@@ -34,7 +34,7 @@ public class SecurityConfig {
   };
 
   @Autowired
-  public SecurityConfig(JwtTokenFilter jwtTokenFilter) {
+  public SecurityConfiguration(JwtTokenFilter jwtTokenFilter) {
     this.jwtTokenFilter = jwtTokenFilter;
   }
 

@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * Unit tests for the ModelMapperConfig class.
  */
 @SpringBootTest
-class ModelMapperConfigTest {
+class ModelMapperConfigurationTest {
 
   @Autowired
   private ModelMapper modelMapper;
