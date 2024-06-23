@@ -1,7 +1,9 @@
 package com.example.jwtsecuritysystem.models;
 
+import static jakarta.persistence.EnumType.STRING;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,19 +21,32 @@ import org.springframework.data.annotation.LastModifiedDate;
 @MappedSuperclass
 public class BaseEntity {
 
+  @Schema(hidden = true)
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Schema(
+      description = "Date when the entity was created",
+      example = "2024-01-01T00:00:00Z"
+  )
   @CreatedDate
   @Column(name = "created")
   private Date created;
 
+  @Schema(
+      description = "Date when the entity was last updated",
+      example = "2024-01-02T00:00:00Z"
+  )
   @LastModifiedDate
   @Column(name = "updated")
   private Date updated;
 
-  @Enumerated(EnumType.STRING)
+  @Schema(
+      description = "Status of the entity",
+      example = "ACTIVE"
+  )
+  @Enumerated(STRING)
   @Column(name = "status")
   private Status status;
 }

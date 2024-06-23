@@ -1,8 +1,11 @@
 package com.example.jwtsecuritysystem.controllers;
 
+import com.example.jwtsecuritysystem.dto.AdminDto;
 import com.example.jwtsecuritysystem.dto.AuthenticationRequestDto;
+import com.example.jwtsecuritysystem.dto.UserDto;
 import com.example.jwtsecuritysystem.models.User;
 import com.example.jwtsecuritysystem.security.token.JwtTokenProvider;
+import com.example.jwtsecuritysystem.services.AuthenticationService;
 import com.example.jwtsecuritysystem.services.UserService;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,9 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/v1/auth")
 public class AuthenticationController {
 
-  private final AuthenticationManager authenticationManager;
-  private final JwtTokenProvider jwtTokenProvider;
   private final UserService userService;
+  private final AuthenticationService authenticationService;
 
   /**
    * Endpoint for user authentication and token generation.
@@ -35,21 +37,17 @@ public class AuthenticationController {
    * @return A ResponseEntity containing the username and authentication token.
    */
   @PostMapping("/login")
-  public ResponseEntity<Map<Object, Object>> login(
-      @RequestBody AuthenticationRequestDto requestDto
-  ) {
-    String username = requestDto.username();
-    authenticationManager.authenticate(
-      new UsernamePasswordAuthenticationToken(username, requestDto.password())
-    );
+  public Map<Object, Object> login(@RequestBody AuthenticationRequestDto requestDto) {
+    return authenticationService.login(requestDto);
+  }
 
-    User user = userService.getByUsername(username);
-    String token = jwtTokenProvider.createToken(username, user.getRoles());
+  @PostMapping(value = "/createAdmin")
+  public AdminDto createAdmin(@RequestBody User user) {
+    return userService.createAdmin(user);
+  }
 
-    Map<Object, Object> response = new HashMap<>();
-    response.put("username", username);
-    response.put("token", token);
-
-    return ResponseEntity.ok(response);
+  @PostMapping(value = "/createUser")
+  public UserDto createUser(@RequestBody User user) {
+    return userService.createUser(user);
   }
 }

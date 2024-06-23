@@ -7,13 +7,14 @@ import static org.mockito.Mockito.when;
 
 import com.example.jwtsecuritysystem.dto.UserDto;
 import com.example.jwtsecuritysystem.models.Role;
-import com.example.jwtsecuritysystem.models.Status;
 import com.example.jwtsecuritysystem.models.User;
 import com.example.jwtsecuritysystem.repositories.RoleRepository;
 import com.example.jwtsecuritysystem.repositories.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.example.jwtsecuritysystem.services.impl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

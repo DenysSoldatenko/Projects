@@ -21,8 +21,8 @@ import lombok.EqualsAndHashCode;
 public class Role extends BaseEntity {
 
   @Schema(
-    description = "Name of the role",
-    example = "ROLE_USER"
+      description = "Name of the role",
+      example = "ROLE_USER"
   )
   @Column(name = "name")
   private String name;

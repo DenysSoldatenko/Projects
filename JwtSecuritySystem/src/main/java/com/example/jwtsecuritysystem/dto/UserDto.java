@@ -12,33 +12,27 @@ import lombok.Data;
 @Schema(description = "Data Transfer Object that represents a user in the system")
 public class UserDto {
 
-    @Schema(
+  @Schema(
       description = "Unique identifier of the user",
       example = "1"
-    )
-    private Long id;
+  )
+  private Long id;
 
-    @Schema(
+  @Schema(
       description = "Username of the user",
       example = "regularUser123@gmail.com"
     )
-    private String username;
+  private String username;
 
-    @Schema(
+  @Schema(
       description = "First name of the user",
       example = "Jane"
-    )
-    private String firstName;
+  )
+  private String firstName;
 
-    @Schema(
+  @Schema(
       description = "Last name of the user",
       example = "Doe"
-    )
-    private String lastName;
-
-    @Schema(
-      description = "Email address of the user",
-      example = "jane.doe@example.com"
-    )
-    private String email;
+  )
+  private String lastName;
 }

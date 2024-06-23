@@ -12,39 +12,33 @@ import lombok.Data;
 @Schema(description = "Data Transfer Object that represents an admin user in the system")
 public class AdminDto {
 
-    @Schema(
+  @Schema(
       description = "Unique identifier of the admin user",
       example = "1"
-    )
-    private Long id;
+  )
+  private Long id;
 
-    @Schema(
+  @Schema(
       description = "Username of the admin user",
       example = "adminUser123@gmail.com"
-    )
-    private String username;
+  )
+  private String username;
 
-    @Schema(
+  @Schema(
       description = "First name of the admin user",
       example = "John"
-    )
-    private String firstName;
+  )
+  private String firstName;
 
-    @Schema(
+  @Schema(
       description = "Last name of the admin user",
       example = "Doe"
-    )
-    private String lastName;
+  )
+  private String lastName;
 
-    @Schema(
-      description = "Email address of the admin user",
-      example = "john.doe@example.com"
-    )
-    private String email;
-
-    @Schema(
+  @Schema(
       description = "Status of the admin user",
       example = "ACTIVE"
-    )
-    private String status;
+  )
+  private String status;
 }

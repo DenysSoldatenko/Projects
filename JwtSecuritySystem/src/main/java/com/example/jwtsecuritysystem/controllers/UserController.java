@@ -1,13 +1,10 @@
 package com.example.jwtsecuritysystem.controllers;
 
 import com.example.jwtsecuritysystem.dto.UserDto;
-import com.example.jwtsecuritysystem.models.User;
 import com.example.jwtsecuritysystem.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,10 +28,5 @@ public class UserController {
   @GetMapping(value = "/{id}")
   public UserDto getUserById(@PathVariable(name = "id") Long id) {
     return userService.getById(id);
-  }
-
-  @PostMapping()
-  public UserDto createUser(@RequestBody User user) {
-    return userService.createUser(user);
   }
 }

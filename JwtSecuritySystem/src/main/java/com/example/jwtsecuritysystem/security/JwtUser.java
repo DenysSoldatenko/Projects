@@ -26,8 +26,6 @@ public class JwtUser implements UserDetails {
 
   private final String password;
 
-  private final String email;
-
   private final boolean enabled;
 
   private final Date lastPasswordResetDate;

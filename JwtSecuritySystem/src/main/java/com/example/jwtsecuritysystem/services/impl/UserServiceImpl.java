@@ -1,4 +1,4 @@
-package com.example.jwtsecuritysystem.services;
+package com.example.jwtsecuritysystem.services.impl;
 
 import static com.example.jwtsecuritysystem.models.Status.ACTIVE;
 import static java.util.Collections.singletonList;
@@ -9,6 +9,7 @@ import com.example.jwtsecuritysystem.models.Role;
 import com.example.jwtsecuritysystem.models.User;
 import com.example.jwtsecuritysystem.repositories.RoleRepository;
 import com.example.jwtsecuritysystem.repositories.UserRepository;
+import com.example.jwtsecuritysystem.services.UserService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public User getByUsername(String username) {
     User result = userRepository.findByUsername(username)
-      .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " not found"));
+        .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " not found"));
     log.info("IN findByUsername - user: {} found by username: {}", result, username);
     return result;
   }
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public AdminDto getAdminById(Long id) {
     User result = userRepository.findById(id)
-      .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+        .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
     return modelMapper.map(result, AdminDto.class);
   }
 

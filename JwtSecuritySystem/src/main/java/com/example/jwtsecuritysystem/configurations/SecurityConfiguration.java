@@ -21,11 +21,9 @@ public class SecurityConfiguration {
 
   private final JwtTokenFilter jwtTokenFilter;
 
-  private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
+  private static final String ADMIN_ENDPOINT = "/api/v*/admin/**";
   private static final String[] PUBLIC_ROUTES = {
-    "/api/v1/auth/login",
-    "/api/v1/users",
-    "/api/v1/admin",
+    "/api/v*/auth/**",
     "/v3/api-docs/**",
     "/swagger-ui/**",
     "/swagger-resources/**",

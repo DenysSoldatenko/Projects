@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * Data Transfer Object (DTO) representing an authentication request.
  */
-@Schema(description = "DTO representing an authentication request, containing username and password.")
+@Schema(description = "DTO representing an authentication request, containing username and password")
 public record AuthenticationRequestDto(
 
     @Schema(
