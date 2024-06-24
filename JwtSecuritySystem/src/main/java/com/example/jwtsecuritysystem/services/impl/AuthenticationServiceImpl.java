@@ -12,6 +12,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of the {@link AuthenticationService} interface.
+ * This service provides methods for user authentication and JWT token generation.
+ */
 @Service
 @AllArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
