@@ -25,13 +25,6 @@ public class AdminController {
 
   private final UserService userService;
 
-  /**
-   * Get a user by their unique identifier.
-   *
-   * @param id The unique identifier of the user to retrieve.
-   * @return A ResponseEntity containing the user information if found (HttpStatus.OK),
-   *     or HttpStatus.NO_CONTENT if not found.
-   */
   @Operation(
       summary = "Get an admin by ID",
       description = "Retrieve the details of an admin using their unique identifier"
