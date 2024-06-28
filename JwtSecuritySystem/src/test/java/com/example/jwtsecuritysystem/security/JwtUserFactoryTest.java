@@ -28,10 +28,9 @@ class JwtUserFactoryTest {
   void testCreateJwtUserFromUser() {
     User user = new User();
     user.setId(1L);
-    user.setUsername("testUser");
+    user.setUsername("test@example.com");
     user.setFirstName("John");
     user.setLastName("Doe");
-    user.setEmail("test@example.com");
     user.setPassword("password");
     user.setStatus(Status.ACTIVE);
     user.setUpdated(null); // Set to null for simplicity
@@ -49,7 +48,6 @@ class JwtUserFactoryTest {
     assertEquals(user.getUsername(), jwtUser.getUsername());
     assertEquals(user.getFirstName(), jwtUser.getFirstName());
     assertEquals(user.getLastName(), jwtUser.getLastName());
-    assertEquals(user.getEmail(), jwtUser.getEmail());
     assertEquals(user.getPassword(), jwtUser.getPassword());
     assertEquals(true, jwtUser.isEnabled());
 

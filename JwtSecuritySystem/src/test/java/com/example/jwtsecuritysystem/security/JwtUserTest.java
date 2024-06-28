@@ -25,11 +25,10 @@ class JwtUserTest {
     );
     JwtUser jwtUser = JwtUser.builder()
         .id(1L)
-        .username("testUser")
+        .username("testUser@gamil.com")
         .firstName("John")
         .lastName("Doe")
         .password("password")
-        .email("test@example.com")
         .enabled(true)
         .lastPasswordResetDate(new Date())
         .authorities(authorities)
@@ -116,18 +115,6 @@ class JwtUserTest {
 
     String password = jwtUser.getPassword();
     assertEquals("password", password);
-  }
-
-  @Test
-  void emailShouldReturnEmail() {
-    JwtUser jwtUser = JwtUser.builder()
-        .id(1L)
-        .email("test@example.com")
-        .password("password")
-        .build();
-
-    String email = jwtUser.getEmail();
-    assertEquals("test@example.com", email);
   }
 
   @Test

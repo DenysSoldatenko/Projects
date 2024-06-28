@@ -16,10 +16,9 @@ class UserDtoTest {
   void setUp() {
     userDto = new UserDto();
     userDto.setId(1L);
-    userDto.setUsername("testUser");
+    userDto.setUsername("johndoe@example.com");
     userDto.setFirstName("John");
     userDto.setLastName("Doe");
-    userDto.setEmail("johndoe@example.com");
   }
 
   @Test
@@ -43,25 +42,18 @@ class UserDtoTest {
   }
 
   @Test
-  void testGetEmail() {
-    assertEquals("johndoe@example.com", userDto.getEmail());
-  }
-
-  @Test
   void testEquals() {
     UserDto userDto1 = new UserDto();
     userDto1.setId(1L);
-    userDto1.setUsername("testUser");
+    userDto1.setUsername("johndoe@example.com");
     userDto1.setFirstName("John");
     userDto1.setLastName("Doe");
-    userDto1.setEmail("johndoe@example.com");
 
     UserDto userDto2 = new UserDto();
     userDto2.setId(2L);
-    userDto2.setUsername("anotherUser");
+    userDto2.setUsername("alicesmith@example.com");
     userDto2.setFirstName("Alice");
     userDto2.setLastName("Smith");
-    userDto2.setEmail("alicesmith@example.com");
 
     assertEquals(userDto, userDto1); // Should be equal
     assertNotEquals(userDto, userDto2); // Should not be equal
@@ -71,10 +63,9 @@ class UserDtoTest {
   void testHashCode() {
     UserDto userDto1 = new UserDto();
     userDto1.setId(1L);
-    userDto1.setUsername("testUser");
+    userDto1.setUsername("johndoe@example.com");
     userDto1.setFirstName("John");
     userDto1.setLastName("Doe");
-    userDto1.setEmail("johndoe@example.com");
 
     assertEquals(userDto.hashCode(), userDto1.hashCode());
   }

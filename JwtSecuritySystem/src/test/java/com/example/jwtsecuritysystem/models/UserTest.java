@@ -25,10 +25,9 @@ class UserTest {
   void setUp() {
     user = new User();
     user.setId(1L);
-    user.setUsername("john.doe");
+    user.setUsername("john.doe@example.com");
     user.setFirstName("John");
     user.setLastName("Doe");
-    user.setEmail("john.doe@example.com");
     user.setPassword("password");
     user.setRoles(List.of(new Role()));
   }
@@ -51,11 +50,6 @@ class UserTest {
   @Test
   void testLastNameProperty() {
     assertEquals("Doe", user.getLastName());
-  }
-
-  @Test
-  void testEmailProperty() {
-    assertEquals("john.doe@example.com", user.getEmail());
   }
 
   @Test

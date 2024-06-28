@@ -42,12 +42,6 @@ class AdminDtoTest {
   }
 
   @Test
-  void testEmail() {
-    adminDto.setEmail("john.doe@example.com");
-    assertEquals("john.doe@example.com", adminDto.getEmail());
-  }
-
-  @Test
   void testStatus() {
     adminDto.setStatus("Active");
     assertEquals("Active", adminDto.getStatus());

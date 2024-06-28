@@ -39,10 +39,9 @@ class JwtUserDetailsServiceTest {
   void testLoadUserByUsernameWhenUserExists() {
     User user = new User();
     user.setId(1L);
-    user.setUsername("testUser");
+    user.setUsername("test@example.com");
     user.setFirstName("John");
     user.setLastName("Doe");
-    user.setEmail("test@example.com");
     user.setPassword("password");
     user.setStatus(Status.ACTIVE);
     user.setUpdated(null); // Set to null for simplicity
@@ -53,7 +52,7 @@ class JwtUserDetailsServiceTest {
     roles.add(role);
     user.setRoles(roles);
 
-    Mockito.when(userService.findByUsername("testUser")).thenReturn(user);
+    Mockito.when(userService.getByUsername("testUser")).thenReturn(user);
 
     UserDetails userDetails = userDetailsService.loadUserByUsername("testUser");
 
@@ -63,7 +62,7 @@ class JwtUserDetailsServiceTest {
 
   @Test
   void testLoadUserByUsernameWhenUserDoesNotExist() {
-    Mockito.when(userService.findByUsername("nonExistentUser")).thenReturn(null);
+    Mockito.when(userService.getByUsername("nonExistentUser")).thenReturn(null);
 
     assertThrows(UsernameNotFoundException.class,
         () -> userDetailsService.loadUserByUsername("nonExistentUser"));
