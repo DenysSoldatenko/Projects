@@ -1,10 +1,8 @@
 spring:
-  config:
-    import: optional:file:.env[.properties]
   data:
     mongodb:
-      database: ${SPRING_DATA_SOURCE_NAME}
-      uri: ${SPRING_DATA_SOURCE_URI}
+      database: ${SPRING_DATA_SOURCE_NAME:mongo_project}
+      uri: ${SPRING_DATA_SOURCE_URI:mongodb://root:password@localhost:27017}
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
