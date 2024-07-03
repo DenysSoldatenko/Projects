@@ -1,9 +1,10 @@
 package com.example.joblisting.controllers;
 
 import com.example.joblisting.models.Post;
-import com.example.joblisting.repositories.PostRepository;
 import com.example.joblisting.repositories.SearchRepository;
 import java.util.List;
+
+import com.example.joblisting.services.PostService;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/example")
 public class PostController {
 
-  private final PostRepository postRepository;
+  private final PostService postService;
 
   private final SearchRepository searchRepository;
 
@@ -33,17 +34,17 @@ public class PostController {
 
   @GetMapping("/posts")
   public List<Post> getAllPosts() {
-    return postRepository.findAll();
+    return postService.getPosts();
   }
 
   @PostMapping("/post")
   public Post addPost(@RequestBody Post post) {
-    return postRepository.save(post);
+    return postService.createPost(post);
   }
 
   @PutMapping("/post")
   public Post updatePost(@RequestBody Post post) {
-    return postRepository.save(post);
+    return postService.editPost(post);
   }
 
   @GetMapping("/posts/{text}")
