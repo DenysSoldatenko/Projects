@@ -1,7 +1,7 @@
-package com.example.joblisting.services;
+package com.example.joblisting.services.impl;
 
 import com.example.joblisting.models.Post;
-import com.example.joblisting.repositories.SearchRepository;
+import com.example.joblisting.services.SearchService;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -22,13 +22,13 @@ import static java.util.Arrays.asList;
 
 @Component
 @RequiredArgsConstructor
-public class SearchRepositoryImpl implements SearchRepository {
+public class SearchServiceImpl implements SearchService {
 
   private final MongoConverter converter;
   private final MongoClient client;
 
   @Override
-  public List<Post> findByText(String text) {
+  public List<Post> searchPostsByText(String text) {
 
     final List<Post> posts = new ArrayList<>();
 
@@ -52,7 +52,7 @@ public class SearchRepositoryImpl implements SearchRepository {
   }
 
   @Override
-  public List<Post> findByPattern(String pattern) {
+  public List<Post> searchPostsByPattern(String pattern) {
     final List<Post> posts = new ArrayList<>();
 
     MongoDatabase database = client.getDatabase("jobs");
@@ -74,7 +74,7 @@ public class SearchRepositoryImpl implements SearchRepository {
   }
 
   @Override
-  public List<Document> findCountByExperience() {
+  public List<Document> getCountByExperienceLevel() {
     final List<Document> posts = new ArrayList<>();
 
     MongoDatabase database = client.getDatabase("jobs");

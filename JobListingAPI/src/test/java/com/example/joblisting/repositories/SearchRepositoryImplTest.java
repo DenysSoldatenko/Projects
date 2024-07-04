@@ -34,7 +34,7 @@ class SearchRepositoryImplTest {
   @Mock
   private MongoConverter mockConverter;
 
-  private SearchRepository searchRepository;
+  private SearchRepositoryImpl searchRepository;
 
   @BeforeEach
   public void setup() {
@@ -52,7 +52,7 @@ class SearchRepositoryImplTest {
         .thenReturn(Mockito.mock(AggregateIterable.class));
     when(mockConverter.read(eq(Post.class), any(Document.class))).thenReturn(new Post());
 
-    List<Post> result = searchRepository.findByText(searchText);
+    List<Post> result = searchRepository.searchPostsByText(searchText);
     assertEquals(0, result.size());
   }
 
@@ -64,7 +64,7 @@ class SearchRepositoryImplTest {
         .thenReturn(Mockito.mock(AggregateIterable.class));
     when(mockConverter.read(eq(Document.class), any(Document.class))).thenReturn(new Document());
 
-    List<Document> result = searchRepository.findCountByExperience();
+    List<Document> result = searchRepository.getCountByExperienceLevel();
     assertEquals(0, result.size());
   }
 }

@@ -1,10 +1,9 @@
 package com.example.joblisting.controllers;
 
 import com.example.joblisting.models.Post;
-import com.example.joblisting.repositories.SearchRepository;
-import java.util.List;
-
 import com.example.joblisting.services.PostService;
+import com.example.joblisting.services.SearchService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +24,7 @@ public class PostController {
 
   private final PostService postService;
 
-  private final SearchRepository searchRepository;
+  private final SearchService searchService;
 
   @GetMapping
   public String hello() {
@@ -49,16 +48,16 @@ public class PostController {
 
   @GetMapping("/posts/{text}")
   public List<Post> search(@PathVariable String text) {
-    return searchRepository.findByText(text);
+    return searchService.searchPostsByText(text);
   }
 
   @GetMapping("/posts/searchByPat/{text}")
   public List<Post> searchByPattern(@PathVariable String text) {
-    return searchRepository.findByPattern(text);
+    return searchService.searchPostsByPattern(text);
   }
 
   @GetMapping("/posts/countByExp")
   public List<Document> countByExperience() {
-    return searchRepository.findCountByExperience();
+    return searchService.getCountByExperienceLevel();
   }
 }

@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.joblisting.models.Post;
 import com.example.joblisting.repositories.PostRepository;
-import com.example.joblisting.repositories.SearchRepository;
+
 import java.util.Collections;
 import java.util.List;
 import org.bson.Document;
