@@ -1,24 +1,22 @@
 package com.example.joblisting.services.impl;
 
+import static com.mongodb.client.model.Filters.or;
+import static com.mongodb.client.model.Filters.regex;
+import static java.util.Arrays.asList;
+
 import com.example.joblisting.models.Post;
 import com.example.joblisting.services.SearchService;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.stereotype.Component;
-
-import static com.mongodb.client.model.Filters.or;
-import static com.mongodb.client.model.Filters.regex;
-import static java.util.Arrays.asList;
 
 @Component
 @RequiredArgsConstructor

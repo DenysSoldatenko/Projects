@@ -41,6 +41,11 @@ public class PostController {
     return postService.createPost(post);
   }
 
+  @PostMapping("/initialize")
+  public String addPost() {
+    return postService.initializeCollectionWithData();
+  }
+
   @PutMapping("/post")
   public Post updatePost(@RequestBody Post post) {
     return postService.editPost(post);

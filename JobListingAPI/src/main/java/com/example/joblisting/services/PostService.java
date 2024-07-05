@@ -10,4 +10,6 @@ public interface PostService {
   Post createPost(Post post);
 
   Post editPost(Post post);
+
+  String initializeCollectionWithData();
 }

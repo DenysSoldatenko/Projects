@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
  * Represents a job listing post.
  */
 @Data
-@Document(collection = "example")
+@Document(collection = "posts")
 public class Post {
   @Id
   private String id;
