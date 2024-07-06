@@ -1,129 +1,129 @@
 [
   {
     "_id": "1",
-    "desc": "Software engineer who can work on enterprise projects using spring boot and mongodb and react",
-    "exp": 1,
-    "profile": "developer",
-    "techs": [
-      "java",
-      "jee",
-      "spring",
-      "springboot",
-      "microservices"
+    "description": "Software engineer who can work on enterprise projects using Spring Boot, MongoDB, and React",
+    "experience": 1,
+    "profile": "Developer",
+    "technologies": [
+      "Java",
+      "JEE",
+      "Spring",
+      "Spring Boot",
+      "Microservices"
     ]
   },
   {
     "_id": "2",
-    "desc": "Senior Software engineer with java expert knowledge in core java and concurrency",
-    "exp": 5,
-    "profile": "java developer",
-    "techs": [
-      "java",
-      "jee",
-      "spring",
-      "springboot",
-      "microservices",
-      "threads"
+    "description": "Senior Software Engineer with expertise in core Java and concurrency",
+    "experience": 5,
+    "profile": "Java Developer",
+    "technologies": [
+      "Java",
+      "JEE",
+      "Spring",
+      "Spring Boot",
+      "Microservices",
+      "Threads"
     ]
   },
   {
     "_id": "3",
-    "desc": "Associate consultant architecture of software, Agile, Devops ",
-    "exp": 10,
+    "description": "Associate Consultant specializing in software architecture, Agile, and DevOps",
+    "experience": 10,
     "profile": "Architect",
-    "techs": [
-      "java",
-      "jee",
-      "spring",
-      "springboot",
-      "microservices",
-      "AWZ",
+    "technologies": [
+      "Java",
+      "JEE",
+      "Spring",
+      "Spring Boot",
+      "Microservices",
+      "AWS",
       "Azure",
-      "devops"
+      "DevOps"
     ]
   },
   {
     "_id": "4",
-    "desc": "Senior Associate consultant for Mumbai Location",
-    "exp": 15,
+    "description": "Senior Associate Consultant based in Mumbai",
+    "experience": 15,
     "profile": "Senior Architect",
-    "techs": [
-      "java",
-      "jee",
-      "spring",
-      "springboot",
-      "microservices"
+    "technologies": [
+      "Java",
+      "JEE",
+      "Spring",
+      "Spring Boot",
+      "Microservices"
     ]
   },
   {
     "_id": "5",
-    "desc": "Manager for onsite projects in US and UK",
-    "exp": 15,
+    "description": "Manager for onsite projects in the US and UK",
+    "experience": 15,
     "profile": "Senior Manager",
-    "techs": [
+    "technologies": [
       "Java",
       "Blockchain",
-      "android",
-      "datascience"
+      "Android",
+      "Data Science"
     ]
   },
   {
     "_id": "6",
-    "desc": "Devops Engineer worked on kubernetes, ansible, docker",
-    "exp": 12,
-    "profile": "development",
-    "techs": [
-      "c",
-      "c++",
-      "java",
-      "kubernetes"
+    "description": "DevOps Engineer with experience in Kubernetes, Ansible, and Docker",
+    "experience": 12,
+    "profile": "DevOps Engineer",
+    "technologies": [
+      "C",
+      "C++",
+      "Java",
+      "Kubernetes"
     ]
   },
   {
     "_id": "7",
-    "desc": "Senior Software engineer for a Data department",
-    "exp": 15,
-    "profile": "development",
-    "techs": [
-      "microservices",
-      "hadoop",
-      "bigdata"
+    "description": "Senior Software Engineer for a Data Department",
+    "experience": 15,
+    "profile": "Senior Software Engineer",
+    "technologies": [
+      "Microservices",
+      "Hadoop",
+      "Big Data"
     ]
   },
   {
     "_id": "8",
-    "desc": "DataScientist who has end-to-end project experience",
-    "exp": 12,
-    "profile": "Junior DataScientist",
-    "techs": [
-      "python",
-      "numpy",
-      "pandas",
-      "matplotlib"
+    "description": "Data Scientist with end-to-end project experience",
+    "experience": 12,
+    "profile": "Junior Data Scientist",
+    "technologies": [
+      "Python",
+      "NumPy",
+      "Pandas",
+      "Matplotlib"
     ]
   },
   {
     "_id": "9",
-    "desc": "Senior Data Scientist",
-    "exp": 15,
-    "profile": "Expert DataScientist",
-    "techs": [
-      "python",
-      "libraries"
+    "description": "Senior Data Scientist",
+    "experience": 15,
+    "profile": "Expert Data Scientist",
+    "technologies": [
+      "Python",
+      "Libraries"
     ]
   },
   {
     "_id": "10",
-    "desc": "Associate consultant for Cloud AWS, PCF, Azure, Redhat",
-    "exp": 10,
+    "description": "Associate Consultant for Cloud technologies including AWS, PCF, Azure, and Redhat",
+    "experience": 10,
     "profile": "Java Expert",
-    "techs": [
-      "java",
-      "jee",
-      "design patterns",
-      "springboot",
-      "cloud",
-      "microservices"
+    "technologies": [
+      "Java",
+      "JEE",
+      "Design Patterns",
+      "Spring Boot",
+      "Cloud",
+      "Microservices"
     ]
   }
 ]
