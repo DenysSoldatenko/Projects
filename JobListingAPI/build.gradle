@@ -18,9 +18,7 @@ repositories {
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-
-    implementation "io.springfox:springfox-boot-starter:${springDocVersion}"
-    implementation "io.springfox:springfox-swagger-ui:${springDocVersion}"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}"
 
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
