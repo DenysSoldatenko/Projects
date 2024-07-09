@@ -1,8 +1,8 @@
 package com.example.joblisting.services;
 
 import com.example.joblisting.models.Post;
-import org.bson.Document;
 import java.util.List;
+import org.bson.Document;
 
 public interface SearchService {
 

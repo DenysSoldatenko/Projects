@@ -27,24 +27,20 @@ public class SearchServiceImpl implements SearchService {
 
   @Override
   public List<Post> searchPostsByText(String text) {
-
     final List<Post> posts = new ArrayList<>();
 
-    MongoDatabase database = client.getDatabase("jobs");
-    MongoCollection<Document> collection = database.getCollection("example");
+    MongoDatabase database = client.getDatabase("mongo_project");
+    MongoCollection<Document> collection = database.getCollection("posts");
 
-    AggregateIterable<Document> result = collection.aggregate(
-        asList(
-            new Document(
-              "$search", new Document(
-                  "text",
-                  new Document("query", text).append("path", asList("techs", "desc", "profile")))
-            ),
-            new Document("$sort", new Document("exp", 1L)),
-            new Document("$limit", 5L))
-        );
+    collection.createIndex(
+      new Document("description", "text").append("profile", "text").append("technologies", "text")
+    );
 
-    result.forEach(doc -> posts.add(converter.read(Post.class, doc)));
+    Bson filter = new Document("$text", new Document("$search", text));
+    List<Document> documents = collection.find(filter)
+        .sort(new Document("experience", 1)).limit(5).into(new ArrayList<>());
+
+    documents.forEach(doc -> posts.add(converter.read(Post.class, doc)));
 
     return posts;
   }
@@ -53,13 +49,13 @@ public class SearchServiceImpl implements SearchService {
   public List<Post> searchPostsByPattern(String pattern) {
     final List<Post> posts = new ArrayList<>();
 
-    MongoDatabase database = client.getDatabase("jobs");
-    MongoCollection<Document> collection = database.getCollection("example");
+    MongoDatabase database = client.getDatabase("mongo_project");
+    MongoCollection<Document> collection = database.getCollection("posts");
 
     Bson filter = or(
-        regex("desc", ".*" + pattern + ".*", "i"),
+        regex("description", ".*" + pattern + ".*", "i"),
         regex("profile", ".*" + pattern + ".*", "i"),
-        regex("techs", ".*" + pattern + ".*", "i")
+        regex("technologies", ".*" + pattern + ".*", "i")
     );
 
     List<Document> documents = collection.find(filter)
@@ -75,14 +71,14 @@ public class SearchServiceImpl implements SearchService {
   public List<Document> getCountByExperienceLevel() {
     final List<Document> posts = new ArrayList<>();
 
-    MongoDatabase database = client.getDatabase("jobs");
-    MongoCollection<Document> collection = database.getCollection("example");
+    MongoDatabase database = client.getDatabase("mongo_project");
+    MongoCollection<Document> collection = database.getCollection("posts");
 
     AggregateIterable<Document> result = collection.aggregate(asList(
           new Document("$group",
-          new Document("_id", "$exp").append("count", new Document("$sum", 1L))),
+          new Document("_id", "$experience").append("count", new Document("$sum", 1L))),
           new Document("$project",
-          new Document("_id", 0).append("exp", "$_id").append("count", 1)),
+          new Document("_id", 0).append("experience", "$_id").append("count", 1)),
           new Document("$sort",
           new Document("count", -1L)))
     );

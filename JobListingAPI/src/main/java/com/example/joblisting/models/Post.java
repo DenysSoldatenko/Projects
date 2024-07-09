@@ -17,27 +17,28 @@ public class Post {
   @Schema(hidden = true)
   private String id;
 
+  @Field("profile")
   @Schema(
       description = "The profile or job title of the post",
       example = "Software Engineer"
   )
   private String profile;
 
-  @Field("desc")
+  @Field("description")
   @Schema(
       description = "Description of the job post",
       example = "Software engineer who can work on enterprise projects using Spring Boot and MongoDB"
   )
   private String description;
 
-  @Field("exp")
+  @Field("experience")
   @Schema(
       description = "Number of years of experience required",
       example = "5"
   )
   private int experience;
 
-  @Field("techs")
+  @Field("technologies")
   @Schema(
       description = "List of technologies required for the job post",
       example = "[\"Java\", \"Spring Boot\", \"Microservices\"]"
