@@ -16,6 +16,10 @@ import org.bson.Document;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
+/**
+ * Implementation of the {@link PostService} interface.
+ * Provides methods for managing job posts, including retrieval, creation, updating, and initializing data.
+ */
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {

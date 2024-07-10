@@ -18,6 +18,10 @@ import org.bson.conversions.Bson;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of the {@link SearchService} interface.
+ * Provides methods for searching job posts by text, pattern, and aggregating post counts by experience level.
+ */
 @Service
 @RequiredArgsConstructor
 public class SearchServiceImpl implements SearchService {
