@@ -1,4 +1,4 @@
-package com.example.joblisting.repositories;
+package com.example.joblisting.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import com.example.joblisting.models.Post;
 import com.example.joblisting.services.SearchRepositoryImpl;
+import com.example.joblisting.services.impl.SearchServiceImpl;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -23,7 +24,7 @@ import org.springframework.data.mongodb.core.convert.MongoConverter;
 /**
  * Unit tests for the SearchRepositoryImpl class.
  */
-class SearchRepositoryImplTest {
+class SearchServiceImpl {
 
   @Mock
   private MongoClient mockClient;
@@ -34,12 +35,12 @@ class SearchRepositoryImplTest {
   @Mock
   private MongoConverter mockConverter;
 
-  private SearchRepositoryImpl searchRepository;
+  private SearchServiceImpl searchRepository;
 
   @BeforeEach
   public void setup() {
     MockitoAnnotations.initMocks(this);
-    searchRepository = new SearchRepositoryImpl(mockConverter, mockClient);
+    searchRepository = new SearchServiceImpl(mockConverter, mockClient);
   }
 
   @Test
