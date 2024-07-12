@@ -1,4 +1,4 @@
-package com.example.joblisting.services.impl;
+package com.example.joblisting.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 

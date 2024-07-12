@@ -1,4 +1,4 @@
-package com.example.joblisting.services.impl;
+package com.example.joblisting.services;
 
 import com.example.joblisting.models.Post;
 import com.example.joblisting.repositories.PostRepository;
