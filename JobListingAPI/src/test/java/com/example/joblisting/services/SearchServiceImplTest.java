@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 import com.example.joblisting.models.Post;
+import com.example.joblisting.services.impl.SearchServiceImpl;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
@@ -22,7 +23,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 
 class SearchServiceImplTest {

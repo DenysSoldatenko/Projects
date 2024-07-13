@@ -1,4 +1,4 @@
-package com.example.joblisting.services;
+package com.example.joblisting.services.impl;
 
 import static com.mongodb.client.model.Filters.or;
 import static com.mongodb.client.model.Filters.regex;
