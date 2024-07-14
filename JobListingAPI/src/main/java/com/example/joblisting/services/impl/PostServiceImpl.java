@@ -8,13 +8,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.bson.Document;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 /**
  * Implementation of the {@link PostService} interface.
@@ -48,9 +49,11 @@ public class PostServiceImpl implements PostService {
     MongoDatabase database = client.getDatabase("mongo_project");
     MongoCollection<Document> collection = database.getCollection("posts");
 
-    File file = ResourceUtils.getFile("JobListingAPI/data.json");
+    Resource resource = new ClassPathResource("data.json");
+    InputStream inputStream = resource.getInputStream();
+
     ObjectMapper objectMapper = new ObjectMapper();
-    List<Document> documents = objectMapper.readValue(file, new TypeReference<>() {});
+    List<Document> documents = objectMapper.readValue(inputStream, new TypeReference<>() {});
 
     collection.drop(); // Optional: drop collection if you want to start fresh
     collection.insertMany(documents);
