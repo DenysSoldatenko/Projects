@@ -1,7 +1,8 @@
 package com.example.pastebox.models;
 
+import static jakarta.persistence.EnumType.STRING;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 public class Paste {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -29,10 +31,10 @@ public class Paste {
   private LocalDateTime creationTime;
   private LocalDateTime expirationTime;
 
-  @Enumerated(EnumType.STRING)
+  @Enumerated(STRING)
   private ExpirationTime expirationDuration;
 
-  @Enumerated(EnumType.STRING)
+  @Enumerated(STRING)
   private PublicStatus publicStatus;
   private String shortLink;
 }

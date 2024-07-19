@@ -5,6 +5,5 @@ package com.example.pastebox.models;
  * which can be PUBLIC or PRIVATE.
  */
 public enum PublicStatus {
-  PUBLIC,
-  PRIVATE
+  PUBLIC, PRIVATE
 }

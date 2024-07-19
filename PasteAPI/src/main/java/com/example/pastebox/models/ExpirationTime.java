@@ -9,6 +9,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ExpirationTime {
+
   _10_MINUTES("10 Minutes"),
   _1_HOUR("1 Hour"),
   _3_HOURS("3 Hours"),
