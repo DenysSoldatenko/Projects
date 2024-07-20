@@ -24,12 +24,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PasteServiceImpl implements PasteService {
 
+  public final ModelMapper modelMapper;
   private final PasteRepository pasteRepository;
 
-  public final ModelMapper modelMapper;
-
   @Override
-  public PasteDto getByHash(String hash) {
+  public PasteDto getPasteByHash(String hash) {
     Optional<Paste> optionalPaste = pasteRepository.findByShortLink(hash);
 
     if (optionalPaste.isPresent()) {
@@ -50,7 +49,7 @@ public class PasteServiceImpl implements PasteService {
   }
 
   @Override
-  public PasteResponse add(PasteDto pasteDto) {
+  public PasteResponse createPaste(PasteDto pasteDto) {
     Paste paste = Paste.builder()
         .content(pasteDto.getContent())
         .creationTime(pasteDto.getCreationTime())
@@ -82,5 +81,4 @@ public class PasteServiceImpl implements PasteService {
       iterator.remove();
     }
   }
-
 }

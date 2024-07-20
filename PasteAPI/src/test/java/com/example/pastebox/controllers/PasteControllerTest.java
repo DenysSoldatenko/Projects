@@ -45,7 +45,7 @@ class PasteControllerTest {
     PasteDto paste = new PasteDto();
     paste.setShortLink("abcd1234");
 
-    when(pasteService.getByHash("abcd1234")).thenReturn(paste);
+    when(pasteService.getPasteByHash("abcd1234")).thenReturn(paste);
 
     PasteDto response = pasteController.getByHash("abcd1234");
 
@@ -57,7 +57,7 @@ class PasteControllerTest {
     PasteDto pasteDto = new PasteDto();
     PasteResponse pasteResponse = new PasteResponse("xyz7890");
 
-    when(pasteService.add(pasteDto)).thenReturn(pasteResponse);
+    when(pasteService.createPaste(pasteDto)).thenReturn(pasteResponse);
 
     PasteResponse response = pasteController.add(pasteDto);
 

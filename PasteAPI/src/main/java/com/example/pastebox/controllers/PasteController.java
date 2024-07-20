@@ -27,11 +27,11 @@ public class PasteController {
 
   @GetMapping("/{hash}")
   public PasteDto getByHash(@PathVariable String hash) {
-    return pasteService.getByHash(hash);
+    return pasteService.getPasteByHash(hash);
   }
 
   @PostMapping("/")
   public PasteResponse add(@RequestBody PasteDto request) {
-    return pasteService.add(request);
+    return pasteService.createPaste(request);
   }
 }

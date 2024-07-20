@@ -8,11 +8,12 @@ import java.util.List;
  * Service interface for managing paste-related operations.
  */
 public interface PasteService {
-  PasteDto getByHash(String hash);
+
+  PasteDto getPasteByHash(String hash);
 
   List<PasteDto> getPublicPastes();
 
-  PasteResponse add(PasteDto paste);
+  PasteResponse createPaste(PasteDto paste);
 
   void removeExpiredPastes();
 }

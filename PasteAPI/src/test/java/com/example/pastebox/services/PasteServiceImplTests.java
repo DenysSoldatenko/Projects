@@ -41,7 +41,7 @@ class PasteServiceImplTests {
   private PasteServiceImpl pasteService;
 
   @Test
-  void shouldGetByHashWithValidHash() {
+  void shouldGetPasteByHashWithValidHash() {
     Paste paste = new Paste();
     paste.setShortLink("validHash");
 
@@ -51,16 +51,16 @@ class PasteServiceImplTests {
     when(pasteRepository.findByShortLink("validHash")).thenReturn(Optional.of(paste));
     when(modelMapper.map(paste, PasteDto.class)).thenReturn(expectedDto);
 
-    PasteDto actualDto = pasteService.getByHash("validHash");
+    PasteDto actualDto = pasteService.getPasteByHash("validHash");
 
     assertEquals(expectedDto.getShortLink(), actualDto.getShortLink());
   }
 
   @Test
-  void shouldGetByHashWithInvalidHash() {
+  void shouldGetPasteByHashWithInvalidHash() {
     when(pasteRepository.findByShortLink("invalidHash")).thenReturn(Optional.empty());
 
-    assertThrows(RuntimeException.class, () -> pasteService.getByHash("invalidHash"));
+    assertThrows(RuntimeException.class, () -> pasteService.getPasteByHash("invalidHash"));
   }
 
   @Test
@@ -87,7 +87,7 @@ class PasteServiceImplTests {
   }
 
   @Test
-  void shouldAddPaste() {
+  void shouldCreatePastePaste() {
     PasteDto pasteDto = new PasteDto();
     pasteDto.setContent("Test content");
     pasteDto.setCreationTime(LocalDateTime.now());
@@ -96,7 +96,7 @@ class PasteServiceImplTests {
 
     when(pasteRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
 
-    PasteResponse response = pasteService.add(pasteDto);
+    PasteResponse response = pasteService.createPaste(pasteDto);
     verify(pasteRepository, times(1)).save(any(Paste.class));
 
     // Verify that the returned PasteResponse contains the expected short link
