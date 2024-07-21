@@ -1,6 +1,7 @@
 package com.example.pastebox.utils;
 
-import java.util.UUID;
+import static java.util.UUID.randomUUID;
+
 import lombok.experimental.UtilityClass;
 
 /**
@@ -10,6 +11,6 @@ import lombok.experimental.UtilityClass;
 public class LinkGenerator {
 
   public String generate() {
-    return UUID.randomUUID().toString().substring(0, 8);
+    return randomUUID().toString().substring(0, 8);
   }
 }

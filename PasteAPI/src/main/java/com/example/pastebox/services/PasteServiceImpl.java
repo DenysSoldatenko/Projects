@@ -1,14 +1,14 @@
 package com.example.pastebox.services;
 
+import static com.example.pastebox.models.PublicStatus.PUBLIC;
+import static com.example.pastebox.utils.PasteFactory.generatePaste;
+import static java.time.LocalDateTime.now;
+
 import com.example.pastebox.models.Paste;
 import com.example.pastebox.models.PasteDto;
 import com.example.pastebox.models.PasteResponse;
-import com.example.pastebox.models.PublicStatus;
 import com.example.pastebox.repositories.PasteRepository;
-import com.example.pastebox.utils.ExpirationTimeGenerator;
-import com.example.pastebox.utils.LinkGenerator;
 import com.example.pastebox.utils.PasteNotFoundException;
-import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -30,18 +30,13 @@ public class PasteServiceImpl implements PasteService {
   @Override
   public PasteDto getPasteByHash(String hash) {
     Optional<Paste> optionalPaste = pasteRepository.findByShortLink(hash);
-
-    if (optionalPaste.isPresent()) {
-      return modelMapper.map(optionalPaste.get(), PasteDto.class);
-    } else {
-      throw new PasteNotFoundException("There is no paste with this hash!");
-    }
+    return optionalPaste.map(p -> modelMapper.map(p, PasteDto.class))
+      .orElseThrow(() -> new PasteNotFoundException("There is no paste with this hash!"));
   }
 
   @Override
   public List<PasteDto> getPublicPastes() {
-    List<Paste> publicPastes = pasteRepository
-        .findTop10ByPublicStatusOrderByCreationTimeDesc(PublicStatus.PUBLIC);
+    List<Paste> publicPastes = pasteRepository.findTop10ByPublicStatusOrderByCreationTimeDesc(PUBLIC);
 
     return publicPastes.stream()
     .map(paste -> modelMapper.map(paste, PasteDto.class))
@@ -50,29 +45,15 @@ public class PasteServiceImpl implements PasteService {
 
   @Override
   public PasteResponse createPaste(PasteDto pasteDto) {
-    Paste paste = Paste.builder()
-        .content(pasteDto.getContent())
-        .creationTime(pasteDto.getCreationTime())
-        .expirationTime(
-          ExpirationTimeGenerator.generate(
-          pasteDto.getCreationTime(), pasteDto.getExpirationDuration()
-          )
-        )
-        .expirationDuration(pasteDto.getExpirationDuration())
-        .publicStatus(pasteDto.getPublicStatus())
-        .shortLink(LinkGenerator.generate())
-        .build();
-
+    Paste paste = generatePaste(pasteDto);
     pasteRepository.save(paste);
-
     return new PasteResponse(paste.getShortLink());
   }
 
   @Override
   @Scheduled(fixedRate = 600_000) // Перевірка кожні 10 хвилин (600 000 мс)
   public void removeExpiredPastes() {
-    LocalDateTime currentTime = LocalDateTime.now();
-    List<Paste> expiredPastes = pasteRepository.findByExpirationTimeLessThanEqual(currentTime);
+    List<Paste> expiredPastes = pasteRepository.findByExpirationTimeLessThanEqual(now());
 
     Iterator<Paste> iterator = expiredPastes.iterator();
     while (iterator.hasNext()) {

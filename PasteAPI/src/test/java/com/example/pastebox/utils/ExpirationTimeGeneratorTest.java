@@ -12,31 +12,31 @@ import org.junit.jupiter.api.Test;
 class ExpirationTimeGeneratorTest {
 
   @Test
-  void shouldGenerateExpirationTime() {
+  void shouldGenerateExpirationTimeExpirationTime() {
     LocalDateTime dateOfCreation = LocalDateTime.now();
 
     assertEquals(dateOfCreation.plusMinutes(10),
-        ExpirationTimeGenerator.generate(dateOfCreation,
+        ExpirationTimeGenerator.generateExpirationTime(dateOfCreation,
         ExpirationTime._10_MINUTES));
 
     assertEquals(dateOfCreation.plusHours(1),
-        ExpirationTimeGenerator.generate(dateOfCreation,
+        ExpirationTimeGenerator.generateExpirationTime(dateOfCreation,
         ExpirationTime._1_HOUR));
 
     assertEquals(dateOfCreation.plusHours(3),
-        ExpirationTimeGenerator.generate(dateOfCreation,
+        ExpirationTimeGenerator.generateExpirationTime(dateOfCreation,
         ExpirationTime._3_HOURS));
 
     assertEquals(dateOfCreation.plusDays(1),
-        ExpirationTimeGenerator.generate(dateOfCreation,
+        ExpirationTimeGenerator.generateExpirationTime(dateOfCreation,
         ExpirationTime._1_DAY));
 
     assertEquals(dateOfCreation.plusWeeks(1),
-        ExpirationTimeGenerator.generate(dateOfCreation,
+        ExpirationTimeGenerator.generateExpirationTime(dateOfCreation,
         ExpirationTime._1_WEEK));
 
     assertEquals(dateOfCreation.plusMonths(1),
-        ExpirationTimeGenerator.generate(dateOfCreation,
+        ExpirationTimeGenerator.generateExpirationTime(dateOfCreation,
         ExpirationTime._1_MONTH));
   }
 }

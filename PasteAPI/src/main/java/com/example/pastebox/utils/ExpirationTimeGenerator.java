@@ -17,7 +17,7 @@ public class ExpirationTimeGenerator {
    * @param expirationTime The duration for which the paste should be valid.
    * @return The calculated expiration date and time.
    */
-  public LocalDateTime generate(LocalDateTime dateOfCreation, ExpirationTime expirationTime) {
+  public LocalDateTime generateExpirationTime(LocalDateTime dateOfCreation, ExpirationTime expirationTime) {
     return switch (expirationTime) {
       case _10_MINUTES -> dateOfCreation.plusMinutes(10);
       case _1_HOUR -> dateOfCreation.plusHours(1);
