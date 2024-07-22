@@ -1,4 +1,4 @@
-package com.example.pastebox.utils;
+package com.example.pastebox.exceptions;
 
 /**
  * Exception thrown when a paste is not found.

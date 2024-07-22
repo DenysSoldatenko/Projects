@@ -8,7 +8,7 @@ import com.example.pastebox.models.Paste;
 import com.example.pastebox.models.PasteDto;
 import com.example.pastebox.models.PasteResponse;
 import com.example.pastebox.repositories.PasteRepository;
-import com.example.pastebox.utils.PasteNotFoundException;
+import com.example.pastebox.exceptions.PasteNotFoundException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
