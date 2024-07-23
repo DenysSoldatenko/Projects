@@ -8,9 +8,9 @@ import lombok.experimental.UtilityClass;
  * Utility class for generating unique links.
  */
 @UtilityClass
-public class LinkGenerator {
+public class LinkFactory {
 
-  public String generate() {
+  public String generateLink() {
     return randomUUID().toString().substring(0, 8);
   }
 }

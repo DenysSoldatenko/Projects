@@ -8,7 +8,7 @@ import lombok.experimental.UtilityClass;
  * Utility class for generating expiration times based on the specified duration.
  */
 @UtilityClass
-public class ExpirationTimeGenerator {
+public class ExpirationTimeFactory {
 
   /**
    * Generates an expiration time based on the specified duration and the date of creation.
@@ -28,4 +28,3 @@ public class ExpirationTimeGenerator {
     };
   }
 }
-

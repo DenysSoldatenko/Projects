@@ -1,6 +1,7 @@
 package com.example.pastebox.utils;
 
-import static com.example.pastebox.utils.ExpirationTimeGenerator.generateExpirationTime;
+import static com.example.pastebox.utils.ExpirationTimeFactory.generateExpirationTime;
+import static com.example.pastebox.utils.LinkFactory.generateLink;
 
 import com.example.pastebox.models.Paste;
 import com.example.pastebox.models.PasteDto;
@@ -16,7 +17,7 @@ public class PasteFactory {
       .expirationTime(generateExpirationTime(pasteDto.getCreationTime(), pasteDto.getExpirationDuration()))
       .expirationDuration(pasteDto.getExpirationDuration())
       .publicStatus(pasteDto.getPublicStatus())
-      .shortLink(LinkGenerator.generate())
+      .shortLink(generateLink())
       .build();
   }
 }
