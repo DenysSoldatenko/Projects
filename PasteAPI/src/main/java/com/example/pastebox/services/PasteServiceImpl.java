@@ -1,7 +1,6 @@
 package com.example.pastebox.services;
 
 import static com.example.pastebox.models.PublicStatus.PUBLIC;
-import static com.example.pastebox.utils.PasteFactory.generatePaste;
 import static java.time.LocalDateTime.now;
 
 import com.example.pastebox.exceptions.PasteNotFoundException;
@@ -9,6 +8,7 @@ import com.example.pastebox.models.Paste;
 import com.example.pastebox.models.PasteDto;
 import com.example.pastebox.models.PasteResponse;
 import com.example.pastebox.repositories.PasteRepository;
+import com.example.pastebox.utils.PasteFactory;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +45,7 @@ public class PasteServiceImpl implements PasteService {
 
   @Override
   public PasteResponse createPaste(PasteDto pasteDto) {
-    Paste paste = generatePaste(pasteDto);
+    Paste paste = PasteFactory.generatePaste(pasteDto);
     pasteRepository.save(paste);
     return new PasteResponse(paste.getShortLink());
   }

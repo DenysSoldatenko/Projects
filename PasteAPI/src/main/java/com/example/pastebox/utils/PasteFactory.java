@@ -1,8 +1,5 @@
 package com.example.pastebox.utils;
 
-import static com.example.pastebox.utils.ExpirationTimeFactory.generateExpirationTime;
-import static com.example.pastebox.utils.LinkFactory.generateLink;
-
 import com.example.pastebox.models.Paste;
 import com.example.pastebox.models.PasteDto;
 import lombok.experimental.UtilityClass;
@@ -26,10 +23,14 @@ public class PasteFactory {
     return Paste.builder()
       .content(pasteDto.getContent())
       .creationTime(pasteDto.getCreationTime())
-      .expirationTime(generateExpirationTime(pasteDto.getCreationTime(), pasteDto.getExpirationDuration()))
+      .expirationTime(
+        ExpirationTimeFactory.generateExpirationTime(
+          pasteDto.getCreationTime(), pasteDto.getExpirationDuration()
+        )
+      )
       .expirationDuration(pasteDto.getExpirationDuration())
       .publicStatus(pasteDto.getPublicStatus())
-      .shortLink(generateLink())
+      .shortLink(LinkFactory.generateLink())
       .build();
   }
 }
