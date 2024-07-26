@@ -35,7 +35,7 @@ class PasteControllerTest {
 
     when(pasteService.getPublicPastes()).thenReturn(pasteList);
 
-    Collection<PasteDto> response = pasteController.getPublicPasteList();
+    Collection<PasteDto> response = pasteController.listPublicPastes();
 
     assertEquals(2, response.size());
   }
@@ -47,7 +47,7 @@ class PasteControllerTest {
 
     when(pasteService.getPasteByHash("abcd1234")).thenReturn(paste);
 
-    PasteDto response = pasteController.getByHash("abcd1234");
+    PasteDto response = pasteController.getPaste("abcd1234");
 
     assertEquals("abcd1234", response.getShortLink());
   }
@@ -59,7 +59,7 @@ class PasteControllerTest {
 
     when(pasteService.createPaste(pasteDto)).thenReturn(pasteResponse);
 
-    PasteResponse response = pasteController.add(pasteDto);
+    PasteResponse response = pasteController.createPaste(pasteDto);
 
     assertEquals("xyz7890", response.shortLink());
   }
