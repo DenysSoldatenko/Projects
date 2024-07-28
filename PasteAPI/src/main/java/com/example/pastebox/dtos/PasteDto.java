@@ -1,5 +1,7 @@
-package com.example.pastebox.models;
+package com.example.pastebox.dtos;
 
+import com.example.pastebox.models.ExpirationTime;
+import com.example.pastebox.models.PublicStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import lombok.Data;

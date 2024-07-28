@@ -3,6 +3,7 @@ package com.example.pastebox.models;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.example.pastebox.dtos.PasteDto;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 

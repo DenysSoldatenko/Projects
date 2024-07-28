@@ -8,18 +8,17 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.example.pastebox.dtos.PasteDto;
+import com.example.pastebox.dtos.PasteResponse;
 import com.example.pastebox.models.ExpirationTime;
 import com.example.pastebox.models.Paste;
-import com.example.pastebox.models.PasteDto;
-import com.example.pastebox.models.PasteResponse;
 import com.example.pastebox.models.PublicStatus;
 import com.example.pastebox.repositories.PasteRepository;
+import com.example.pastebox.services.impl.PasteServiceImpl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import com.example.pastebox.services.impl.PasteServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

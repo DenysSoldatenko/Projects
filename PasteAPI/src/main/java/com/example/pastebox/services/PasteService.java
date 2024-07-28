@@ -1,7 +1,7 @@
 package com.example.pastebox.services;
 
-import com.example.pastebox.models.PasteDto;
-import com.example.pastebox.models.PasteResponse;
+import com.example.pastebox.dtos.PasteDto;
+import com.example.pastebox.dtos.PasteResponse;
 import java.util.List;
 
 /**

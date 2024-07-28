@@ -5,8 +5,8 @@ import static java.time.LocalDateTime.now;
 
 import com.example.pastebox.exceptions.PasteNotFoundException;
 import com.example.pastebox.models.Paste;
-import com.example.pastebox.models.PasteDto;
-import com.example.pastebox.models.PasteResponse;
+import com.example.pastebox.dtos.PasteDto;
+import com.example.pastebox.dtos.PasteResponse;
 import com.example.pastebox.repositories.PasteRepository;
 import com.example.pastebox.services.PasteService;
 import com.example.pastebox.utils.PasteFactory;

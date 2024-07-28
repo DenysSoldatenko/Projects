@@ -1,7 +1,7 @@
 package com.example.pastebox.utils;
 
 import com.example.pastebox.models.Paste;
-import com.example.pastebox.models.PasteDto;
+import com.example.pastebox.dtos.PasteDto;
 import lombok.experimental.UtilityClass;
 
 /**

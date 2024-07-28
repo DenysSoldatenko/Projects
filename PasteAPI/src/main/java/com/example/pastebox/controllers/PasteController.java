@@ -1,7 +1,7 @@
 package com.example.pastebox.controllers;
 
-import com.example.pastebox.models.PasteDto;
-import com.example.pastebox.models.PasteResponse;
+import com.example.pastebox.dtos.PasteDto;
+import com.example.pastebox.dtos.PasteResponse;
 import com.example.pastebox.services.PasteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

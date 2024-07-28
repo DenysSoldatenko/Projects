@@ -3,8 +3,8 @@ package com.example.pastebox.controllers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import com.example.pastebox.models.PasteDto;
-import com.example.pastebox.models.PasteResponse;
+import com.example.pastebox.dtos.PasteDto;
+import com.example.pastebox.dtos.PasteResponse;
 import com.example.pastebox.services.PasteService;
 import java.util.Arrays;
 import java.util.Collection;

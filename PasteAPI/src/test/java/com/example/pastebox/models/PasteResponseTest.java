@@ -2,6 +2,7 @@ package com.example.pastebox.models;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.example.pastebox.dtos.PasteResponse;
 import org.junit.jupiter.api.Test;
 
 /**
