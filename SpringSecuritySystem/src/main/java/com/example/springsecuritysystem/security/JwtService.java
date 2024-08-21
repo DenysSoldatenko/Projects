@@ -1,8 +1,10 @@
-package com.example.springsecuritysystem.configurations;
+package com.example.springsecuritysystem.security;
+
+import static io.jsonwebtoken.SignatureAlgorithm.HS256;
+import static java.lang.System.currentTimeMillis;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Service;
  * Utility class for working with JSON Web Tokens (JWTs).
  */
 @Service
-public class JwtUtil {
+public class JwtService {
 
   private final String secretKey = "eyJhbGciOiJIUzI1NiJ9eyJSb2xlIjoiQWRtaW"
       + "4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY5NjI"
@@ -61,9 +63,9 @@ public class JwtUtil {
     return Jwts.builder()
     .setClaims(claims)
     .setSubject(subject)
-    .setIssuedAt(new Date(System.currentTimeMillis()))
-    .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-    .signWith(SignatureAlgorithm.HS256, secretKey)
+    .setIssuedAt(new Date(currentTimeMillis()))
+    .setExpiration(new Date(currentTimeMillis() + 1000 * 60 * 60 * 10))
+    .signWith(HS256, secretKey)
     .compact();
   }
 

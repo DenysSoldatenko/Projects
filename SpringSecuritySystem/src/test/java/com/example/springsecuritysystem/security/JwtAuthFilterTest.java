@@ -1,4 +1,4 @@
-package com.example.springsecuritysystem.configurations;
+package com.example.springsecuritysystem.security;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.lenient;
@@ -34,7 +34,7 @@ class JwtAuthFilterTest {
   private FilterChain filterChain;
 
   @Mock
-  private JwtUtil jwtUtil;
+  private JwtService jwtService;
 
   @InjectMocks
   private JwtAuthFilter jwtAuthFilter;
@@ -51,7 +51,7 @@ class JwtAuthFilterTest {
 
   @Test
   void testDoFilterInternalWithValidToken() throws IOException, ServletException {
-    lenient().when(jwtUtil.extractUsername(token)).thenReturn("jane.doe@gmail.com");
+    lenient().when(jwtService.extractUsername(token)).thenReturn("jane.doe@gmail.com");
 
     jwtAuthFilter.doFilterInternal(request, response, filterChain);
 
@@ -72,7 +72,7 @@ class JwtAuthFilterTest {
 
   @Test
   void testDoFilterInternalWithInvalidToken() throws IOException, ServletException {
-    lenient().when(jwtUtil.extractUsername(token)).thenReturn("invaliduser@gmail.com");
+    lenient().when(jwtService.extractUsername(token)).thenReturn("invaliduser@gmail.com");
 
     jwtAuthFilter.doFilterInternal(request, response, filterChain);
 

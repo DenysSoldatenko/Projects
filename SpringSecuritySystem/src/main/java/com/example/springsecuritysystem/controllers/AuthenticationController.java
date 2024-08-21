@@ -1,6 +1,6 @@
 package com.example.springsecuritysystem.controllers;
 
-import com.example.springsecuritysystem.configurations.JwtUtil;
+import com.example.springsecuritysystem.security.JwtService;
 import com.example.springsecuritysystem.dao.UserDao;
 import com.example.springsecuritysystem.dtos.AuthenticationRequest;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
   private final AuthenticationManager authenticationManager;
   private final UserDao userDao;
-  private final JwtUtil jwtUtil;
+  private final JwtService jwtService;
 
   /**
    * Authenticates a user
@@ -40,7 +40,7 @@ public class AuthenticationController {
     UserDetails user = userDao.findUserByEmail(request.email());
 
     if (user != null) {
-      return ResponseEntity.ok(jwtUtil.generateToken(user));
+      return ResponseEntity.ok(jwtService.generateToken(user));
     }
     return ResponseEntity.status(400).body("Some error has occurred!");
   }

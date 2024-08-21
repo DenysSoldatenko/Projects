@@ -6,7 +6,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.example.springsecuritysystem.configurations.JwtUtil;
+import com.example.springsecuritysystem.security.JwtService;
 import com.example.springsecuritysystem.dao.UserDao;
 import com.example.springsecuritysystem.dtos.AuthenticationRequest;
 import java.util.Collections;
@@ -31,7 +31,7 @@ class AuthenticationControllerTest {
   private AuthenticationController authenticationController;
   private AuthenticationManager authenticationManager;
   private UserDao userDao;
-  private JwtUtil jwtUtil;
+  private JwtService jwtService;
 
   /**
    * Set up the necessary components for testing the AuthenticationController.
@@ -40,9 +40,9 @@ class AuthenticationControllerTest {
   public void setUp() {
     authenticationManager = mock(AuthenticationManager.class);
     userDao = mock(UserDao.class);
-    jwtUtil = mock(JwtUtil.class);
+    jwtService = mock(JwtService.class);
     authenticationController
-      = new AuthenticationController(authenticationManager, userDao, jwtUtil);
+      = new AuthenticationController(authenticationManager, userDao, jwtService);
   }
 
   @Test
@@ -58,7 +58,7 @@ class AuthenticationControllerTest {
     when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
         .thenReturn(null);
     when(userDao.findUserByEmail("john.doe@gmail.com")).thenReturn(userDetails);
-    when(jwtUtil.generateToken(userDetails)).thenReturn(token);
+    when(jwtService.generateToken(userDetails)).thenReturn(token);
 
     ResponseEntity<String> response = authenticationController.authenticate(request);
 

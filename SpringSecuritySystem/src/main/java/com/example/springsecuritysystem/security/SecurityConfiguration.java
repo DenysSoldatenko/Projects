@@ -1,4 +1,6 @@
-package com.example.springsecuritysystem.configurations;
+package com.example.springsecuritysystem.security;
+
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 import com.example.springsecuritysystem.dao.UserDao;
 import lombok.AllArgsConstructor;
@@ -11,7 +13,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +25,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-public class SecurityConfig {
+public class SecurityConfiguration {
+
   private final JwtAuthFilter jwtAuthFilter;
   private final UserDao userDao;
 
@@ -46,7 +48,7 @@ public class SecurityConfig {
         .anyRequest().authenticated()
     )
     .authenticationProvider(authenticationProvider())
-    .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+    .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
