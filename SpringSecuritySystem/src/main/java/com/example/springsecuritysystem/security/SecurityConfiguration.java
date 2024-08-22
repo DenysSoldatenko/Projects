@@ -27,8 +27,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @AllArgsConstructor
 public class SecurityConfiguration {
 
-  private final JwtAuthFilter jwtAuthFilter;
   private final UserDao userDao;
+  private final JwtAuthFilter jwtAuthFilter;
+
+  private static final String[] PUBLIC_ROUTES = {
+    "/api/v*/auth/**",
+    "/v3/api-docs/**",
+    "/swagger-ui/**",
+    "/swagger-resources/**",
+    "/swagger-ui.html",
+    "/webjars/**"
+  };
 
   /**
    * Configures the security filter chain.
@@ -44,7 +53,7 @@ public class SecurityConfiguration {
     .authorizeHttpRequests(
       authorizeRequests ->
         authorizeRequests
-        .requestMatchers("/api/v*/auth/**").permitAll()
+        .requestMatchers(PUBLIC_ROUTES).permitAll()
         .anyRequest().authenticated()
     )
     .authenticationProvider(authenticationProvider())
