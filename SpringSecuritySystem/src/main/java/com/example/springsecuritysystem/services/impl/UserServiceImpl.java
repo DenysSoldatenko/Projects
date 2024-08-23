@@ -1,20 +1,21 @@
-package com.example.springsecuritysystem.repositories;
+package com.example.springsecuritysystem.services.impl;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
+import com.example.springsecuritysystem.services.UserService;
 import java.util.List;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementation of the {@link UserService} interface for managing application users.
  * Provides a hardcoded list of users for demonstration purposes.
  */
-@Repository
+@Service
 public class UserServiceImpl implements UserService {
 
   private static final List<UserDetails> APPLICATION_USERS = asList(

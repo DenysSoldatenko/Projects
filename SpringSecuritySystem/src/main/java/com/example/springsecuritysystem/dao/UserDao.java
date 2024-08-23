@@ -1,6 +1,6 @@
 package com.example.springsecuritysystem.dao;
 
-import com.example.springsecuritysystem.repositories.UserService;
+import com.example.springsecuritysystem.services.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
