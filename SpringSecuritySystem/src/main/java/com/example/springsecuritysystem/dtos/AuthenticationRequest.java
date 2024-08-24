@@ -10,13 +10,13 @@ public record AuthenticationRequest(
 
     @Schema(
       description = "User's email address",
-      example = "user@example.com"
+      example = "john.doe@gmail.com"
     )
     String email,
 
     @Schema(
       description = "User's password",
-      example = "P@ssw0rd!"
+      example = "password"
     )
     String password
 ) {}

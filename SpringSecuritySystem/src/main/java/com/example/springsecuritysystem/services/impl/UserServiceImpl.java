@@ -21,13 +21,13 @@ public class UserServiceImpl implements UserService {
   private static final List<UserDetails> APPLICATION_USERS = asList(
     new User(
       "john.doe@gmail.com",
-      "$2a$12$5eQY3spQwagdeevqjouf7.5em7Vx4Hvp.oJ4Na0Jc.nhjlRZhJTJ2",
+      "$2a$12$vFNWoU3xAv0MhkGIx.OMlOs8qGQoF/6qYcIF/YGfXFidIycBWtm2W",
       singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"))
     ),
 
     new User(
       "jane.doe@gmail.com",
-      "$2a$12$5eQY3spQwagdeevqjouf7.5em7Vx4Hvp.oJ4Na0Jc.nhjlRZhJTJ2",
+      "$2a$12$vFNWoU3xAv0MhkGIx.OMlOs8qGQoF/6qYcIF/YGfXFidIycBWtm2W",
       singletonList(new SimpleGrantedAuthority("ROLE_USER"))
     )
   );

@@ -34,9 +34,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
       new UsernamePasswordAuthenticationToken(request.email(), request.password())
     );
     UserDetails user = userDao.findUserByEmail(request.email());
-    if (user != null) {
-      return jwtService.generateToken(user);
-    }
-    return null;
+    return user != null ? jwtService.generateToken(user) : "User not found";
   }
 }

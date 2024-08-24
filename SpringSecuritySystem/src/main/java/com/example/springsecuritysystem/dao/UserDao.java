@@ -1,23 +1,21 @@
 package com.example.springsecuritysystem.dao;
 
 import com.example.springsecuritysystem.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 /**
  * Data Access Object (DAO) for handling user-related database interactions.
  * This class communicates with the {@link UserService} to retrieve user details.
  */
-@Repository
+@Service
+@RequiredArgsConstructor
 public class UserDao {
 
-  private final UserService userRepository;
-
-  public UserDao(UserService userRepository) {
-    this.userRepository = userRepository;
-  }
+  private final UserService userService;
 
   public UserDetails findUserByEmail(String email) {
-    return userRepository.findUserByEmail(email);
+    return userService.findUserByEmail(email);
   }
 }
