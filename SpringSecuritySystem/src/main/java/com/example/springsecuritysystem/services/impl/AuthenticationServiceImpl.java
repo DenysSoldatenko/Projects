@@ -30,10 +30,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
    */
   @Override
   public String authenticateAndGenerateToken(AuthenticationRequest request) {
+    UserDetails user = userDao.findUserByEmail(request.email());
     authenticationManager.authenticate(
       new UsernamePasswordAuthenticationToken(request.email(), request.password())
     );
-    UserDetails user = userDao.findUserByEmail(request.email());
-    return user != null ? jwtService.generateToken(user) : "User not found";
+    return jwtService.generateToken(user);
   }
 }
