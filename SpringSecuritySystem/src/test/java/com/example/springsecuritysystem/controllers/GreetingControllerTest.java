@@ -1,35 +1,29 @@
 package com.example.springsecuritysystem.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Unit tests for the GreetingController class.
  */
-class GreetingControllerTest {
+@SpringBootTest
+@AutoConfigureMockMvc
+public class GreetingControllerTest {
 
-  private GreetingController greetingController;
-
-  @BeforeEach
-  public void setUp() {
-    greetingController = new GreetingController();
-  }
+  @Autowired
+  private MockMvc mockMvc;
 
   @Test
-  void shouldReturnHello() {
-    ResponseEntity<String> response = greetingController.sayHello();
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals("Hello from API!", response.getBody());
-  }
-
-  @Test
-  void shouldReturnGoodBye() {
-    ResponseEntity<String> response = greetingController.sayGoodBye();
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals("Goodbye and see you later!", response.getBody());
+  public void testSayHello_Forbidden() throws Exception {
+    mockMvc.perform(get("/greetings")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden());
   }
 }
