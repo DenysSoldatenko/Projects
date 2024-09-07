@@ -7,7 +7,6 @@ import com.example.demo.models.Student;
 import com.example.demo.repositories.StudentRepository;
 import com.example.demo.services.StudentService;
 import java.util.List;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +31,9 @@ public class StudentServiceImpl implements StudentService {
   }
 
   @Override
-  public Optional<Student> findStudentById(String id) {
-    return studentRepository.findById(id);
+  public Student findStudentById(String id) {
+    return studentRepository.findById(id)
+        .orElseThrow(() -> new StudentNotFoundException("Student not found!"));
   }
 
   /**
@@ -45,14 +45,15 @@ public class StudentServiceImpl implements StudentService {
    */
   @Override
   public Student updateStudentById(Student student) {
-    Optional<Student> existingStudentOptional = studentRepository.findById(student.getId());
-
-    if (existingStudentOptional.isPresent()) {
-      studentRepository.save(student);
-      return student;
-    } else {
-      throw new StudentNotFoundException("Student not found!");
-    }
+    Student existingStudent = findStudentById(student.getId());
+    existingStudent.setFirstName(student.getFirstName());
+    existingStudent.setLastName(student.getLastName());
+    existingStudent.setEmail(student.getEmail());
+    existingStudent.setGender(student.getGender());
+    existingStudent.setAddress(student.getAddress());
+    existingStudent.setFavouriteSubjects(student.getFavouriteSubjects());
+    existingStudent.setTotalSpentInBooks(student.getTotalSpentInBooks());
+    return studentRepository.save(existingStudent);
   }
 
   /**
@@ -64,14 +65,11 @@ public class StudentServiceImpl implements StudentService {
    */
   @Override
   public Student addStudent(Student student) {
-    Optional<Student> existingStudentOptional = studentRepository.findById(student.getId());
-
-    if (existingStudentOptional.isPresent()) {
-      throw new StudentAlreadyExistsException("Database already have this student!");
-    } else {
-      studentRepository.save(student);
-      return student;
+    if (studentRepository.existsById(student.getId())) {
+      throw new StudentAlreadyExistsException("Database already has this student!");
     }
+
+    return studentRepository.save(student);
   }
 
   /**
@@ -82,12 +80,7 @@ public class StudentServiceImpl implements StudentService {
    */
   @Override
   public void deleteStudentById(String id) {
-    Optional<Student> existingStudentOptional = studentRepository.findById(id);
-
-    if (existingStudentOptional.isPresent()) {
-      studentRepository.deleteById(id);
-    } else {
-      throw new StudentNotFoundException("Student not found!");
-    }
+    Student existingStudent = findStudentById(id);
+    studentRepository.deleteById(existingStudent.getId());
   }
 }

@@ -33,7 +33,7 @@ public class StudentInitializer {
   public String initDatabase() {
     range(1, STUDENT_COUNT)
       .mapToObj(this::createRandomStudent)
-      .forEach(repository::insert);
+        .forEach(repository::insert);
 
     return "Sample database initialized with 10 random records.";
   }
@@ -43,9 +43,9 @@ public class StudentInitializer {
    */
   private Student createRandomStudent(int id) {
     Address address = new Address(
-      faker.address().country(),
-      faker.address().city(),
-      faker.address().zipCode()
+        faker.address().country(),
+        faker.address().city(),
+        faker.address().zipCode()
     );
 
     return Student.builder()
