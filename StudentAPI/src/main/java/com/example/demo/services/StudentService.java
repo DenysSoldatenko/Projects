@@ -16,7 +16,7 @@ public interface StudentService {
 
   Student addStudent(Student student);
 
-  void deleteStudentById(String id);
+  boolean deleteStudentById(String id);
 
   String initializeData();
 }

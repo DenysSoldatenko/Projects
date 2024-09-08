@@ -45,6 +45,7 @@ public class StudentServiceImpl implements StudentService {
    */
   @Override
   public Student updateStudentById(Student student) {
+    System.out.println(student);
     Student existingStudent = findStudentById(student.getId());
     existingStudent.setFirstName(student.getFirstName());
     existingStudent.setLastName(student.getLastName());
@@ -65,10 +66,10 @@ public class StudentServiceImpl implements StudentService {
    */
   @Override
   public Student addStudent(Student student) {
-    if (studentRepository.existsById(student.getId())) {
-      throw new StudentAlreadyExistsException("Database already has this student!");
+    System.out.println(student);
+    if (studentRepository.findByEmail(student.getEmail()).isPresent()) {
+      throw new StudentAlreadyExistsException("A student with this email already exists!");
     }
-
     return studentRepository.save(student);
   }
 
@@ -79,8 +80,11 @@ public class StudentServiceImpl implements StudentService {
    * @throws RuntimeException if the student is not found.
    */
   @Override
-  public void deleteStudentById(String id) {
-    Student existingStudent = findStudentById(id);
-    studentRepository.deleteById(existingStudent.getId());
+  public boolean deleteStudentById(String id) {
+    if (studentRepository.existsById(id)) {
+      studentRepository.deleteById(id);
+      return true;
+    }
+    return false;
   }
 }

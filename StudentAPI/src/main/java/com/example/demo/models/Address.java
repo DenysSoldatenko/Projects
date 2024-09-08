@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
  * Represents an address with country, city, and postal code information.
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "Represents an address with country, city, and postal code information")
 public class Address {
 

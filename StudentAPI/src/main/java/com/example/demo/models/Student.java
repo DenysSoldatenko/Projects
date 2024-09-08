@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
-import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -59,7 +59,7 @@ public class Student {
 
   @Schema(
       description = "List of favorite subjects of the student",
-      example = "Maths"
+      example = "[\"Maths\", \"Arts\", \"Science\"]"
   )
   private List<String> favouriteSubjects;
 

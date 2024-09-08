@@ -1,12 +1,13 @@
 package com.example.demo.controllers;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.notFound;
 
 import com.example.demo.models.Student;
 import com.example.demo.services.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -48,21 +49,15 @@ public class StudentController {
 
   @Operation(
       summary = "Fetch all students",
-      description = "Retrieves a list of all students in the database",
-      responses = {
-          @ApiResponse(
-            responseCode = "200",
-            description = "Successfully fetched all students",
-            content = @Content(mediaType = "application/json",
-              schema = @Schema(implementation = Student.class)
-            )
-          ),
-          @ApiResponse(responseCode = "500", description = "Internal server error")
-      }
+      description = "Retrieves a list of all students in the database"
   )
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "Successfully fetched all students"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
   @GetMapping
-  public List<Student> fetchAllStudents() {
-    return studentService.getAllStudents();
+  public ResponseEntity<List<Student>> fetchAllStudents() {
+    return new ResponseEntity<>(studentService.getAllStudents(), OK);
   }
 
   @Operation(
@@ -75,28 +70,22 @@ public class StudentController {
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping("/addStudent")
-  public Student addStudent(@RequestBody Student student) {
-    return studentService.addStudent(student);
+  public ResponseEntity<Student> addStudent(@RequestBody Student student) {
+    return new ResponseEntity<>(studentService.addStudent(student), CREATED);
   }
 
   @Operation(
       summary = "Fetch a single student by ID",
-      description = "Retrieves a student from the database by their ID",
-      responses = {
-          @ApiResponse(
-            responseCode = "200",
-            description = "Successfully fetched the student",
-            content = @Content(mediaType = "application/json",
-              schema = @Schema(implementation = Student.class)
-            )
-          ),
-          @ApiResponse(responseCode = "404", description = "Student not found"),
-          @ApiResponse(responseCode = "500", description = "Internal server error")
-      }
+      description = "Retrieves a student from the database by their ID"
   )
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Successfully fetched the student"),
+    @ApiResponse(responseCode = "404", description = "Student not found"),
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
   @GetMapping("/{id}")
-  public Student fetchOneStudent(@PathVariable String id) {
-    return studentService.findStudentById(id);
+  public ResponseEntity<Student> fetchOneStudent(@PathVariable String id) {
+    return new ResponseEntity<>(studentService.findStudentById(id), OK);
   }
 
   @Operation(
@@ -109,8 +98,8 @@ public class StudentController {
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/update")
-  public Student updateOneStudent(@RequestBody Student student) {
-    return studentService.updateStudentById(student);
+  public ResponseEntity<Student> updateOneStudent(@RequestBody Student student) {
+    return new ResponseEntity<>(studentService.updateStudentById(student), OK);
   }
 
   @Operation(
@@ -118,12 +107,12 @@ public class StudentController {
       description = "Deletes a student from the database by their ID"
   )
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Student deleted successfully"),
+      @ApiResponse(responseCode = "204", description = "Student deleted successfully"),
       @ApiResponse(responseCode = "404", description = "Student not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{id}")
-  public void deleteOneStudent(@PathVariable String id) {
-    studentService.deleteStudentById(id);
+  public ResponseEntity<Void> deleteOneStudent(@PathVariable String id) {
+    return studentService.deleteStudentById(id) ? noContent().build() : notFound().build();
   }
 }
