@@ -14,6 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+/**
+ * Unit tests for the StudentInitializer class.
+ */
 @ExtendWith(MockitoExtension.class)
 class StudentInitializerTest {
 
