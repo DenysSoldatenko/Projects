@@ -1,8 +1,11 @@
-package com.example.kafka_demo;
+package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Entry point for the Kafka Demo application.
+ */
 @SpringBootApplication
 public class KafkaDemoApplication {
 
