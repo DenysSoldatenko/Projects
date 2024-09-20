@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaProducer {
 
-  private KafkaTemplate<String, String> template;
+  private final KafkaTemplate<String, String> template;
 
   public void sendMessage(String message) {
     log.info(format("Message sent %s", message));
