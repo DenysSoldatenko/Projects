@@ -26,7 +26,7 @@ public class JsonKafkaProducer {
 
     Message<ProductMessage> message = MessageBuilder
       .withPayload(productMessage)
-      .setHeader(TOPIC, "Demo")
+      .setHeader(TOPIC, "Demo_json")
       .build();
 
     template.send(message);
