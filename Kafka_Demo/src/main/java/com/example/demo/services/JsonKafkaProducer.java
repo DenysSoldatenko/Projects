@@ -12,7 +12,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 /**
- * Service class for producing messages to a Kafka topic.
+ * Service class for producing JSON messages to a Kafka topic.
  */
 @Slf4j
 @Service
@@ -21,13 +21,18 @@ public class JsonKafkaProducer {
 
   private final KafkaTemplate<String, String> template;
 
+  /**
+   * Sends a {@link ProductMessage} to the Kafka topic.
+   *
+   * @param productMessage the message to be sent to the Kafka topic
+   */
   public void sendMessage(ProductMessage productMessage) {
     log.info(format("Message sent -> %s", productMessage.toString()));
 
     Message<ProductMessage> message = MessageBuilder
-      .withPayload(productMessage)
-      .setHeader(TOPIC, "Demo_json")
-      .build();
+        .withPayload(productMessage)
+        .setHeader(TOPIC, "Demo_json")
+        .build();
 
     template.send(message);
   }
