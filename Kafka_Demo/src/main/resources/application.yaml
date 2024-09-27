@@ -1,5 +1,9 @@
 spring:
   kafka:
+    topic:
+      name: "Demo"
+    topic-json:
+      name: "Demo_json"
     bootstrap-servers: localhost:29092
 
     consumer:

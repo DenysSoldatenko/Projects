@@ -1,6 +1,7 @@
 package com.example.demo.configurations;
 
 import org.apache.kafka.clients.admin.NewTopic;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
@@ -13,13 +14,19 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaTopicConfiguration {
 
+  @Value("${spring.kafka.topic.name}")
+  private String topic;
+
+  @Value("${spring.kafka.topic-json.name}")
+  private String jsonTopic;
+
   @Bean
   public NewTopic demoTopic() {
-    return TopicBuilder.name("Demo").build();
+    return TopicBuilder.name(topic).build();
   }
 
   @Bean
   public NewTopic demoJsonTopic() {
-    return TopicBuilder.name("Demo_json").build();
+    return TopicBuilder.name(jsonTopic).build();
   }
 }
