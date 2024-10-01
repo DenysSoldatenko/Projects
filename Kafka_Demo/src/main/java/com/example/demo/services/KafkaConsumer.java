@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaConsumer {
 
-  @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
+  @KafkaListener(
+      topics = "${spring.kafka.topic.name}",
+      groupId = "${spring.kafka.consumer.group-id}"
+  )
   public void consumeMessage(String message) {
     log.info("Message received -> {}", message);
   }
