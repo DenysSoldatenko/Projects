@@ -4,6 +4,10 @@ import static org.springframework.http.ResponseEntity.ok;
 
 import com.example.demo.dtos.MessageRequest;
 import com.example.demo.services.KafkaProducer;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/kafka")
+@Tag(name = "Message Controller", description = "Operations for sending messages to Kafka")
 public class MessageController {
 
   private final KafkaProducer kafkaProducer;
@@ -31,6 +36,13 @@ public class MessageController {
    * @param messageRequest the request containing the message
    * @return ResponseEntity indicating the result of the operation
    */
+  @Operation(summary = "Send message via body",
+      description = "Sends a message to the Kafka topic using the request body."
+  )
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Message sent successfully"),
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
   @PostMapping("/publish-via-body")
   public ResponseEntity<String> sendMessageFromBody(@RequestBody MessageRequest messageRequest) {
     String message = messageRequest.message();
@@ -45,6 +57,13 @@ public class MessageController {
    * @param message the message to be sent
    * @return ResponseEntity indicating the result of the operation
    */
+  @Operation(summary = "Send message via query parameter",
+      description = "Sends a message to the Kafka topic using a query parameter."
+  )
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Message sent successfully"),
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
   @GetMapping("/publish-via-query")
   public ResponseEntity<String> sendMessageFromQueryParam(@RequestParam("message") String message) {
     log.info("Received request to send message via query parameter: {}", message);
