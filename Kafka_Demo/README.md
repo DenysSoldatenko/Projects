@@ -1,4 +1,4 @@
-# Kafka Message API
+# Kafka_Demo Project
 This repository provides a simple REST API for publishing messages to Kafka topics. It includes two controllers: one for sending messages in JSON format and another for sending plain text messages.
 
 ## Features
