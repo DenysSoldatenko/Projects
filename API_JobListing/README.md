@@ -1,4 +1,4 @@
-# JobListing Project
+# API_JobListing Project
 This project is based on the [YouTube video](https://www.youtube.com/watch?v=kYiLzIiHVY8 "YouTube video") tutorial titled "Java Spring Boot MongoDB Full Project." The tutorial guides you through the process of building a comprehensive job posting platform using Spring Boot, MongoDB, and React. Below is a detailed README that summarizes the technical details and features covered in the video.
 
 ### Getting Started
