@@ -1,5 +1,5 @@
-# Creating a backend for the server
-You need to design and implement a backend (REST API) for a service similar to pastebin.com — the service allows you to fill in pieces of text/code ("paste") and get a short link to them, which can be sent to other people.
+# API_Paste Project
+This project involves designing and implementing a backend REST API for a service similar to pastebin.com. The service allows users to create and share pieces of text or code, referred to as "pastes," and provides short links for easy sharing.
 
 When loading "paste," the user specifies:
 1. The period during which "pasta" will be available at the link (expiration time) is 10 minutes, 1 hour, 3 hours, 1 Day, 1 Week, 1 month, without restriction, after the deadline, you cannot access "pasta," including the author
