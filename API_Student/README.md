@@ -1,4 +1,4 @@
-# Spring Boot MongoDB REST API
+# API_Student Project
 ### Project Overview
 This repository contains the code for a RESTful API built using Spring Boot and MongoDB. The project was inspired by the "Spring Boot Tutorial — Build a Rest Api with MongoDB" video available on [YouTube](https://www.youtube.com/watch?v=ssj0CGxv60k "YouTube"). The primary goal of this project is to simplify the process of querying MongoDB by taking advantage of Spring Boot's Query Methods feature.
 
