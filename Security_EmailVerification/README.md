@@ -1,4 +1,4 @@
-# Java User Registration and Email Verification Backend
+# Security_EmailVerification Project
 This repository contains a Java backend system that facilitates user registration, role management, secure endpoints, and email verification. The project is based on the Spring Security framework, uses the Postgres database driver for data storage, and Java Mail for email functionality.
 
 ### Overview
