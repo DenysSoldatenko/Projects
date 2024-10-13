@@ -1,4 +1,4 @@
-# Spring Security REST API with JWT Token Authentication
+# Security_JWT_Auth_3 Project
 This repository contains the code and resources for creating a secure Spring Security REST API using JWT (JSON Web Token) for authentication and authorization. The tutorial and code implementation are based on the concepts presented in the [YouTube video](https://www.youtube.com/watch?v=yRnSUDx3Y8k&list=WL "YouTube video") titled "Creating a Spring Security REST API with JWT Token".
 
 The tutorial covers various aspects of building a secure REST API, including project setup, configuration, entity and table creation, repository and service implementation, user data service, token generation and decoding, and the usage of filters and providers for security.
