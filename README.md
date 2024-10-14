@@ -1,26 +1,35 @@
 # Projects Repository
-This collection hosts a diverse set of projects, each focusing on distinct aspects of application development. Below is a snapshot of each project, highlighting its unique features and purpose:
+This collection hosts a diverse set of projects, each focusing on distinct aspects of application development. Below is a snapshot of each project, highlighting its unique features and purposes:
 
-## 1. Spring Boot HATEOAS CRUD API — AccountApi
-Explore a Spring Boot REST API implementing HATEOAS principles, offering CRUD operations for account management. The inclusion of hypermedia links enhances the navigation experience within the API. Derived from the "Spring Boot REST API CRUD with HATEOAS Tutorial" on YouTube.
+## API
 
-## 2. Java User Registration and Email Verification Backend
-Dive into a Java backend system designed for user registration, role management, secure endpoints, and email verification. Leveraging Spring Security, Postgres database driver, and Java Mail, this project ensures a robust and secure user management system.
+### 1. HATEOAS-Compliant Account Management API - API_Account Project
+Explore a Spring Boot REST API that implements HATEOAS principles, offering CRUD operations for account management. The integration of hypermedia links enhances navigation within the API, creating a user-friendly and efficient experience.
 
-## 3. JobListing Project
-Embark on a comprehensive job posting platform built with Spring Boot, MongoDB, and React. The README encapsulates technical details and features covered in the tutorial "Java Spring Boot MongoDB Full Project."
+### 2. Comprehensive Job Posting Platform - API_JobListing Project
+Embark on a comprehensive job posting platform built with Spring Boot, MongoDB, and React. This project emphasizes a seamless user experience for both job seekers and employers, encapsulating essential technical details and features.
 
-## 4. Spring Security REST API with JWT Token Authentication
-Discover a repository focusing on creating a secure Spring Security REST API utilizing JWT for authentication and authorization. Based on the concepts from the YouTube video "Creating a Spring Security REST API with JWT Token," it covers essential aspects of API security.
+### 3. Pastebin-like Backend API - API_Paste Project
+Engage in designing and implementing a backend REST API reminiscent of pastebin.com. Users can create and share "pastes" with customizable expiration times and access restrictions, enhancing collaboration and content control while ensuring data privacy.
 
-## 5. Spring JwtAuthSecuritySystem
-Experience a minimalistic authentication and authorization system using Spring Framework and JSON Web Tokens (JWT). Uncover endpoints for user registration and authentication, providing a foundation for securing access to protected resources.
+### 4. Student Management API - API_Student Project
+Discover a RESTful API built with Spring Boot and MongoDB, simplifying data querying through Spring Boot's Query Methods feature. Inspired by the "Spring Boot Tutorial — Build a REST API with MongoDB," this project focuses on efficient data retrieval.
 
-## 6. Creating a backend for the server — PasteApi
-Engage in the design and implementation of a backend (REST API) resembling pastebin.com. Users can create and share "paste" with customizable expiration times and access restrictions, enhancing collaboration and content control.
+## Kafka
 
-## 7. Spring Boot Security System project
-Delve into a Spring Boot application security tutorial, focusing on securing REST APIs through basic authentication and JWT token authentication. The tutorial guides you through creating a secure REST API with a custom security filter chain.
+### 1. Kafka Messaging Demo Service API - Kafka_Demo Project
+This repository features a straightforward REST API designed for publishing messages to Kafka topics. It offers two controllers: one for sending structured messages in JSON format, ideal for detailed product data integration, and another for publishing plain text messages directly in the request body for quick publication.
 
-## 8. Spring Boot MongoDB REST API Tutorial
-Explore a RESTful API built with Spring Boot and MongoDB, simplifying the process of querying MongoDB through Spring Boot's Query Methods feature. Inspired by the "Spring Boot Tutorial — Build a Rest Api with MongoDB" video, this project emphasizes efficient data retrieval.
+## Security
+
+### 1. Secure User Registration and Email Verification API - Security_EmailVerification Project
+Dive into a Java backend system designed for user registration, role management, secure endpoints, and email verification. Leveraging Spring Security, PostgreSQL, and Java Mail, this project ensures a robust and secure user management system.
+
+### 2. JWT-Based Authentication System - Security_JWT_Auth_1 Project
+Experience a minimalistic authentication and authorization system using the Spring Framework and JSON Web Tokens (JWT). This project provides endpoints for user registration and authentication, laying a solid foundation for securing access to protected resources.
+
+### 3. Spring Boot JWT Security Implementation - Security_JWT_Auth_2 Project
+Delve into a Spring Boot application security tutorial focused on securing REST APIs through basic authentication and JWT token authentication. This project guides you in creating a secure REST API with a custom security filter chain, reinforcing best practices in API security.
+
+### 4. JWT-Enhanced Security for Spring APIs - Security_JWT_Auth_3 Project
+Discover a repository dedicated to creating a secure Spring Security REST API utilizing JWT for authentication and authorization. This project addresses essential aspects of API security, ensuring that only authorized users can access sensitive resources.
