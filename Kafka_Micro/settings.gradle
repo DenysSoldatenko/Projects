@@ -1,1 +1,6 @@
 rootProject.name = 'Kafka_Micro'
+
+includeBuild('email-service')
+includeBuild('order-service')
+includeBuild('shared-domain')
+includeBuild('stock-service')
