@@ -30,11 +30,4 @@ dependencies {
 
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-
-    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
-    testImplementation "org.springframework.kafka:spring-kafka-test:${springKafkaVersion}"
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
 }
