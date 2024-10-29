@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: Telegram_NotificationBot
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:5432/${DATABASE_NAME:example_database}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+telegram:
+  bot:
+    url:
+    name: @spring_notification_bot
+    token: 7824649577:AAHPjEmxv0VKI8WKfPhlWzJ36RKvpPhvVqQ
