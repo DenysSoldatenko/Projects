@@ -20,6 +20,9 @@ Discover a RESTful API built with Spring Boot and MongoDB, simplifying data quer
 ### 1. Kafka Messaging Demo Service API - Kafka_Demo Project
 This repository features a straightforward REST API designed for publishing messages to Kafka topics. It offers two controllers: one for sending structured messages in JSON format, ideal for detailed product data integration, and another for publishing plain text messages directly in the request body for quick publication.
 
+### 2. Kafka Microservices Architecture for Order Management - Kafka_Micro Project
+This project showcases a microservices architecture utilizing Kafka for asynchronous communication. It includes an Email Service for order notifications, an Order Service for managing orders, and a Stock Service for inventory management. Each service operates independently and communicates through Kafka events, providing a robust and scalable solution for real-time data processing.
+
 ## Security
 
 ### 1. Secure User Registration and Email Verification API - Security_EmailVerification Project
