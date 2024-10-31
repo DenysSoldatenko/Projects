@@ -1,5 +1,6 @@
 package com.example.notificationbot.configurations;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * Configuration class for Telegram bot properties.
  * This class holds the bot's URL, name, and token, which are injected from application properties.
  */
+@Data
 @Configuration
 public class TelegramConfiguration {
 
