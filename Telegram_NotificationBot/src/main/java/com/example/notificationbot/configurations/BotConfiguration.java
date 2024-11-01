@@ -8,16 +8,16 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 /**
- * Telegram bot implementation that extends the TelegramWebhookBot.
+ * Telegram bot configuration that extends the TelegramWebhookBot.
  * This class handles incoming webhook updates and provides bot configuration details.
  */
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public final class TelegramBot extends TelegramWebhookBot {
+public final class BotConfiguration extends TelegramWebhookBot {
 
   TelegramConfiguration telegramConfiguration;
 
-  public TelegramBot(TelegramConfiguration telegramConfiguration) {
+  public BotConfiguration(TelegramConfiguration telegramConfiguration) {
     super(telegramConfiguration.getToken());
     this.telegramConfiguration = telegramConfiguration;
   }

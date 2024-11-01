@@ -18,5 +18,5 @@ spring:
 telegram:
   bot:
     url:
-    name: @spring_notification_bot
+    name: spring_notification_bot
     token: 7824649577:AAHPjEmxv0VKI8WKfPhlWzJ36RKvpPhvVqQ
