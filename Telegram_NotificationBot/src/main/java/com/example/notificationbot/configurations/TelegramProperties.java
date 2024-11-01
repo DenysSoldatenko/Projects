@@ -5,12 +5,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Configuration class for Telegram bot properties.
- * This class holds the bot's URL, name, and token, which are injected from application properties.
+ * Configuration class for managing Telegram bot properties.
  */
 @Data
 @Configuration
-public class TelegramConfiguration {
+public class TelegramProperties {
 
   @Value("${telegram.bot.url}")
   private String url;

@@ -1,5 +1,6 @@
 package com.example.notificationbot.configurations;
 
+import com.example.notificationbot.services.UpdateDispatcher;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
@@ -13,27 +14,29 @@ import org.telegram.telegrambots.meta.api.objects.Update;
  */
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public final class BotConfiguration extends TelegramWebhookBot {
+public final class TelegramBot extends TelegramWebhookBot {
 
-  TelegramConfiguration telegramConfiguration;
+  TelegramProperties properties;
+  UpdateDispatcher updateDispatcher;
 
-  public BotConfiguration(TelegramConfiguration telegramConfiguration) {
-    super(telegramConfiguration.getToken());
-    this.telegramConfiguration = telegramConfiguration;
+  public TelegramBot(TelegramProperties properties, UpdateDispatcher updateDispatcher) {
+    super(properties.getToken());
+    this.properties = properties;
+    this.updateDispatcher = updateDispatcher;
   }
 
   @Override
   public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-    return null;
+    return updateDispatcher.distribute(update, this);
   }
 
   @Override
   public String getBotPath() {
-    return telegramConfiguration.getUrl();
+    return properties.getUrl();
   }
 
   @Override
   public String getBotUsername() {
-    return telegramConfiguration.getName();
+    return properties.getName();
   }
 }
