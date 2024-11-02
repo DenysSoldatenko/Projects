@@ -19,6 +19,12 @@ public final class TelegramBot extends TelegramWebhookBot {
   TelegramProperties properties;
   UpdateDispatcher updateDispatcher;
 
+  /**
+   * Constructs a new instance of the TelegramBot.
+   *
+   * @param properties the configuration properties for the Telegram bot, including the token
+   * @param updateDispatcher the dispatcher for handling incoming updates
+   */
   public TelegramBot(TelegramProperties properties, UpdateDispatcher updateDispatcher) {
     super(properties.getToken());
     this.properties = properties;
@@ -27,7 +33,7 @@ public final class TelegramBot extends TelegramWebhookBot {
 
   @Override
   public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-    return updateDispatcher.distribute(update, this);
+    return updateDispatcher.processUpdate(update, this);
   }
 
   @Override

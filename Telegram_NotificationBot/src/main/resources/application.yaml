@@ -1,3 +1,6 @@
+server:
+  port: 8085
+
 spring:
   application:
     name: Telegram_NotificationBot
@@ -17,6 +20,6 @@ spring:
 
 telegram:
   bot:
-    url:
+    url: https://0973-45-132-93-45.ngrok-free.app
     name: spring_notification_bot
     token: 7824649577:AAHPjEmxv0VKI8WKfPhlWzJ36RKvpPhvVqQ

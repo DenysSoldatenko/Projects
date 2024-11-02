@@ -1,6 +1,7 @@
 package com.example.notificationbot.handlers;
 
 import com.example.notificationbot.configurations.TelegramBot;
+import com.example.notificationbot.managers.MainManager;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -9,14 +10,22 @@ import org.telegram.telegrambots.meta.api.interfaces.BotApiObject;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+/**
+ * Handler for processing commands received by the Telegram bot.
+ */
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class CommandHandler extends AbstractHandler {
+public class CommandHandler extends BaseHandler {
+
+  MainManager mainManager;
 
   @Override
-  public BotApiMethod<?> answer(BotApiObject object, TelegramBot telegramBot) {
+  public BotApiMethod<?> handle(BotApiObject object, TelegramBot telegramBot) {
     Message command = (Message) object;
+    if (command.getText().equals("/start")) {
+      return mainManager.processCommand(command, telegramBot);
+    }
     throw new UnsupportedOperationException("Method not implemented yet");
   }
 }
