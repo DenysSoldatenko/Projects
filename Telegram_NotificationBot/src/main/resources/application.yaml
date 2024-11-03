@@ -20,6 +20,6 @@ spring:
 
 telegram:
   bot:
-    url: https://0973-45-132-93-45.ngrok-free.app
+    url: https://9069-45-132-93-22.ngrok-free.app
     name: spring_notification_bot
     token: 7824649577:AAHPjEmxv0VKI8WKfPhlWzJ36RKvpPhvVqQ

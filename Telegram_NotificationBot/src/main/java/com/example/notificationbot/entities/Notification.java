@@ -4,13 +4,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
@@ -21,15 +25,19 @@ import lombok.experimental.FieldDefaults;
  */
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor(force = true)
 @Table(name = "notifications")
-@EqualsAndHashCode(callSuper = true)
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class Notification extends AbstractEntity {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Notification {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  UUID id;
 
   @Column(name = "title")
-  Long title;
+  String title;
 
   @Column(name = "description")
   String description;
@@ -39,7 +47,7 @@ public class Notification extends AbstractEntity {
   NotificationStatus status;
 
   @Column(name = "duration")
-  Long duration;
+  Integer duration;
 
   @ManyToOne
   @JoinColumn(name = "user_id")

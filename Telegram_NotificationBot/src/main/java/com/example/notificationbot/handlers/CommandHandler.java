@@ -16,16 +16,16 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class CommandHandler extends BaseHandler {
+public class CommandHandler implements BaseHandler {
 
   MainManager mainManager;
 
   @Override
   public BotApiMethod<?> handle(BotApiObject object, TelegramBot telegramBot) {
-    Message command = (Message) object;
+    var command = (Message) object;
     if (command.getText().equals("/start")) {
       return mainManager.processCommand(command, telegramBot);
     }
-    throw new UnsupportedOperationException("Method not implemented yet");
+    throw new UnsupportedOperationException("Method not implemented yet!");
   }
 }

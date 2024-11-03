@@ -1,6 +1,7 @@
 package com.example.notificationbot.managers;
 
 import com.example.notificationbot.configurations.TelegramBot;
+import com.example.notificationbot.keyboards.KeyboardFactory;
 import com.example.notificationbot.listeners.CommandListener;
 import com.example.notificationbot.listeners.QueryListener;
 import lombok.AccessLevel;
@@ -9,8 +10,14 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+
+import java.util.List;
+
+import static com.example.notificationbot.data.CallbackData.*;
 
 /**
  * Main manager for processing commands and queries in the Telegram bot.
@@ -18,32 +25,34 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class MainManager extends AbstractManager implements QueryListener, CommandListener {
+public class MainManager implements QueryListener, CommandListener {
+
+  KeyboardFactory keyboardFactory;
 
   @Override
   public BotApiMethod<?> processCommand(Message message, TelegramBot telegramBot) {
-    return greetings(message.getChatId());
-  }
-
-  @Override
-  public BotApiMethod<?> processQuery(CallbackQuery query, TelegramBot telegramBot) {
-    return null;
-  }
-
-  @Override
-  public BotApiMethod<?> showMainMenu(Message message, TelegramBot telegramBot) {
-    return null;
-  }
-
-  @Override
-  public BotApiMethod<?> showMainMenu(CallbackQuery query, TelegramBot telegramBot) {
-    return null;
-  }
-
-  public BotApiMethod<?> greetings(Long chatId) {
     return SendMessage.builder()
-      .chatId(chatId)
-      .text("Hello World!")
+      .chatId(message.getChatId())
+      .text("Welcome, dear friend!")
+      .replyMarkup(createInlineKeyboard())
       .build();
+  }
+
+  @Override
+  public BotApiMethod<?> processQuery(CallbackQuery query, String[] words, TelegramBot telegramBot) {
+    return EditMessageText.builder()
+      .chatId(query.getMessage().getChatId())
+      .messageId(query.getMessage().getMessageId())
+      .text("Welcome, dear friend!")
+      .replyMarkup(createInlineKeyboard())
+      .build();
+  }
+
+  private InlineKeyboardMarkup createInlineKeyboard() {
+    return keyboardFactory.createInlineKeyboard(
+      List.of("Reminders"),
+      List.of(1),
+      List.of(notification_main.name())
+    );
   }
 }

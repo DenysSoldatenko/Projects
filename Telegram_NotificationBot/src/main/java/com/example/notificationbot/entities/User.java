@@ -2,14 +2,20 @@ package com.example.notificationbot.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
@@ -20,12 +26,16 @@ import lombok.experimental.FieldDefaults;
  */
 @Data
 @Entity
-@Table(name = "users")
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor(force = true)
-@EqualsAndHashCode(callSuper = true)
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class User extends AbstractEntity {
+@Table(name = "users")
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class User {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  UUID id;
 
   @Column(name = "chat_id", unique = true, nullable = false)
   Long chatId;
@@ -33,9 +43,15 @@ public class User extends AbstractEntity {
   @Column(name = "first_name", nullable = false)
   String firstName;
 
+  @Enumerated(EnumType.STRING)
+  Action action;
+
   @Column(name = "registered_at", nullable = false)
   LocalDateTime registeredAt;
 
   @OneToMany
   Set<Notification> notifications;
+
+  @Column(name = "current_notification_id")
+  UUID currentNotification;
 }
