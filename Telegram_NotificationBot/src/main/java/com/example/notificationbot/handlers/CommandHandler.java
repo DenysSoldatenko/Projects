@@ -26,6 +26,6 @@ public class CommandHandler implements BaseHandler {
     if (command.getText().equals("/start")) {
       return mainManager.processCommand(command, telegramBot);
     }
-    throw new UnsupportedOperationException("Method not implemented yet!");
+    throw new UnsupportedOperationException("Method not implemented for command: " + command.getText());
   }
 }

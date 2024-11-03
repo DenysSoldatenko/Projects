@@ -1,7 +1,10 @@
 package com.example.notificationbot.managers.query;
 
+import static com.example.notificationbot.data.CallbackData.notification_new;
+
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.keyboards.KeyboardFactory;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -9,10 +12,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-
-import java.util.List;
-
-import static com.example.notificationbot.data.CallbackData.notification_new;
 
 /**
  * Manages callback queries related to notifications in the Telegram bot.

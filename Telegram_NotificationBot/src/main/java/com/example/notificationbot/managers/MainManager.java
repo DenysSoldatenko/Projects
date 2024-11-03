@@ -1,9 +1,12 @@
 package com.example.notificationbot.managers;
 
+import static com.example.notificationbot.data.CallbackData.notification_main;
+
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.keyboards.KeyboardFactory;
 import com.example.notificationbot.listeners.CommandListener;
 import com.example.notificationbot.listeners.QueryListener;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -14,10 +17,6 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-
-import java.util.List;
-
-import static com.example.notificationbot.data.CallbackData.*;
 
 /**
  * Main manager for processing commands and queries in the Telegram bot.
@@ -50,7 +49,7 @@ public class MainManager implements QueryListener, CommandListener {
 
   private InlineKeyboardMarkup createInlineKeyboard() {
     return keyboardFactory.createInlineKeyboard(
-      List.of("Reminders"),
+      List.of("Set Reminder"),
       List.of(1),
       List.of(notification_main.name())
     );

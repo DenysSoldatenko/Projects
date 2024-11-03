@@ -50,12 +50,6 @@ public class KeyboardFactory {
     return keyboard;
   }
 
-  private InlineKeyboardMarkup createKeyboardMarkup(List<List<InlineKeyboardButton>> keyboard) {
-    InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
-    keyboardMarkup.setKeyboard(keyboard);
-    return keyboardMarkup;
-  }
-
   private List<InlineKeyboardButton> createRow(List<String> texts, List<String> data, int startIndex, int count) {
     List<InlineKeyboardButton> row = new ArrayList<>();
 
@@ -67,5 +61,11 @@ public class KeyboardFactory {
     }
 
     return row;
+  }
+
+  private InlineKeyboardMarkup createKeyboardMarkup(List<List<InlineKeyboardButton>> keyboard) {
+    InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
+    keyboardMarkup.setKeyboard(keyboard);
+    return keyboardMarkup;
   }
 }

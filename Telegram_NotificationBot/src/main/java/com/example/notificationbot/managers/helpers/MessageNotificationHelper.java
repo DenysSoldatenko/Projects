@@ -1,5 +1,7 @@
 package com.example.notificationbot.managers.helpers;
 
+import static com.example.notificationbot.data.CallbackData.notification_back_;
+
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.entities.Action;
 import com.example.notificationbot.entities.Notification;
@@ -8,6 +10,7 @@ import com.example.notificationbot.keyboards.KeyboardFactory;
 import com.example.notificationbot.managers.message.MessageManager;
 import com.example.notificationbot.repositories.NotificationRepository;
 import com.example.notificationbot.repositories.UserRepository;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -15,10 +18,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
-
-import java.util.List;
-
-import static com.example.notificationbot.data.CallbackData.notification_back_;
 
 /**
  * Utility class for handling notification-related operations.
@@ -108,7 +107,7 @@ public class MessageNotificationHelper {
       .text("Invalid input format\nHH:MM:SS (01:00:30 - one hour, zero minutes, thirty seconds)")
       .chatId(message.getChatId())
       .replyMarkup(keyboardFactory.createInlineKeyboard(
-        List.of("\uD83D\uDD19 Back"),
+        List.of("🔙 Back"),
         List.of(1),
         List.of(notification_back_ + String.valueOf(user.getCurrentNotification()))
       ))

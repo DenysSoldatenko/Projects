@@ -6,7 +6,6 @@ import com.example.notificationbot.listeners.QueryListener;
 import com.example.notificationbot.managers.helpers.MessageNotificationHelper;
 import com.example.notificationbot.managers.helpers.QueryNotificationHelper;
 import com.example.notificationbot.managers.query.QueryManager;
-import com.example.notificationbot.managers.query.QueryManagerImpl;
 import com.example.notificationbot.repositories.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -31,14 +29,8 @@ public class NotificationManager implements QueryListener, MessageListener {
   QueryNotificationHelper queryHelper;
 
   @Override
-  public BotApiMethod<?> processMessage(Message message, TelegramBot bot) throws TelegramApiException {
+  public BotApiMethod<?> processMessage(Message message, TelegramBot bot) {
     var user = userRepository.findByChatId(message.getChatId());
-    bot.execute(
-        DeleteMessage.builder()
-          .chatId(message.getChatId())
-          .messageId(message.getMessageId() - 1)
-          .build()
-    );
 
     return switch (user.getAction()) {
       case SENDING_TIME -> messageHelper.editTime(message, user, bot);

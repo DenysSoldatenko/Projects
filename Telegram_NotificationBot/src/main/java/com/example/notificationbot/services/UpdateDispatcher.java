@@ -3,6 +3,8 @@ package com.example.notificationbot.services;
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.entities.Action;
 import com.example.notificationbot.entities.User;
+import com.example.notificationbot.exceptions.MessageNotTextException;
+import com.example.notificationbot.exceptions.UpdateProcessingException;
 import com.example.notificationbot.handlers.CommandHandler;
 import com.example.notificationbot.handlers.MessageHandler;
 import com.example.notificationbot.handlers.QueryHandler;
@@ -10,12 +12,10 @@ import com.example.notificationbot.repositories.UserRepository;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -54,11 +54,9 @@ public class UpdateDispatcher {
       }
     } catch (TelegramApiException e) {
       log.error("Error processing update: {}", update, e);
-      throw new RuntimeException(e);
+      throw new UpdateProcessingException("Failed to process update", e);
     }
-
-    log.warn("Unsupported update type: {}", update);
-    return createUnsupportedResponse(update);
+    throw new UpdateProcessingException("Update does not contain a valid message or callback query", null);
   }
 
   private BotApiMethod<?> handleCallbackQuery(CallbackQuery callbackQuery, TelegramBot telegramBot) throws TelegramApiException {
@@ -73,7 +71,7 @@ public class UpdateDispatcher {
         ? commandHandler.handle(message, telegramBot)
         : messageHandler.handle(message, telegramBot);
     }
-    return createUnsupportedResponse(message);
+    throw new MessageNotTextException("Message does not contain text");
   }
 
   private void checkUser(Long chatId) {
@@ -87,10 +85,5 @@ public class UpdateDispatcher {
             .build()
       );
     }
-  }
-
-  private BotApiMethod<?> createUnsupportedResponse(Object object) {
-    String chatId = object instanceof Message ? String.valueOf(((Message) object).getChatId()) : String.valueOf(((CallbackQuery) object).getMessage().getChatId());
-    return new SendMessage(chatId, "I don't recognize that command. Please try again.");
   }
 }
