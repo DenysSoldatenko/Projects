@@ -12,7 +12,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+#    show-sql: true
     properties:
       hibernate:
         format_sql: true
@@ -20,6 +20,6 @@ spring:
 
 telegram:
   bot:
-    url: https://2713-45-132-93-101.ngrok-free.app
+    url: https://09bb-45-132-93-1.ngrok-free.app
     name: spring_notification_bot
     token: 7824649577:AAHPjEmxv0VKI8WKfPhlWzJ36RKvpPhvVqQ

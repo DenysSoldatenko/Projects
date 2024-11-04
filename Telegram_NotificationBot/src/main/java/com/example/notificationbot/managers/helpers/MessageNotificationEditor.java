@@ -1,22 +1,19 @@
 package com.example.notificationbot.managers.helpers;
 
-import static com.example.notificationbot.data.CallbackData.notification_back_;
-
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.entities.Action;
 import com.example.notificationbot.entities.Notification;
 import com.example.notificationbot.entities.User;
-import com.example.notificationbot.keyboards.KeyboardFactory;
+import com.example.notificationbot.factories.NotificationMarkupFactory;
+import com.example.notificationbot.factories.NotificationMessageFactory;
 import com.example.notificationbot.managers.message.MessageManager;
 import com.example.notificationbot.repositories.NotificationRepository;
 import com.example.notificationbot.repositories.UserRepository;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 /**
@@ -25,19 +22,20 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class MessageNotificationHelper {
+public class MessageNotificationEditor {
 
   UserRepository userRepository;
   MessageManager messageManager;
-  KeyboardFactory keyboardFactory;
   NotificationRepository notificationRepository;
+  NotificationMarkupFactory notificationMarkupFactory;
+  NotificationMessageFactory notificationMessageFactory;
 
   /**
    * Edits the title of the current notification for the given user.
    *
    * @param message the message containing the new title
-   * @param user the user whose notification is being edited
-   * @param bot the Telegram bot instance
+   * @param user    the user whose notification is being edited
+   * @param bot     the Telegram bot instance
    * @return the BotApiMethod response to show the main menu
    */
   public BotApiMethod<?> editTitle(Message message, User user, TelegramBot bot) {
@@ -54,8 +52,8 @@ public class MessageNotificationHelper {
    * Edits the description of the current notification for the given user.
    *
    * @param message the message containing the new description
-   * @param user the user whose notification is being edited
-   * @param bot the Telegram bot instance
+   * @param user    the user whose notification is being edited
+   * @param bot     the Telegram bot instance
    * @return the BotApiMethod response to show the main menu
    */
   public BotApiMethod<?> editDescription(Message message, User user, TelegramBot bot) {
@@ -72,8 +70,8 @@ public class MessageNotificationHelper {
    * Edits the duration of the current notification based on the given time format.
    *
    * @param message the message containing the time in HH:MM:SS format
-   * @param user the user whose notification is being edited
-   * @param bot the Telegram bot instance
+   * @param user    the user whose notification is being edited
+   * @param bot     the Telegram bot instance
    * @return the BotApiMethod response to show the main menu or an error message
    */
   public BotApiMethod<?> editTime(Message message, User user, TelegramBot bot) {
@@ -103,14 +101,10 @@ public class MessageNotificationHelper {
   }
 
   private BotApiMethod<?> sendErrorMessage(Message message, User user) {
-    return SendMessage.builder()
-      .text("Invalid input format\nHH:MM:SS (01:00:30 - one hour, zero minutes, thirty seconds)")
-      .chatId(message.getChatId())
-      .replyMarkup(keyboardFactory.createInlineKeyboard(
-        List.of("🔙 Back"),
-        List.of(1),
-        List.of(notification_back_ + String.valueOf(user.getCurrentNotification()))
-      ))
-      .build();
+    return notificationMessageFactory.createMessageResponse(
+      message,
+      "❌ Invalid format!\n\n Use HH:MM:SS (e.g., 01:00:30 for 1 hour, 0 min, 30 sec)",
+      notificationMarkupFactory.createBackButtonMarkup(String.valueOf(user.getCurrentNotification()))
+    );
   }
 }

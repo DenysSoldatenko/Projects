@@ -24,14 +24,11 @@ public class MessageHandler implements BaseHandler {
   NotificationManager notificationManager;
 
   @Override
-  public BotApiMethod<?> handle(BotApiObject object, TelegramBot bot) throws TelegramApiException {
+  public BotApiMethod<?> handle(BotApiObject object, TelegramBot bot) {
     var message = (Message) object;
     var user = userRepository.findByChatId(message.getChatId());
 
     switch (user.getAction()) {
-      case FREE -> {
-        return null;
-      }
       case SENDING_TIME, SENDING_DESCRIPTION, SENDING_TITLE -> {
         return notificationManager.processMessage(message, bot);
       }

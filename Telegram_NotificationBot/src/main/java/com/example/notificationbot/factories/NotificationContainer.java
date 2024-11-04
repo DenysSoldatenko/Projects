@@ -1,4 +1,4 @@
-package com.example.notificationbot.utlis;
+package com.example.notificationbot.factories;
 
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.entities.Notification;
@@ -25,7 +25,8 @@ public class NotificationContainer implements Runnable {
   Long chatId;
   TelegramBot bot;
   Notification notification;
-  NotificationRepository notificationRepo;
+  NotificationRepository notificationRepository;
+  NotificationMessageFactory notificationMessageFactory;
 
   @Override
   public void run() {
@@ -44,10 +45,10 @@ public class NotificationContainer implements Runnable {
   }
 
   private void sendNotification() {
-    SendMessage message = SendMessage.builder()
-        .chatId(chatId)
-        .text(buildNotificationText(notification))
-        .build();
+    SendMessage message = notificationMessageFactory.createMessageResponse(
+        chatId,
+        String.format("🔔 Reminder: %s\n\n📝 Details: %s", notification.getTitle(), notification.getDescription())
+    );
 
     try {
       bot.execute(message);
@@ -58,10 +59,6 @@ public class NotificationContainer implements Runnable {
 
   private void completeNotification() {
     notification.setStatus(NotificationStatus.COMPLETED);
-    notificationRepo.save(notification);
-  }
-
-  private String buildNotificationText(Notification notification) {
-    return String.format("⚡️ Reminder: %s\n❗️ %s\n\n", notification.getTitle(), notification.getDescription());
+    notificationRepository.save(notification);
   }
 }

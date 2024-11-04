@@ -3,8 +3,8 @@ package com.example.notificationbot.managers;
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.listeners.MessageListener;
 import com.example.notificationbot.listeners.QueryListener;
-import com.example.notificationbot.managers.helpers.MessageNotificationHelper;
-import com.example.notificationbot.managers.helpers.QueryNotificationHelper;
+import com.example.notificationbot.managers.helpers.MessageNotificationEditor;
+import com.example.notificationbot.managers.helpers.QueryNotificationEditor;
 import com.example.notificationbot.managers.query.QueryManager;
 import com.example.notificationbot.repositories.UserRepository;
 import lombok.AccessLevel;
@@ -17,6 +17,11 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+/**
+ * Manages notifications and user interactions within the Telegram bot.
+ * This service processes messages and callback queries, coordinating
+ * between various helper classes for message and query handling.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -25,17 +30,17 @@ public class NotificationManager implements QueryListener, MessageListener {
 
   QueryManager queryManager;
   UserRepository userRepository;
-  MessageNotificationHelper messageHelper;
-  QueryNotificationHelper queryHelper;
+  MessageNotificationEditor messageNotificationEditor;
+  QueryNotificationEditor queryNotificationEditor;
 
   @Override
   public BotApiMethod<?> processMessage(Message message, TelegramBot bot) {
     var user = userRepository.findByChatId(message.getChatId());
 
     return switch (user.getAction()) {
-      case SENDING_TIME -> messageHelper.editTime(message, user, bot);
-      case SENDING_DESCRIPTION -> messageHelper.editDescription(message, user, bot);
-      case SENDING_TITLE -> messageHelper.editTitle(message, user, bot);
+      case SENDING_TIME -> messageNotificationEditor.editTime(message, user, bot);
+      case SENDING_DESCRIPTION -> messageNotificationEditor.editDescription(message, user, bot);
+      case SENDING_TITLE -> messageNotificationEditor.editTitle(message, user, bot);
       default -> throw new IllegalStateException("Unexpected action: " + user.getAction());
     };
   }
@@ -53,15 +58,15 @@ public class NotificationManager implements QueryListener, MessageListener {
   private BotApiMethod<?> handleTwoWordsQuery(String[] words, CallbackQuery query, TelegramBot bot) {
     return switch (words[1]) {
       case "main" -> queryManager.showMainMenu(query, bot);
-      case "new" -> queryHelper.newNotification(query);
+      case "new" -> queryNotificationEditor.createNewNotification(query);
       default -> throw new IllegalStateException("Unexpected value: " + words[1]);
     };
   }
 
   private BotApiMethod<?> handleThreeWordsQuery(String[] words, CallbackQuery query, TelegramBot bot) throws TelegramApiException {
     return switch (words[1]) {
-      case "back" -> queryHelper.editPage(query, words[2]);
-      case "done" -> queryHelper.sendNotification(query, words[2], bot);
+      case "back" -> queryNotificationEditor.editPage(query, words[2]);
+      case "done" -> queryNotificationEditor.processAndSendNotification(query, words[2], bot);
       default -> throw new IllegalStateException("Unexpected value: " + words[1]);
     };
   }
@@ -69,9 +74,9 @@ public class NotificationManager implements QueryListener, MessageListener {
   private BotApiMethod<?> handleFourWordsQuery(String[] words, CallbackQuery query) {
     if ("edit".equals(words[1])) {
       return switch (words[2]) {
-        case "title" -> queryHelper.askTitle(query, words[3]);
-        case "d" -> queryHelper.askDescription(query, words[3]);
-        case "time" -> queryHelper.askSeconds(query, words[3]);
+        case "title" -> queryNotificationEditor.editTitle(query, words[3]);
+        case "d" -> queryNotificationEditor.editDescription(query, words[3]);
+        case "time" -> queryNotificationEditor.editDuration(query, words[3]);
         default -> throw new IllegalStateException("Unexpected value: " + words[2]);
       };
     }

@@ -1,14 +1,15 @@
 package com.example.notificationbot.managers.message;
 
 import com.example.notificationbot.configurations.TelegramBot;
+import com.example.notificationbot.factories.NotificationMarkupFactory;
+import com.example.notificationbot.factories.NotificationMessageFactory;
+import com.example.notificationbot.repositories.NotificationRepository;
 import com.example.notificationbot.repositories.UserRepository;
-import com.example.notificationbot.utlis.ReplyMarkupEditor;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 /**
@@ -22,18 +23,19 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 public class MessageManagerImpl implements MessageManager {
 
   UserRepository userRepository;
-  ReplyMarkupEditor replyMarkupEditor;
+  NotificationRepository notificationRepository;
+  NotificationMarkupFactory notificationMarkupFactory;
+  NotificationMessageFactory notificationMessageFactory;
 
   @Override
   public BotApiMethod<?> showMainMenu(Message message, TelegramBot bot) {
-    return SendMessage.builder()
-      .chatId(message.getChatId())
-      .text("Configure Notification")
-      .replyMarkup(
-        replyMarkupEditor.editNotificationReplyMarkup(
-          String.valueOf(userRepository.findByChatId(message.getChatId()).getCurrentNotification())
-        )
-      )
-      .build();
+    var user = userRepository.findByChatId(message.getChatId());
+    var notification = notificationRepository.findNotificationById(user.getCurrentNotification()).orElseThrow();
+
+    return notificationMessageFactory.createMessageResponse(
+      message,
+      "Configure the notification",
+      notificationMarkupFactory.setNotificationMarkup(notification)
+    );
   }
 }
