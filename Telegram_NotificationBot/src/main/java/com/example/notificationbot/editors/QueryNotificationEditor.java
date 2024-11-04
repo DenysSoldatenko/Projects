@@ -1,4 +1,4 @@
-package com.example.notificationbot.managers.helpers;
+package com.example.notificationbot.editors;
 
 import static com.example.notificationbot.entities.NotificationStatus.IN_PROGRESS;
 
@@ -58,7 +58,10 @@ public class QueryNotificationEditor {
       );
     }
 
-    return notificationMessageFactory.createAnswerCallback(query, "Please fill in the required values: title and time");
+    return notificationMessageFactory.createAnswerCallback(
+      query,
+      "Please fill in the required values: title and time"
+    );
   }
 
   /**
@@ -75,12 +78,27 @@ public class QueryNotificationEditor {
         .build();
     Notification savedNotification = notificationRepository.save(notification);
 
-    return notificationMessageFactory.createEditMessageResponse(query, "Set up your new notification", notificationMarkupFactory.setNotificationMarkup(savedNotification));
+    return notificationMessageFactory.createEditMessageResponse(
+      query,
+      "Set up your new notification",
+      notificationMarkupFactory.setNotificationMarkup(savedNotification)
+    );
   }
 
+  /**
+   * Edits the page for a specific notification.
+   *
+   * @param query The callback query from Telegram containing the user's action.
+   * @param id The ID of the notification to edit, formatted as a UUID string.
+   * @return A BotApiMethod object that updates the message with the notification details.
+   */
   public BotApiMethod<?> editPage(CallbackQuery query, String id) {
     var notification = notificationRepository.findNotificationById(UUID.fromString(id)).orElseThrow();
-    return notificationMessageFactory.createEditMessageResponse(query, "Update your notification details", notificationMarkupFactory.setNotificationMarkup(notification));
+    return notificationMessageFactory.createEditMessageResponse(
+      query,
+      "Update your notification details",
+      notificationMarkupFactory.setNotificationMarkup(notification)
+    );
   }
 
   /**

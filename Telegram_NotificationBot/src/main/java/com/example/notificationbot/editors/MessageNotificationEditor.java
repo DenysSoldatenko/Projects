@@ -1,4 +1,4 @@
-package com.example.notificationbot.managers.helpers;
+package com.example.notificationbot.editors;
 
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.entities.Action;

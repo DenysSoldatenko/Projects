@@ -1,10 +1,10 @@
 package com.example.notificationbot.managers;
 
 import com.example.notificationbot.configurations.TelegramBot;
+import com.example.notificationbot.editors.MessageNotificationEditor;
+import com.example.notificationbot.editors.QueryNotificationEditor;
 import com.example.notificationbot.listeners.MessageListener;
 import com.example.notificationbot.listeners.QueryListener;
-import com.example.notificationbot.managers.helpers.MessageNotificationEditor;
-import com.example.notificationbot.managers.helpers.QueryNotificationEditor;
 import com.example.notificationbot.managers.query.QueryManager;
 import com.example.notificationbot.repositories.UserRepository;
 import lombok.AccessLevel;
@@ -30,8 +30,8 @@ public class NotificationManager implements QueryListener, MessageListener {
 
   QueryManager queryManager;
   UserRepository userRepository;
-  MessageNotificationEditor messageNotificationEditor;
   QueryNotificationEditor queryNotificationEditor;
+  MessageNotificationEditor messageNotificationEditor;
 
   @Override
   public BotApiMethod<?> processMessage(Message message, TelegramBot bot) {
@@ -75,7 +75,7 @@ public class NotificationManager implements QueryListener, MessageListener {
     if ("edit".equals(words[1])) {
       return switch (words[2]) {
         case "title" -> queryNotificationEditor.editTitle(query, words[3]);
-        case "d" -> queryNotificationEditor.editDescription(query, words[3]);
+        case "desc" -> queryNotificationEditor.editDescription(query, words[3]);
         case "time" -> queryNotificationEditor.editDuration(query, words[3]);
         default -> throw new IllegalStateException("Unexpected value: " + words[2]);
       };

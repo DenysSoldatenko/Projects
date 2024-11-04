@@ -3,7 +3,7 @@ package com.example.notificationbot.factories;
 import static com.example.notificationbot.data.CallbackData.main;
 import static com.example.notificationbot.data.CallbackData.notification_back_;
 import static com.example.notificationbot.data.CallbackData.notification_done_;
-import static com.example.notificationbot.data.CallbackData.notification_edit_d_;
+import static com.example.notificationbot.data.CallbackData.notification_edit_desc_;
 import static com.example.notificationbot.data.CallbackData.notification_edit_time_;
 import static com.example.notificationbot.data.CallbackData.notification_edit_title_;
 import static com.example.notificationbot.data.CallbackData.notification_main;
@@ -51,7 +51,7 @@ public class NotificationMarkupFactory {
       List.of(
         notification_edit_title_.name() + notification.getId(),
         notification_edit_time_.name() + notification.getId(),
-        notification_edit_d_.name() + notification.getId(),
+        notification_edit_desc_.name() + notification.getId(),
         main.name(),
         notification_done_.name() + notification.getId()
       )
@@ -69,19 +69,6 @@ public class NotificationMarkupFactory {
       List.of("🔙 Back"),
       List.of(1),
       List.of(notification_back_ + id)
-    );
-  }
-
-  /**
-   * Creates a main button markup for navigating to the main menu.
-   *
-   * @return an InlineKeyboardMarkup containing a main menu button
-   */
-  public InlineKeyboardMarkup createMainButtonMarkup() {
-    return keyboardFactory.createInlineKeyboard(
-      List.of("🏠 Go to Main"),
-      List.of(1),
-      List.of(main.name())
     );
   }
 

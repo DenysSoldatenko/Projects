@@ -20,6 +20,6 @@ spring:
 
 telegram:
   bot:
-    url: https://09bb-45-132-93-1.ngrok-free.app
-    name: spring_notification_bot
-    token: 7824649577:AAHPjEmxv0VKI8WKfPhlWzJ36RKvpPhvVqQ
+    url: ${TELEGRAM_BOT_URL}
+    name: ${TELEGRAM_BOT_NAME}
+    token: ${TELEGRAM_BOT_TOKEN}
