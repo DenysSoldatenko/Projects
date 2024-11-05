@@ -1,0 +1,40 @@
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+
+services:
+  app:
+    build:
+      context: .
+    container_name: telegram_NotificationBot_project
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    ports:
+      - '8085:8085'
+    environment:
+      DATABASE_HOST: ${DATASOURCE_HOST}
+      TELEGRAM_BOT_URL: ${TELEGRAM_BOT_URL}
+      TELEGRAM_BOT_NAME: ${TELEGRAM_BOT_NAME}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+
+  postgres:
+    image: postgres:15.1-alpine
+    container_name: postgres
+    networks:
+      - app-network
+    environment:
+      POSTGRES_USER: ${DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${DATASOURCE_PASSWORD}
+      POSTGRES_DB: ${DATASOURCE_NAME}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
