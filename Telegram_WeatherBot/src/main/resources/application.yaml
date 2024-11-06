@@ -1,0 +1,19 @@
+server:
+  port: 8085
+
+spring:
+  config:
+    import: optional:file:Telegram_WeatherBot/.env[.properties]
+  application:
+    name: Telegram_WeatherBot
+
+telegram:
+  bot:
+    url: ${TELEGRAM_BOT_URL}
+    name: ${TELEGRAM_BOT_NAME}
+    token: ${TELEGRAM_BOT_TOKEN}
+
+weather:
+  base-hourly-url: https://api.weatherbit.io/v2.0/forecast/hourly
+  base-daily-url: https://api.weatherbit.io/v2.0/forecast/daily
+  api-key: ${API_KEY}
