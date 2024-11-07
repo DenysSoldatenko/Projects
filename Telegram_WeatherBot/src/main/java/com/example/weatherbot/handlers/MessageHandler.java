@@ -1,12 +1,14 @@
 package com.example.weatherbot.handlers;
 
 import com.example.weatherbot.configurations.TelegramBot;
+import com.example.weatherbot.utils.WeatherService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.interfaces.BotApiObject;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 /**
  * Handler for processing messages received by the Telegram bot.
@@ -14,11 +16,12 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class MessageHandler implements BaseHandler {
+public class MessageHandler {
 
-  @Override
+  WeatherService weatherService;
+
   public BotApiMethod<?> handle(BotApiObject object, TelegramBot bot) {
-
-    return null;
+    var message = (Message) object;
+    return weatherService.processWeatherRequest(message.getChatId(), message.getText());
   }
 }

@@ -16,11 +16,10 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class CommandHandler implements BaseHandler {
+public class CommandHandler {
 
   MainManager mainManager;
 
-  @Override
   public BotApiMethod<?> handle(BotApiObject object, TelegramBot telegramBot) {
     var command = (Message) object;
     if (command.getText().equals("/start")) {
