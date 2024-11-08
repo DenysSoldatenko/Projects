@@ -1,6 +1,5 @@
 package com.example.weatherbot.handlers;
 
-import com.example.weatherbot.configurations.TelegramBot;
 import com.example.weatherbot.utils.WeatherService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,7 @@ public class MessageHandler {
 
   WeatherService weatherService;
 
-  public BotApiMethod<?> handle(BotApiObject object, TelegramBot bot) {
+  public BotApiMethod<?> handle(BotApiObject object) {
     var message = (Message) object;
     return weatherService.processWeatherRequest(message.getChatId(), message.getText());
   }

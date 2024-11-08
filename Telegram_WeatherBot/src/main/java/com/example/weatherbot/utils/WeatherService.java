@@ -1,5 +1,8 @@
 package com.example.weatherbot.utils;
 
+import static com.example.weatherbot.utils.MessageUtils.INVALID_INPUT_MESSAGE;
+import static com.example.weatherbot.utils.MessageUtils.WEATHER_FETCH_ERROR_MESSAGE;
+
 import com.example.weatherbot.dtos.WeatherResponse;
 import com.example.weatherbot.factories.MessageFactory;
 import java.util.regex.Matcher;
@@ -22,14 +25,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 public class WeatherService {
 
   static String REGEX = "^([A-Za-z\\s]+)\\s(\\d+)(h|d| hours| days)$";
-  static String INVALID_FORMAT_MESSAGE = """
-      ❌ Error: Invalid input format
-      
-      Please use the format: 'City <number>h' or 'City <number>d' or 'City <number> hours' or 'City <number> days'
-      """;
 
-  WeatherDataProvider weatherDataProvider;
   MessageFactory messageFactory;
+  WeatherDataProvider weatherDataProvider;
   ResponseFormatter weatherResponseFormatter;
 
   /**
@@ -54,7 +52,7 @@ public class WeatherService {
     }
 
     log.warn("Invalid format received: {}", input);
-    return messageFactory.createMessageResponse(chatId, INVALID_FORMAT_MESSAGE);
+    return messageFactory.createMessageResponse(chatId, INVALID_INPUT_MESSAGE);
   }
 
   private boolean isValidWeatherRequest(String city, String timeUnit, String number) {
@@ -90,7 +88,7 @@ public class WeatherService {
     }
 
     log.error("Error: Could not retrieve weather data for city: {}", city);
-    return messageFactory.createMessageResponse(chatId, "❌ Error: Could not retrieve weather data");
+    return messageFactory.createMessageResponse(chatId, WEATHER_FETCH_ERROR_MESSAGE);
   }
 
   private boolean isDailyForecast(String timeUnit) {

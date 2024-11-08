@@ -1,5 +1,7 @@
 package com.example.weatherbot.managers;
 
+import static com.example.weatherbot.utils.MessageUtils.WELCOME_MESSAGE_TEMPLATE;
+
 import com.example.weatherbot.factories.MessageFactory;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,23 +17,6 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MainManager {
-
-  static final String WELCOME_MESSAGE_TEMPLATE = """
-        👋 Welcome to the Weather Forecast Bot!
-
-        ✅ This bot was created for demonstration purposes
-        ✅ It uses the WeatherBit API
-        ✅ Technologies used: Java & Spring Boot
-
-        To get the weather forecast, please enter the city name followed by the forecast mode:
-
-        🌍 Example 1: "London 24h" — Get the weather forecast for the next 24 hours in London
-        🌍 Example 2: "Paris 5d" — Get the weather forecast for the next 5 days in Paris
-
-        📍 Type a city and the forecast mode (e.g., '24h' for hourly or '5d' for daily).
-
-        Enjoy and stay updated with the weather! 😊
-      """;
 
   MessageFactory messageFactory;
 

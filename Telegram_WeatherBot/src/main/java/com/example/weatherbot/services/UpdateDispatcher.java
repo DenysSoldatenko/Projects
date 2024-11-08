@@ -1,6 +1,5 @@
 package com.example.weatherbot.services;
 
-import com.example.weatherbot.configurations.TelegramBot;
 import com.example.weatherbot.exceptions.MessageNotTextException;
 import com.example.weatherbot.exceptions.UpdateProcessingException;
 import com.example.weatherbot.handlers.CommandHandler;
@@ -34,23 +33,20 @@ public class UpdateDispatcher {
    * unrecognized update types.
    *
    * @param update the incoming {@link Update}.
-   * @param telegramBot the {@link TelegramBot} instance for sending responses.
    * @return a {@link BotApiMethod} representing the response to the user.
    */
-  public BotApiMethod<?> processUpdate(Update update, TelegramBot telegramBot) {
+  public BotApiMethod<?> processUpdate(Update update) {
     try {
-      return handleMessage(update.getMessage(), telegramBot);
+      return handleMessage(update.getMessage());
     } catch (TelegramApiException e) {
       log.error("Error processing update: {}", update, e);
       throw new UpdateProcessingException("Failed to process update", e);
     }
   }
 
-  private BotApiMethod<?> handleMessage(Message message, TelegramBot telegramBot) throws TelegramApiException {
+  private BotApiMethod<?> handleMessage(Message message) throws TelegramApiException {
     if (message.hasText()) {
-      return message.getText().startsWith("/")
-        ? commandHandler.handle(message, telegramBot)
-        : messageHandler.handle(message, telegramBot);
+      return message.getText().startsWith("/") ? commandHandler.handle(message) : messageHandler.handle(message);
     }
     throw new MessageNotTextException("Message does not contain text");
   }

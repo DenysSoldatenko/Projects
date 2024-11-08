@@ -1,5 +1,7 @@
 package com.example.weatherbot.utils;
 
+import static com.example.weatherbot.utils.MessageUtils.NO_WEATHER_DATA_MESSAGE;
+
 import com.example.weatherbot.dtos.Data;
 import com.example.weatherbot.dtos.WeatherResponse;
 import java.time.Instant;
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Component;
  * Formats weather response data into a user-friendly string with emojis.
  */
 @Component
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PUBLIC, makeFinal = true)
 public class ResponseFormatter {
 
   static DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -28,7 +30,7 @@ public class ResponseFormatter {
   public String formatWeatherResponse(WeatherResponse weatherResponse) {
     List<Data> dataList = weatherResponse.getData();
     if (dataList == null || dataList.isEmpty()) {
-      return "🚨 No weather data available!";
+      return NO_WEATHER_DATA_MESSAGE;
     }
 
     String cityInfo = String.format("🌆 City: %s\n🕰️ Timezone: %s\n\n",
