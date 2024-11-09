@@ -1,0 +1,17 @@
+server:
+  port: 8085
+
+spring:
+  config:
+    import: optional:file:Telegram_MilitaryTrackerBot/.env[.properties]
+  application:
+    name: Telegram_MilitaryTrackerBot
+
+telegram:
+  bot:
+    url: ${TELEGRAM_BOT_URL}
+    name: ${TELEGRAM_BOT_NAME}
+    token: ${TELEGRAM_BOT_TOKEN}
+
+military:
+  base-url: https://russianwarship.rip/api/v2/statistics
