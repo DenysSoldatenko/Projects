@@ -13,7 +13,7 @@ public class MessageUtils {
       ⚔️ Welcome to the Russian Losses Tracker Bot! ⚔️
   
       🚨 Here, we track the massive losses Russia has sustained in this war!
-      From military personnel to tanks, helicopters, and artillery, we keep an eye on it all. 
+      From military personnel to tanks, helicopters, and artillery, we keep an eye on it all.
   
       💥 Check out the staggering losses of the Russian invaders:
   
@@ -51,18 +51,26 @@ public class MessageUtils {
   public static final String MILITARY_DATA_FETCH_ERROR_MESSAGE = """
       🚨 Something went wrong while fetching the loss data!
   
-      The Russian invaders' losses continue to rise, but we couldn't retrieve the data right now. 
+      The Russian invaders' losses continue to rise, but we couldn't retrieve the data right now.
       ⚠️ Please try again later or check your input.
-              
+
       The war rages on...💥
+      """;
+
+  public static final String UNEXPECTED_ERROR_MESSAGE = """
+      🚨 An unexpected error occurred while processing your request!
+  
+      ⚠️ Please try again later. If the problem persists, contact support.
+  
+      Thank you for your patience, and stay tuned for updates! 💥
       """;
 
   public static final String NO_MILITARY_DATA_MESSAGE = """
       🚨 No military loss data found for the selected period! 😞
   
-      Double-check your command or date format and try again. 📅 
+      Double-check your command or date format and try again. 📅
       If you still see this message, check back later for updates. 🔄
-              
+
       Ukraine's victory will be recorded, just stay tuned! 🇺🇦💪
       """;
 
@@ -83,6 +91,75 @@ public class MessageUtils {
   
       Glory to Ukraine! 🇺🇦💪
       """;
+
+  public static final String STATS_DISPLAY_MESSAGE_LATEST_DAY = """
+      📊 Russian Military Losses for Day %d (Date: %s) 📊
+  
+      🔴 Personnel Units: %s
+      🚗 Tanks: %s
+      🎯 Artillery Systems: %s
+      🛩️ Planes: %s
+      🚁 Helicopters: %s
+      🚚 Fuel Vehicles: %s
+      🚢 Warships / Cutters: %s
+      🛸 Cruise Missiles: %s
+      🔧 Special Military Equipment: %s
+      🌊 Submarines: %s
+  
+      ➕ Increase Since Last Report:
+      🔼 Personnel Units: %s
+      🔼 Tanks: %s
+      🔼 Artillery Systems: %s
+      🔼 Planes: %s
+      🔼 Helicopters: %s
+      🔼 Fuel Vehicles: %s
+      🔼 Warships / Cutters: %s
+      🔼 Cruise Missiles: %s
+      🔼 Special Military Equipment: %s
+      🔼 Submarines: %s
+      
+      ⚠️ The statistics are based on the most recent data collected.
+      Keep an eye on future updates to see how the losses continue to rise! 🚨
+      """;
+
+  public static final String STATS_DISPLAY_MESSAGE_PERIOD = """
+        📊 Russian Military Losses for the Period (From: %s to: %s) 📊
+
+        %s
+
+        ⚠️ The statistics are based on the most recent data collected for the selected period.
+        Stay tuned for continuous updates! 🚨
+        """;
+
+  public static final String STATS_DAY_STATS_TEMPLATE = """
+        📅 Date: %s
+
+        🔴 Personnel Units: %s
+        🚗 Tanks: %s
+        🎯 Artillery Systems: %s
+        🛩️ Planes: %s
+        🚁 Helicopters: %s
+        🚚 Fuel Vehicles: %s
+        🚢 Warships / Cutters: %s
+        🛸 Cruise Missiles: %s
+        🔧 Special Military Equipment: %s
+        🌊 Submarines: %s
+    
+        ➕ Increase Since Last Report:
+        🔼 Personnel Units: %s
+        🔼 Tanks: %s
+        🔼 Artillery Systems: %s
+        🔼 Planes: %s
+        🔼 Helicopters: %s
+        🔼 Fuel Vehicles: %s
+        🔼 Warships / Cutters: %s
+        🔼 Cruise Missiles: %s
+        🔼 Special Military Equipment: %s
+        🔼 Submarines: %s
+
+        ----------------------------------------
+        """;
+
 
   public static final String AVAILABLE_COMMANDS_MESSAGE = "📜 Available Commands ⬇️";
 }

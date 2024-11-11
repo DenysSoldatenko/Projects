@@ -4,8 +4,9 @@ import static com.example.militarytrackerbot.utils.MessageUtils.AVAILABLE_COMMAN
 import static com.example.militarytrackerbot.utils.MessageUtils.WELCOME_MESSAGE_TEMPLATE;
 
 import com.example.militarytrackerbot.data.CallbackData;
-import com.example.militarytrackerbot.factories.MilitaryDataKeyboardFactory;
-import com.example.militarytrackerbot.factories.NotificationMessageFactory;
+import com.example.militarytrackerbot.factories.DataKeyboardFactory;
+import com.example.militarytrackerbot.factories.MessageFactory;
+import com.example.militarytrackerbot.utils.DataProvider;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,8 +24,9 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MilitaryTrackerManager {
 
-  MilitaryDataKeyboardFactory militaryDataKeyboardFactory;
-  NotificationMessageFactory notificationMessageFactory;
+  DataProvider dataProvider;
+  MessageFactory messageFactory;
+  DataKeyboardFactory dataKeyboardFactory;
 
   /**
    * Processes the callback query from the user based on the provided word.
@@ -37,29 +39,35 @@ public class MilitaryTrackerManager {
   public BotApiMethod<?> processQuery(CallbackQuery query, String word) {
     return switch (CallbackData.valueOf(word)) {
       case MAIN -> handleMainMenu(query);
-      case OPTIONS -> handleViewOptions(query);
-      case DAY -> null;
+      case OPTIONS, BACK -> handleViewOptions(query);
+      case DAY -> handleDayStats(query);
       case WEEK -> null;
       case MONTH -> null;
       case PERIOD -> null;
-      case BACK -> null;
     };
   }
 
   private BotApiMethod<?> handleMainMenu(CallbackQuery query) {
-    return notificationMessageFactory.createEditMessageResponse(
+    return messageFactory.createEditMessageResponse(
       query,
       WELCOME_MESSAGE_TEMPLATE,
-      militaryDataKeyboardFactory.createOptionsMarkup()
+      dataKeyboardFactory.createOptionsMarkup()
     );
   }
 
   private BotApiMethod<?> handleViewOptions(CallbackQuery query) {
-    return notificationMessageFactory.createEditMessageResponse(
+    return messageFactory.createEditMessageResponse(
       query,
       AVAILABLE_COMMANDS_MESSAGE,
-      militaryDataKeyboardFactory.createMainOptionsMarkup()
+      dataKeyboardFactory.createMainOptionsMarkup()
     );
   }
 
+  private BotApiMethod<?> handleDayStats(CallbackQuery query) {
+    return messageFactory.createEditMessageResponse(
+      query,
+      dataProvider.getDataForLatestDay(),
+      dataKeyboardFactory.createBackButtonMarkup()
+    );
+  }
 }

@@ -18,7 +18,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class NotificationMessageFactory {
+public class MessageFactory {
 
   /**
    * Creates an EditMessageText response for a given callback query.

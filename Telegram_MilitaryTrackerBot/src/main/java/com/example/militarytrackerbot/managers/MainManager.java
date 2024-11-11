@@ -2,8 +2,8 @@ package com.example.militarytrackerbot.managers;
 
 import static com.example.militarytrackerbot.utils.MessageUtils.WELCOME_MESSAGE_TEMPLATE;
 
-import com.example.militarytrackerbot.factories.MilitaryDataKeyboardFactory;
-import com.example.militarytrackerbot.factories.NotificationMessageFactory;
+import com.example.militarytrackerbot.factories.DataKeyboardFactory;
+import com.example.militarytrackerbot.factories.MessageFactory;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,8 +20,8 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MainManager {
 
-  MilitaryDataKeyboardFactory militaryDataKeyboardFactory;
-  NotificationMessageFactory notificationMessageFactory;
+  DataKeyboardFactory dataKeyboardFactory;
+  MessageFactory messageFactory;
 
   /**
    * Processes a regular command (message) from the user
@@ -31,10 +31,10 @@ public class MainManager {
    * @return A {@link BotApiMethod} that represents the response to be sent to the user.
    */
   public BotApiMethod<?> processCommand(Message message) {
-    return notificationMessageFactory.createMessageResponse(
+    return messageFactory.createMessageResponse(
       message,
       WELCOME_MESSAGE_TEMPLATE,
-      militaryDataKeyboardFactory.createOptionsMarkup()
+      dataKeyboardFactory.createOptionsMarkup()
     );
   }
 
@@ -47,10 +47,10 @@ public class MainManager {
    * @return A {@link BotApiMethod} that represents the response to be sent to the user.
    */
   public BotApiMethod<?> processQuery(CallbackQuery query) {
-    return notificationMessageFactory.createEditMessageResponse(
+    return messageFactory.createEditMessageResponse(
       query,
       WELCOME_MESSAGE_TEMPLATE,
-      militaryDataKeyboardFactory.createOptionsMarkup()
+      dataKeyboardFactory.createOptionsMarkup()
     );
   }
 }

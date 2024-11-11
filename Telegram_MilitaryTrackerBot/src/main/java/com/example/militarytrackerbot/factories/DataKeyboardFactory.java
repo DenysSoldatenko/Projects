@@ -17,14 +17,14 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 /**
- * The {@link MilitaryDataKeyboardFactory} class is responsible
+ * The {@link DataKeyboardFactory} class is responsible
  * for creating different keyboard layouts that can be used in the bot's interface,
  * specifically the inline keyboard options for various user interactions.
  */
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class MilitaryDataKeyboardFactory {
+public class DataKeyboardFactory {
 
   KeyboardFactory keyboardFactory;
 
@@ -55,15 +55,14 @@ public class MilitaryDataKeyboardFactory {
    * Creates a keyboard markup with a "Back" button.
    * This button is used to navigate back to the previous menu or screen.
    *
-   * @param id The identifier used to construct the callback data for the back button.
    * @return An {@link InlineKeyboardMarkup} object containing the "Back" button
    *     with the specified callback data.
    */
-  public InlineKeyboardMarkup createBackButtonMarkup(String id) {
+  public InlineKeyboardMarkup createBackButtonMarkup() {
     return keyboardFactory.createInlineKeyboard(
       List.of("🔙 Back"),
       List.of(1),
-      List.of(BACK + id)
+      List.of(BACK.name())
     );
   }
 
