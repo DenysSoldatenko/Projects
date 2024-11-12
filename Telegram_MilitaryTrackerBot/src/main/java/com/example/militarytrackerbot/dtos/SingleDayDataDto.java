@@ -10,7 +10,6 @@ import lombok.Data;
  */
 @Data
 public class SingleDayDataDto {
-
   private String message;
   private RecordDto data;
 }

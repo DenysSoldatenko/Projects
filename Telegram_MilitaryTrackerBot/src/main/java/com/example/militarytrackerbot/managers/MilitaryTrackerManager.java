@@ -1,12 +1,6 @@
 package com.example.militarytrackerbot.managers;
 
-import static com.example.militarytrackerbot.utils.MessageUtils.AVAILABLE_COMMANDS_MESSAGE;
-import static com.example.militarytrackerbot.utils.MessageUtils.WELCOME_MESSAGE_TEMPLATE;
-
-import com.example.militarytrackerbot.data.CallbackData;
-import com.example.militarytrackerbot.factories.DataKeyboardFactory;
-import com.example.militarytrackerbot.factories.MessageFactory;
-import com.example.militarytrackerbot.utils.DataProvider;
+import com.example.militarytrackerbot.processors.QueryProcessor;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,50 +18,40 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MilitaryTrackerManager {
 
-  DataProvider dataProvider;
-  MessageFactory messageFactory;
-  DataKeyboardFactory dataKeyboardFactory;
+  QueryProcessor queryProcessor;
 
   /**
-   * Processes the callback query from the user based on the provided word.
-   * The word represents an action determined by a button click in the bot's interface.
+   * Processes the callback query based on the number of words in the query data.
    *
-   * @param query The callback query object containing the user's interaction.
-   * @param word The action word which corresponds to a specific user request.
-   * @return A {@link BotApiMethod} that sends a response to the user.
+   * @param query The callback query containing user interaction data.
+   * @param words The query data split into an array of strings.
+   * @return The response to be sent back to the user.
+   * @throws IllegalStateException If the number of words is not 1 or 2.
    */
-  public BotApiMethod<?> processQuery(CallbackQuery query, String word) {
-    return switch (CallbackData.valueOf(word)) {
-      case MAIN -> handleMainMenu(query);
-      case OPTIONS, BACK -> handleViewOptions(query);
-      case DAY -> handleDayStats(query);
-      case WEEK -> null;
-      case MONTH -> null;
-      case PERIOD -> null;
+  public BotApiMethod<?> processQuery(CallbackQuery query, String[] words) {
+    return switch (words.length) {
+      case 1 -> handleOneWordQuery(words, query);
+      case 2 -> handleTwoWordsQuery(words, query);
+      default -> throw new IllegalStateException("Unexpected number of words: " + words.length);
     };
   }
 
-  private BotApiMethod<?> handleMainMenu(CallbackQuery query) {
-    return messageFactory.createEditMessageResponse(
-      query,
-      WELCOME_MESSAGE_TEMPLATE,
-      dataKeyboardFactory.createOptionsMarkup()
-    );
+  private BotApiMethod<?> handleOneWordQuery(String[] words, CallbackQuery query) {
+    return switch (words[0]) {
+      case "MAIN" -> queryProcessor.handleMainMenu(query);
+      case "OPTIONS", "BACK" -> queryProcessor.handleViewOptions(query);
+      case "DAY" -> queryProcessor.handleDayStats(query);
+      case "WEEK" -> queryProcessor.handleWeekStats(query);
+      case "MONTH" -> null;
+      case "PERIOD" -> null;
+      default -> throw new IllegalStateException("Unexpected value: " + words[0]);
+    };
   }
 
-  private BotApiMethod<?> handleViewOptions(CallbackQuery query) {
-    return messageFactory.createEditMessageResponse(
-      query,
-      AVAILABLE_COMMANDS_MESSAGE,
-      dataKeyboardFactory.createMainOptionsMarkup()
-    );
-  }
-
-  private BotApiMethod<?> handleDayStats(CallbackQuery query) {
-    return messageFactory.createEditMessageResponse(
-      query,
-      dataProvider.getDataForLatestDay(),
-      dataKeyboardFactory.createBackButtonMarkup()
-    );
+  private BotApiMethod<?> handleTwoWordsQuery(String[] words, CallbackQuery query) {
+    return switch (words[0]) {
+      case "PREV", "NEXT" -> queryProcessor.handlePagination(query, words[1]);
+      default -> throw new IllegalStateException("Unexpected value: " + words[0]);
+    };
   }
 }

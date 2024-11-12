@@ -77,7 +77,8 @@ public class MessageUtils {
   public static final String HELP_MESSAGE = """
       🛠️ How to use the Russian Losses Tracker Bot:
   
-      The bot tracks losses of Russian forces in the war. You can request updates based on different time periods or a specific date:
+      The bot tracks losses of Russian forces in the war.
+      You can request updates based on different time periods or a specific date:
   
       - /day — View the most recent losses for the day 📆.
       - /week — View the total losses over the past week 📅.
@@ -123,43 +124,47 @@ public class MessageUtils {
       """;
 
   public static final String STATS_DISPLAY_MESSAGE_PERIOD = """
-        📊 Russian Military Losses for the Period (From: %s to: %s) 📊
+      📊 Russian Military Losses for the Period
+      🕒 From: %s to: %s
 
-        %s
+      %s
 
-        ⚠️ The statistics are based on the most recent data collected for the selected period.
-        Stay tuned for continuous updates! 🚨
-        """;
+      ⚠️ The statistics are based on the most recent data collected for the selected period.
+      Stay tuned for continuous updates! 🚨
+      """;
 
   public static final String STATS_DAY_STATS_TEMPLATE = """
-        📅 Date: %s
+      📅 Date: %s
 
-        🔴 Personnel Units: %s
-        🚗 Tanks: %s
-        🎯 Artillery Systems: %s
-        🛩️ Planes: %s
-        🚁 Helicopters: %s
-        🚚 Fuel Vehicles: %s
-        🚢 Warships / Cutters: %s
-        🛸 Cruise Missiles: %s
-        🔧 Special Military Equipment: %s
-        🌊 Submarines: %s
-    
-        ➕ Increase Since Last Report:
-        🔼 Personnel Units: %s
-        🔼 Tanks: %s
-        🔼 Artillery Systems: %s
-        🔼 Planes: %s
-        🔼 Helicopters: %s
-        🔼 Fuel Vehicles: %s
-        🔼 Warships / Cutters: %s
-        🔼 Cruise Missiles: %s
-        🔼 Special Military Equipment: %s
-        🔼 Submarines: %s
+      🔴 Personnel Units: %s
+      🚗 Tanks: %s
+      🎯 Artillery Systems: %s
+      🛩️ Planes: %s
+      🚁 Helicopters: %s
+      🚚 Fuel Vehicles: %s
+      🚢 Warships / Cutters: %s
+      🛸 Cruise Missiles: %s
+      🔧 Special Military Equipment: %s
+      🌊 Submarines: %s
+  
+      ➕ Increase Since Last Report:
+      🔼 Personnel Units: %s
+      🔼 Tanks: %s
+      🔼 Artillery Systems: %s
+      🔼 Planes: %s
+      🔼 Helicopters: %s
+      🔼 Fuel Vehicles: %s
+      🔼 Warships / Cutters: %s
+      🔼 Cruise Missiles: %s
+      🔼 Special Military Equipment: %s
+      🔼 Submarines: %s
 
-        ----------------------------------------
-        """;
+      ----------------------------------------
+      """;
 
+  public static final String OFFSET_ERROR_MESSAGE = """
+      ⚠️ Oops! The offset value can't be less than 0. Please check and try again. 🔄
+      """;
 
   public static final String AVAILABLE_COMMANDS_MESSAGE = "📜 Available Commands ⬇️";
 }

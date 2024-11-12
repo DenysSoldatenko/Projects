@@ -1,7 +1,11 @@
 package com.example.militarytrackerbot.utils;
 
+import static com.example.militarytrackerbot.utils.MessageUtils.STATS_DAY_STATS_TEMPLATE;
 import static com.example.militarytrackerbot.utils.MessageUtils.STATS_DISPLAY_MESSAGE_LATEST_DAY;
+import static com.example.militarytrackerbot.utils.MessageUtils.STATS_DISPLAY_MESSAGE_PERIOD;
 
+import com.example.militarytrackerbot.dtos.MultipleDaysDataDto;
+import com.example.militarytrackerbot.dtos.RecordDto;
 import com.example.militarytrackerbot.dtos.SingleDayDataDto;
 import java.text.DecimalFormat;
 import lombok.AccessLevel;
@@ -14,7 +18,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @FieldDefaults(level = AccessLevel.PUBLIC, makeFinal = true)
-public class ResponseFormatter {
+public class ResponseFormatterUtils {
 
   /**
    * Formats the response data for the latest day into a readable message.
@@ -50,5 +54,47 @@ public class ResponseFormatter {
       df.format(response.getData().getIncrease().getSpecialMilitaryEquip()),
       df.format(response.getData().getIncrease().getSubmarines())
     );
+  }
+
+  /**
+   * Formats the response data for a given period (e.g., date range) into a readable message.
+   *
+   * @param response  The MultipleDaysDataDto containing the military statistics for the period.
+   * @param startDate The start date of the period.
+   * @param endDate   The end date of the period.
+   * @return A formatted string message to display the data for the period.
+   */
+  public String formatForPeriod(MultipleDaysDataDto response, String startDate, String endDate) {
+    DecimalFormat df = new DecimalFormat("#,###");
+    StringBuilder periodStats = new StringBuilder();
+
+    for (RecordDto record : response.getData().getRecords()) {
+      periodStats.append(String.format(
+          STATS_DAY_STATS_TEMPLATE,
+          record.getDate(),
+          df.format(record.getStats().getPersonnelUnits()),
+          df.format(record.getStats().getTanks()),
+          df.format(record.getStats().getArtillerySystems()),
+          df.format(record.getStats().getPlanes()),
+          df.format(record.getStats().getHelicopters()),
+          df.format(record.getStats().getVehiclesFuelTanks()),
+          df.format(record.getStats().getWarshipsCutters()),
+          df.format(record.getStats().getCruiseMissiles()),
+          df.format(record.getStats().getSpecialMilitaryEquip()),
+          df.format(record.getStats().getSubmarines()),
+          df.format(record.getIncrease().getPersonnelUnits()),
+          df.format(record.getIncrease().getTanks()),
+          df.format(record.getIncrease().getArtillerySystems()),
+          df.format(record.getIncrease().getPlanes()),
+          df.format(record.getIncrease().getHelicopters()),
+          df.format(record.getIncrease().getVehiclesFuelTanks()),
+          df.format(record.getIncrease().getWarshipsCutters()),
+          df.format(record.getIncrease().getCruiseMissiles()),
+          df.format(record.getIncrease().getSpecialMilitaryEquip()),
+          df.format(record.getIncrease().getSubmarines())
+      ));
+    }
+
+    return String.format(STATS_DISPLAY_MESSAGE_PERIOD, startDate, endDate, periodStats);
   }
 }

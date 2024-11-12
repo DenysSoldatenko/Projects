@@ -7,7 +7,6 @@ package com.example.militarytrackerbot.data;
  * the bot that deals with military data, updates, and status reports.</p>
  */
 public enum CallbackData {
-
   MAIN,           // Main menu for the bot
   OPTIONS,        // View available options
   DAY,            // View data for the latest day
@@ -15,4 +14,6 @@ public enum CallbackData {
   MONTH,          // View data for the latest month
   PERIOD,         // Action to set a specific time period
   BACK,           // Navigate back to the main menu
+  PREV$,          // Navigate to the previous page (for pagination)
+  NEXT$;          // Navigate to the next page (for pagination)
 }

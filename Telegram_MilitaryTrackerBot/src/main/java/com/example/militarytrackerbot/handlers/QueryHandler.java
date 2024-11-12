@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.interfaces.BotApiObject;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
@@ -19,8 +18,19 @@ public class QueryHandler {
 
   MilitaryTrackerManager militaryTrackerManager;
 
-  public BotApiMethod<?> handle(BotApiObject object) {
-    var query = (CallbackQuery) object;
-    return militaryTrackerManager.processQuery(query, query.getData());
+  /**
+   * Processes a callback query and delegates the task to the MilitaryTrackerManager.
+   *
+   * @param query The callback query received from the bot.
+   * @return A BotApiMethod response to be sent back to the user.
+   */
+  public BotApiMethod<?> handle(CallbackQuery query) {
+    String[] words = query.getData().split("\\$");
+
+    if (words.length == 0) {
+      throw new UnsupportedOperationException("Empty query data");
+    }
+
+    return militaryTrackerManager.processQuery(query, words);
   }
 }

@@ -4,8 +4,10 @@ import static com.example.militarytrackerbot.data.CallbackData.BACK;
 import static com.example.militarytrackerbot.data.CallbackData.DAY;
 import static com.example.militarytrackerbot.data.CallbackData.MAIN;
 import static com.example.militarytrackerbot.data.CallbackData.MONTH;
+import static com.example.militarytrackerbot.data.CallbackData.NEXT$;
 import static com.example.militarytrackerbot.data.CallbackData.OPTIONS;
 import static com.example.militarytrackerbot.data.CallbackData.PERIOD;
+import static com.example.militarytrackerbot.data.CallbackData.PREV$;
 import static com.example.militarytrackerbot.data.CallbackData.WEEK;
 
 import com.example.militarytrackerbot.keyboards.KeyboardFactory;
@@ -63,6 +65,23 @@ public class DataKeyboardFactory {
       List.of("🔙 Back"),
       List.of(1),
       List.of(BACK.name())
+    );
+  }
+
+  /**
+   * Creates pagination buttons for navigating through pages,
+   * with options to move to the "Previous" page,
+   * move to the "Next" page, or "Go Back" to the previous menu.
+   *
+   * @return An {@link InlineKeyboardMarkup} object
+   *     with the "Previous", "Next", and "Go Back" buttons.
+   */
+  public InlineKeyboardMarkup createPaginationButtonsMarkup(String url) {
+    System.out.println(PREV$.name() + url);
+    return keyboardFactory.createInlineKeyboard(
+      List.of("⬅️ Previous", "➡️ Next", "🔙 Back"),
+      List.of(2, 1),
+      List.of(PREV$.name() + url, NEXT$.name() + url, BACK.name())
     );
   }
 
