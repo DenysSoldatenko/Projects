@@ -16,9 +16,10 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 /**
  * The {@code QueryProcessor} class handles different types of callback queries from users
  * and processes them accordingly, generating the appropriate message responses.
- * <p>
- * It interacts with the {@link DataProvider} to fetch the relevant data, the {@link MessageFactory}
- * to create the message content, and the {@link DataKeyboardFactory} to generate the appropriate
+ *
+ * <p>It interacts with the {@link DataProvider} to fetch the relevant data,
+ * the {@link MessageFactory} to create the message content,
+ * and the {@link DataKeyboardFactory} to generate the appropriate
  * keyboard markup for user interaction.
  * </p>
  */
@@ -33,8 +34,9 @@ public class QueryProcessor {
 
   /**
    * Handles the main menu callback query.
-   * <p>
-   * This method is triggered when a user interacts with the main menu button in the Telegram bot.
+   *
+   * <p>This method is triggered when a user interacts
+   * with the main menu button in the Telegram bot.
    * It responds with a welcome message and displays the main options keyboard.
    * </p>
    *
@@ -51,8 +53,8 @@ public class QueryProcessor {
 
   /**
    * Handles the view options callback query.
-   * <p>
-   * This method is triggered when a user selects to view available commands or options.
+   *
+   * <p>This method is triggered when a user selects to view available commands or options.
    * It responds with a list of available commands and displays the main options keyboard.
    * </p>
    *
@@ -69,8 +71,8 @@ public class QueryProcessor {
 
   /**
    * Handles the day stats callback query.
-   * <p>
-   * This method is triggered when a user selects to view statistics for the latest day.
+   *
+   * <p>This method is triggered when a user selects to view statistics for the latest day.
    * It fetches the data from the {@link DataProvider}, formats it, and responds with the data,
    * along with a back button to return to the previous menu.
    * </p>
@@ -81,15 +83,15 @@ public class QueryProcessor {
   public BotApiMethod<?> handleDayStats(CallbackQuery query) {
     return messageFactory.createEditMessageResponse(
       query,
-      dataProvider.getDataForLatestDay(),
+      dataProvider.getDataForLatestDay().get("formattedResponse"),
       dataKeyboardFactory.createBackButtonMarkup()
     );
   }
 
   /**
    * Handles the week stats callback query.
-   * <p>
-   * This method is triggered when a user selects to view statistics for the past week.
+   *
+   * <p>This method is triggered when a user selects to view statistics for the past week.
    * It fetches the week data from the {@link DataProvider} and responds with the formatted data
    * along with pagination buttons if the data is paginated.
    * </p>
@@ -106,9 +108,28 @@ public class QueryProcessor {
   }
 
   /**
+   * Handles the month stats callback query.
+   *
+   * <p>This method is triggered when a user selects to view statistics for the past month.
+   * It fetches the month data from the {@link DataProvider} and responds with the formatted data
+   * along with pagination buttons if the data is paginated.</p>
+   *
+   * @param query The callback query containing user interaction data.
+   * @return A BotApiMethod object representing the edit message response
+   *     with month statistics and pagination.
+   */
+  public BotApiMethod<?> handleMonthStats(CallbackQuery query) {
+    return messageFactory.createEditMessageResponse(
+      query,
+      dataProvider.getDataForMonth().get("formattedResponse"),
+      dataKeyboardFactory.createPaginationButtonsMarkup(dataProvider.getDataForMonth().get("param"))
+    );
+  }
+
+  /**
    * Handles the pagination callback query.
-   * <p>
-   * This method is triggered when a user interacts
+   *
+   * <p>This method is triggered when a user interacts
    * with pagination buttons (e.g., "Next" or "Previous").
    * It fetches the paginated data from the {@link DataProvider}, formats the response, and displays
    * the updated message along with pagination controls.

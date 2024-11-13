@@ -1,8 +1,7 @@
 package com.example.militarytrackerbot.utils;
 
-import static com.example.militarytrackerbot.utils.MessageUtils.OFFSET_ERROR_MESSAGE;
+import static java.lang.Integer.parseInt;
 
-import com.example.militarytrackerbot.exceptions.InvalidOffsetException;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,30 +14,53 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class PaginationUtils {
 
-  public static String incrementOffset(String params) {
-    return updateOffset(params, 1);
+  /**
+   * Creates query parameters for a given date range.
+   *
+   * @param dateFrom The start date of the period.
+   * @param dateTo The end date of the period.
+   * @return A string representing the query parameters,
+   *     including the date range and pagination details.
+   */
+  public static String createQueryParamsForPeriod(String dateFrom, String dateTo) {
+    return String.format("date_from=%s&date_to=%s&offset=0&limit=2", dateFrom, dateTo);
   }
 
-  public static String decrementOffset(String params) {
-    return updateOffset(params, -1);
-  }
-
+  /**
+   * Extracts the "date_from" parameter from a query string.
+   *
+   * @param params The query string containing the parameters.
+   * @return The value of the "date_from" parameter.
+   */
   public static String getDateFrom(String params) {
     return parseQueryParams(params).get("date_from");
   }
 
+  /**
+   * Extracts the "date_to" parameter from a query string.
+   *
+   * @param params The query string containing the parameters.
+   * @return The value of the "date_to" parameter.
+   */
   public static String getDateTo(String params) {
     return parseQueryParams(params).get("date_to");
   }
 
-  private static String updateOffset(String params, int increment) {
+  /**
+   * Adjusts the "offset" parameter based on the user action ("PREV" or "NEXT").
+   *
+   * @param action The user action, which is either "PREV" or "NEXT".
+   * @param params The current query string containing the parameters.
+   * @return The updated query string with the adjusted "offset".
+   */
+  public static String adjustOffset(String action, String params) {
     Map<String, String> paramMap = parseQueryParams(params);
-    int offset = Integer.parseInt(paramMap.getOrDefault("offset", "0")) + increment;
-
-    if (offset < 0) {
-      throw new InvalidOffsetException(OFFSET_ERROR_MESSAGE);
+    int offset = parseInt(paramMap.get("offset"));
+    if ("PREV".equals(action.substring(0, 4)) && offset > 0) {
+      offset--;
+    } else if ("NEXT".equals(action.substring(0, 4))) {
+      offset++;
     }
-
     paramMap.put("offset", String.valueOf(offset));
     return reconstructQueryString(paramMap);
   }

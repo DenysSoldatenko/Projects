@@ -77,7 +77,6 @@ public class DataKeyboardFactory {
    *     with the "Previous", "Next", and "Go Back" buttons.
    */
   public InlineKeyboardMarkup createPaginationButtonsMarkup(String url) {
-    System.out.println(PREV$.name() + url);
     return keyboardFactory.createInlineKeyboard(
       List.of("⬅️ Previous", "➡️ Next", "🔙 Back"),
       List.of(2, 1),

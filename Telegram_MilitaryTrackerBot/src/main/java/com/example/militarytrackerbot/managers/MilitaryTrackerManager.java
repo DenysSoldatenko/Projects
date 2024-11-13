@@ -42,7 +42,7 @@ public class MilitaryTrackerManager {
       case "OPTIONS", "BACK" -> queryProcessor.handleViewOptions(query);
       case "DAY" -> queryProcessor.handleDayStats(query);
       case "WEEK" -> queryProcessor.handleWeekStats(query);
-      case "MONTH" -> null;
+      case "MONTH" -> queryProcessor.handleMonthStats(query);
       case "PERIOD" -> null;
       default -> throw new IllegalStateException("Unexpected value: " + words[0]);
     };

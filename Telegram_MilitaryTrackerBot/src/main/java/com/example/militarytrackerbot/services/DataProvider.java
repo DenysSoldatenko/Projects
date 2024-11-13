@@ -1,40 +1,23 @@
 package com.example.militarytrackerbot.services;
 
-import static com.example.militarytrackerbot.utils.MessageUtils.MILITARY_DATA_FETCH_ERROR_MESSAGE;
-import static com.example.militarytrackerbot.utils.MessageUtils.NO_MILITARY_DATA_MESSAGE;
-import static com.example.militarytrackerbot.utils.MessageUtils.UNEXPECTED_ERROR_MESSAGE;
-import static com.example.militarytrackerbot.utils.PaginationUtils.decrementOffset;
+import static com.example.militarytrackerbot.utils.DateRangeUtils.getDateFromLastMonth;
+import static com.example.militarytrackerbot.utils.DateRangeUtils.getDateFromLastWeek;
+import static com.example.militarytrackerbot.utils.DateRangeUtils.getToday;
+import static com.example.militarytrackerbot.utils.PaginationUtils.adjustOffset;
+import static com.example.militarytrackerbot.utils.PaginationUtils.createQueryParamsForPeriod;
 import static com.example.militarytrackerbot.utils.PaginationUtils.getDateFrom;
 import static com.example.militarytrackerbot.utils.PaginationUtils.getDateTo;
-import static com.example.militarytrackerbot.utils.PaginationUtils.incrementOffset;
-import static java.time.LocalDate.now;
-import static java.time.format.DateTimeFormatter.ofPattern;
 
-import com.example.militarytrackerbot.dtos.MultipleDaysDataDto;
-import com.example.militarytrackerbot.dtos.SingleDayDataDto;
-import com.example.militarytrackerbot.exceptions.InvalidOffsetException;
-import com.example.militarytrackerbot.utils.ResponseFormatterUtils;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import com.example.militarytrackerbot.utils.DataFetchUtils;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
 /**
- * Service class that provides methods to fetch and format military data from an external API,
- * handles pagination for data, and returns formatted responses to be used in a Telegram bot.
- * <p>
- * This class interacts with the military API to fetch the latest day and weekly data, processes the
- * data, and handles paginated data requests,
- * using appropriate error handling and response formatting.
- * </p>
+ * Service class responsible for providing formatted data for different time periods.
  */
 @Slf4j
 @Service
@@ -47,104 +30,55 @@ public class DataProvider {
   @Value("${military.latest-url}")
   private String latestUrl;
 
-  private static final DateTimeFormatter DATE_FORMATTER = ofPattern("yyyy-MM-dd");
-
-  private final RestTemplate restTemplate;
-  private final ResponseFormatterUtils responseFormatter;
+  private final DataFetchUtils dataFetcher;
 
   /**
-   * Fetches and formats data for the latest day.
+   * Fetches and formats the data for the latest day.
    *
-   * @return A formatted string with the latest day data.
+   * @return A string containing the formatted data for the latest day.
    */
-  public String getDataForLatestDay() {
-    return fetchAndFormatData(latestUrl, responseFormatter::formatForLatestDay);
+  public Map<String, String> getDataForLatestDay() {
+    return dataFetcher.fetchAndFormatData(latestUrl);
   }
 
   /**
-   * Fetches and formats data for the last week.
+   * Fetches and formats the data for the past week.
    *
-   * @return A Map containing the formatted response and URL parameters.
+   * @return A Map containing the formatted data for the past week, including query parameters.
    */
   public Map<String, String> getDataForWeek() {
-    LocalDate today = now();
-    String dateFrom = today.minusDays(7).format(DATE_FORMATTER);
-    String dateTo = today.format(DATE_FORMATTER);
-    String queryParams = "date_from=" + dateFrom + "&date_to=" + dateTo + "&offset=0&limit=2";
-
+    String dateFrom = getDateFromLastWeek();
+    String dateTo = getToday();
+    String queryParams = createQueryParamsForPeriod(dateFrom, dateTo);
     String url = baseUrl + "?" + queryParams;
-    return fetchAndFormatPeriodData(url, dateFrom, dateTo, queryParams);
+    return dataFetcher.fetchPaginatedData(url, queryParams, dateFrom, dateTo);
   }
 
   /**
-   * Fetches and formats paginated data based on callback query action.
+   * Fetches and formats the data for the past month.
    *
-   * @param query  The Telegram callback query object.
-   * @param params The current URL parameters.
-   * @return A Map containing the formatted response and updated parameters.
+   * @return A Map containing the formatted data for the past month, including query parameters.
+   */
+  public Map<String, String> getDataForMonth() {
+    String dateFrom = getDateFromLastMonth();
+    String dateTo = getToday();
+    String queryParams = createQueryParamsForPeriod(dateFrom, dateTo);
+    String url = baseUrl + "?" + queryParams;
+    return dataFetcher.fetchPaginatedData(url, queryParams, dateFrom, dateTo);
+  }
+
+  /**
+   * Fetches paginated data based on user interaction (pagination).
+   *
+   * @param query The CallbackQuery object containing user interaction data.
+   * @param params The query parameters containing pagination information.
+   * @return A Map containing the formatted paginated data, including updated query parameters.
    */
   public Map<String, String> getDataForPagination(CallbackQuery query, String params) {
-    try {
-      String updatedParams = "PREV".equals(query.getData().split("\\$")[0])
-          ? decrementOffset(params)
-          : incrementOffset(params);
-
-      String dateFrom = getDateFrom(params);
-      String dateTo = getDateTo(params);
-      String url = baseUrl + "?" + updatedParams;
-
-      return fetchAndFormatPeriodData(url, dateFrom, dateTo, updatedParams);
-    } catch (InvalidOffsetException e) {
-      log.error("Invalid offset in pagination parameters: {}", e.getMessage());
-      return createErrorResult(NO_MILITARY_DATA_MESSAGE);
-    }
-  }
-
-  private String fetchAndFormatData(String url, FormatterFunction<SingleDayDataDto> formatter) {
-    try {
-      SingleDayDataDto response = restTemplate.getForObject(url, SingleDayDataDto.class);
-      if (response == null) {
-        log.warn("No data found at URL: {}", url);
-        return NO_MILITARY_DATA_MESSAGE;
-      }
-      return formatter.format(response);
-    } catch (HttpClientErrorException | HttpServerErrorException e) {
-      log.error("Error fetching data: {}", e.getMessage());
-      return MILITARY_DATA_FETCH_ERROR_MESSAGE;
-    } catch (Exception e) {
-      log.error("Unexpected error occurred: {}", e.getMessage());
-      return UNEXPECTED_ERROR_MESSAGE;
-    }
-  }
-
-  private Map<String, String> fetchAndFormatPeriodData(String url, String dateFrom, String dateTo, String params) {
-    try {
-      MultipleDaysDataDto response = restTemplate.getForObject(url, MultipleDaysDataDto.class);
-      if (response == null || response.getData().getRecords().isEmpty()) {
-        log.warn("No data found at URL: {}", url);
-        return createErrorResult(NO_MILITARY_DATA_MESSAGE);
-      }
-      String formattedResponse = responseFormatter.formatForPeriod(response, dateFrom, dateTo);
-      return createResultMap(formattedResponse, params);
-    } catch (HttpClientErrorException | HttpServerErrorException e) {
-      log.error("Error fetching data: {}", e.getMessage());
-      return createErrorResult(MILITARY_DATA_FETCH_ERROR_MESSAGE);
-    } catch (Exception e) {
-      log.error("Unexpected error occurred: {}", e.getMessage());
-      return createErrorResult(UNEXPECTED_ERROR_MESSAGE);
-    }
-  }
-
-  private Map<String, String> createErrorResult(String message) {
-    Map<String, String> result = new HashMap<>();
-    result.put("formattedResponse", message);
-    return result;
-  }
-
-  private Map<String, String> createResultMap(String formattedResponse, String params) {
-    Map<String, String> result = new HashMap<>();
-    result.put("formattedResponse", formattedResponse);
-    result.put("param", params);
-    return result;
+    String dateFrom = getDateFrom(params);
+    String dateTo = getDateTo(params);
+    String updatedParams = adjustOffset(query.getData(), params);
+    String url = baseUrl + "?" + updatedParams;
+    return dataFetcher.fetchPaginatedData(url, updatedParams, dateFrom, dateTo);
   }
 }

@@ -15,5 +15,5 @@ public enum CallbackData {
   PERIOD,         // Action to set a specific time period
   BACK,           // Navigate back to the main menu
   PREV$,          // Navigate to the previous page (for pagination)
-  NEXT$;          // Navigate to the next page (for pagination)
+  NEXT$           // Navigate to the next page (for pagination)
 }

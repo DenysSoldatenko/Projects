@@ -15,6 +15,12 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MessageHandler {
 
+  /**
+   * Processes an incoming message or update.
+   *
+   * @param object The incoming update or message.
+   * @return The response to send back to the user.
+   */
   public BotApiMethod<?> handle(BotApiObject object) {
 
 

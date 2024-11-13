@@ -31,9 +31,9 @@ public class MessageUtils {
       - /set [date one] - [date two] — View losses for a specific date range
         (e.g., /set 2024-11-07 - 2024-11-09).
   
-      Watch as the invaders' losses continue to grow… 💪
+      💪 Watch as the invaders' losses continue to grow…
   
-      Glory to Ukraine! 🇺🇦💪
+      🇺🇦 Glory to Ukraine!
       """;
 
   public static final String INVALID_INPUT_MESSAGE = """
@@ -54,7 +54,7 @@ public class MessageUtils {
       The Russian invaders' losses continue to rise, but we couldn't retrieve the data right now.
       ⚠️ Please try again later or check your input.
 
-      The war rages on...💥
+      💥 The war rages on...
       """;
 
   public static final String UNEXPECTED_ERROR_MESSAGE = """
@@ -62,16 +62,16 @@ public class MessageUtils {
   
       ⚠️ Please try again later. If the problem persists, contact support.
   
-      Thank you for your patience, and stay tuned for updates! 💥
+      💥 Thank you for your patience, and stay tuned for updates!
       """;
 
   public static final String NO_MILITARY_DATA_MESSAGE = """
       🚨 No military loss data found for the selected period! 😞
   
-      Double-check your command or date format and try again. 📅
-      If you still see this message, check back later for updates. 🔄
+      📅 Double-check your command or date format and try again.
+      🔄 If you still see this message, check back later for updates.
 
-      Ukraine's victory will be recorded, just stay tuned! 🇺🇦💪
+      🇺🇦 Ukraine's victory will be recorded, just stay tuned!
       """;
 
   public static final String HELP_MESSAGE = """
@@ -90,7 +90,7 @@ public class MessageUtils {
       - /start — Start the bot and see the welcome message 👋.
       - /help — See this help message again for guidance 🛠️.
   
-      Glory to Ukraine! 🇺🇦💪
+      🇺🇦 Glory to Ukraine!
       """;
 
   public static final String STATS_DISPLAY_MESSAGE_LATEST_DAY = """
@@ -120,7 +120,7 @@ public class MessageUtils {
       🔼 Submarines: %s
       
       ⚠️ The statistics are based on the most recent data collected.
-      Keep an eye on future updates to see how the losses continue to rise! 🚨
+      🚨 Keep an eye on future updates to see how the losses continue to rise!
       """;
 
   public static final String STATS_DISPLAY_MESSAGE_PERIOD = """
@@ -130,7 +130,7 @@ public class MessageUtils {
       %s
 
       ⚠️ The statistics are based on the most recent data collected for the selected period.
-      Stay tuned for continuous updates! 🚨
+      🚨 Stay tuned for continuous updates!
       """;
 
   public static final String STATS_DAY_STATS_TEMPLATE = """
@@ -160,10 +160,6 @@ public class MessageUtils {
       🔼 Submarines: %s
 
       ----------------------------------------
-      """;
-
-  public static final String OFFSET_ERROR_MESSAGE = """
-      ⚠️ Oops! The offset value can't be less than 0. Please check and try again. 🔄
       """;
 
   public static final String AVAILABLE_COMMANDS_MESSAGE = "📜 Available Commands ⬇️";
