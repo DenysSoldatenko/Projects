@@ -22,7 +22,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class DataProvider {
+public class DataProviderService {
 
   @Value("${military.base-url}")
   private String baseUrl;
@@ -30,15 +30,13 @@ public class DataProvider {
   @Value("${military.latest-url}")
   private String latestUrl;
 
-  private final DataFetchUtils dataFetcher;
-
   /**
    * Fetches and formats the data for the latest day.
    *
    * @return A string containing the formatted data for the latest day.
    */
   public Map<String, String> getDataForLatestDay() {
-    return dataFetcher.fetchAndFormatData(latestUrl);
+    return DataFetchUtils.fetchAndFormatData(latestUrl);
   }
 
   /**
@@ -51,7 +49,7 @@ public class DataProvider {
     String dateTo = getToday();
     String queryParams = createQueryParamsForPeriod(dateFrom, dateTo);
     String url = baseUrl + "?" + queryParams;
-    return dataFetcher.fetchPaginatedData(url, queryParams, dateFrom, dateTo);
+    return DataFetchUtils.fetchPaginatedData(url, queryParams, dateFrom, dateTo);
   }
 
   /**
@@ -64,7 +62,7 @@ public class DataProvider {
     String dateTo = getToday();
     String queryParams = createQueryParamsForPeriod(dateFrom, dateTo);
     String url = baseUrl + "?" + queryParams;
-    return dataFetcher.fetchPaginatedData(url, queryParams, dateFrom, dateTo);
+    return DataFetchUtils.fetchPaginatedData(url, queryParams, dateFrom, dateTo);
   }
 
   /**
@@ -79,6 +77,6 @@ public class DataProvider {
     String dateTo = getDateTo(params);
     String updatedParams = adjustOffset(query.getData(), params);
     String url = baseUrl + "?" + updatedParams;
-    return dataFetcher.fetchPaginatedData(url, updatedParams, dateFrom, dateTo);
+    return DataFetchUtils.fetchPaginatedData(url, updatedParams, dateFrom, dateTo);
   }
 }

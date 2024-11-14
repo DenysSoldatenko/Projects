@@ -2,10 +2,12 @@ package com.example.militarytrackerbot.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import lombok.experimental.UtilityClass;
 
 /**
  * Utility class for creating response maps with formatted messages and query parameters.
  */
+@UtilityClass
 public class ResponseUtils {
 
   /**

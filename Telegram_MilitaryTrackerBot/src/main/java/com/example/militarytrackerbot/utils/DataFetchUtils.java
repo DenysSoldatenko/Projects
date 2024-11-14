@@ -3,15 +3,18 @@ package com.example.militarytrackerbot.utils;
 import static com.example.militarytrackerbot.utils.MessageUtils.MILITARY_DATA_FETCH_ERROR_MESSAGE;
 import static com.example.militarytrackerbot.utils.MessageUtils.NO_MILITARY_DATA_MESSAGE;
 import static com.example.militarytrackerbot.utils.MessageUtils.UNEXPECTED_ERROR_MESSAGE;
+import static com.example.militarytrackerbot.utils.ResponseFormatterUtils.formatForLatestDay;
+import static com.example.militarytrackerbot.utils.ResponseFormatterUtils.formatForPeriod;
 import static com.example.militarytrackerbot.utils.ResponseUtils.createResponseMapWithFormattedMessage;
 import static com.example.militarytrackerbot.utils.ResponseUtils.createResponseMapWithParams;
 
 import com.example.militarytrackerbot.dtos.MultipleDaysDataDto;
 import com.example.militarytrackerbot.dtos.SingleDayDataDto;
 import java.util.Map;
-import lombok.RequiredArgsConstructor;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -25,12 +28,11 @@ import org.springframework.web.client.RestTemplate;
  * based on the type of data (single-day or multiple-days).
  */
 @Slf4j
-@Component
-@RequiredArgsConstructor
+@UtilityClass
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DataFetchUtils {
 
-  private final RestTemplate restTemplate;
-  private final ResponseFormatterUtils responseFormatter;
+  RestTemplate restTemplate = new RestTemplate();
 
   /**
    * Fetches data from the given URL and formats it based on the response type and pagination flag.
@@ -56,9 +58,9 @@ public class DataFetchUtils {
       if (isPaginated && response instanceof MultipleDaysDataDto multipleDaysData) {
         return multipleDaysData.getData().getRecords().isEmpty()
           ? createResponseMapWithFormattedMessage(NO_MILITARY_DATA_MESSAGE)
-          : createResponseMapWithParams(responseFormatter.formatForPeriod(multipleDaysData, dateFrom, dateTo), params);
+          : createResponseMapWithParams(formatForPeriod(multipleDaysData, dateFrom, dateTo), params);
       } else if (!isPaginated && response instanceof SingleDayDataDto singleDayData) {
-        return createResponseMapWithParams(responseFormatter.formatForLatestDay(singleDayData), params);
+        return createResponseMapWithParams(formatForLatestDay(singleDayData), params);
       } else {
         log.error("Unexpected response type: {}", responseType.getName());
         return createResponseMapWithFormattedMessage(UNEXPECTED_ERROR_MESSAGE);

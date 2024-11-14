@@ -8,16 +8,13 @@ import com.example.militarytrackerbot.dtos.MultipleDaysDataDto;
 import com.example.militarytrackerbot.dtos.RecordDto;
 import com.example.militarytrackerbot.dtos.SingleDayDataDto;
 import java.text.DecimalFormat;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Component;
+import lombok.experimental.UtilityClass;
 
 /**
  * This class is responsible for formatting the response data from the military tracker
  * into a readable message for display.
  */
-@Component
-@FieldDefaults(level = AccessLevel.PUBLIC, makeFinal = true)
+@UtilityClass
 public class ResponseFormatterUtils {
 
   /**
@@ -26,7 +23,7 @@ public class ResponseFormatterUtils {
    * @param response The RecordDto containing the military statistics.
    * @return A formatted string message to display the data.
    */
-  public String formatForLatestDay(SingleDayDataDto response) {
+  public static String formatForLatestDay(SingleDayDataDto response) {
     DecimalFormat df = new DecimalFormat("#,###");
 
     return String.format(
@@ -64,7 +61,7 @@ public class ResponseFormatterUtils {
    * @param endDate   The end date of the period.
    * @return A formatted string message to display the data for the period.
    */
-  public String formatForPeriod(MultipleDaysDataDto response, String startDate, String endDate) {
+  public static String formatForPeriod(MultipleDaysDataDto response, String startDate, String endDate) {
     DecimalFormat df = new DecimalFormat("#,###");
     StringBuilder periodStats = new StringBuilder();
 

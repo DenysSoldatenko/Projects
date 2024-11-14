@@ -4,11 +4,13 @@ import static java.time.LocalDate.now;
 import static java.time.format.DateTimeFormatter.ofPattern;
 
 import java.time.format.DateTimeFormatter;
+import lombok.experimental.UtilityClass;
 
 /**
  * Utility class for working with date ranges.
  * Provides methods to retrieve the date, all in the "yyyy-MM-dd" format.
  */
+@UtilityClass
 public class DateRangeUtils {
 
   private static final DateTimeFormatter DATE_FORMATTER = ofPattern("yyyy-MM-dd");

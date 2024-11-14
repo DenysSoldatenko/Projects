@@ -43,13 +43,16 @@ public class MilitaryTrackerManager {
       case "DAY" -> queryProcessor.handleDayStats(query);
       case "WEEK" -> queryProcessor.handleWeekStats(query);
       case "MONTH" -> queryProcessor.handleMonthStats(query);
-      case "PERIOD" -> null;
+      case "PERIOD" -> queryProcessor.handleSetDate(query);
       default -> throw new IllegalStateException("Unexpected value: " + words[0]);
     };
   }
 
   private BotApiMethod<?> handleTwoWordsQuery(String[] words, CallbackQuery query) {
     return switch (words[0]) {
+      case "EMPTY" -> queryProcessor.handleSetDate(query);
+      case "INPUT" -> queryProcessor.handleSetDate(query, words[1]);
+      case "SUBMIT" -> null;
       case "PREV", "NEXT" -> queryProcessor.handlePagination(query, words[1]);
       default -> throw new IllegalStateException("Unexpected value: " + words[0]);
     };

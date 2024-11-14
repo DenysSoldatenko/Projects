@@ -29,7 +29,7 @@ public class MessageUtils {
       - /week — See the weekly military losses.
       - /month — View the losses for the past month.
       - /set [date one] - [date two] — View losses for a specific date range
-        (e.g., /set 2024-11-07 - 2024-11-09).
+        (e.g., /set 2024-11-07 – 2024-11-09).
   
       💪 Watch as the invaders' losses continue to grow…
   
@@ -43,7 +43,7 @@ public class MessageUtils {
       - /week — Get the losses for the latest week 📅.
       - /month — View the losses for the past month 🏙️.
       - /set [date one] - [date two] — View losses for a specific date range
-        (e.g., /set 2024-11-07 - 2024-11-09) 📅.
+        (e.g., /set 2024-11-07 – 2024-11-09) 📅.
   
       ❗ Please try again with a valid command or refer to /help for more guidance.
       """;
@@ -84,7 +84,7 @@ public class MessageUtils {
       - /week — View the total losses over the past week 📅.
       - /month — View the total losses over the past month 📆.
       - /set [date one] - [date two] — View losses for a specific date range
-        (e.g., /set 2024-11-07 - 2024-11-09) 🔍.
+        (e.g., /set 2024-11-07 – 2024-11-09) 🔍.
   
       You can also use these commands:
       - /start — Start the bot and see the welcome message 👋.
@@ -163,4 +163,5 @@ public class MessageUtils {
       """;
 
   public static final String AVAILABLE_COMMANDS_MESSAGE = "📜 Available Commands ⬇️";
+  public static final String ENTER_PERIOD_OR_DATE_MESSAGE = "📅 Please enter a period or a single date ⬇️";
 }

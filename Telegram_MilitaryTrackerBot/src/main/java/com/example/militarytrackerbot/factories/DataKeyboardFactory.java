@@ -2,12 +2,15 @@ package com.example.militarytrackerbot.factories;
 
 import static com.example.militarytrackerbot.data.CallbackData.BACK;
 import static com.example.militarytrackerbot.data.CallbackData.DAY;
+import static com.example.militarytrackerbot.data.CallbackData.EMPTY$INPUT;
+import static com.example.militarytrackerbot.data.CallbackData.INPUT$;
 import static com.example.militarytrackerbot.data.CallbackData.MAIN;
 import static com.example.militarytrackerbot.data.CallbackData.MONTH;
 import static com.example.militarytrackerbot.data.CallbackData.NEXT$;
 import static com.example.militarytrackerbot.data.CallbackData.OPTIONS;
 import static com.example.militarytrackerbot.data.CallbackData.PERIOD;
 import static com.example.militarytrackerbot.data.CallbackData.PREV$;
+import static com.example.militarytrackerbot.data.CallbackData.SUBMIT$INPUT;
 import static com.example.militarytrackerbot.data.CallbackData.WEEK;
 
 import com.example.militarytrackerbot.keyboards.KeyboardFactory;
@@ -95,6 +98,32 @@ public class DataKeyboardFactory {
       List.of("📢 View Bot Options"),
       List.of(1),
       List.of(OPTIONS.name())
+    );
+  }
+
+  public InlineKeyboardMarkup createPeriodEnteringKeyboardMarkup(String current) {
+    return keyboardFactory.createInlineKeyboard(
+      List.of(
+        !current.isEmpty() ? current : "Input field",
+        "1", "2", "3", "4",
+        "5", "6", "7", "8",
+        "9", "0", "-", "–",
+        "✔ Submit", "❌ Remove", "🗑️ Clear",
+        "2024-11-07",
+        "2024-11-07 – 2024-11-09",
+        "🔙 Back"
+      ),
+      List.of(1, 4, 4, 4, 3, 1, 1, 1),
+      List.of(
+        EMPTY$INPUT.name(),
+        INPUT$.name() + current + "1", INPUT$.name() + current + "2", INPUT$.name() + current + "3", INPUT$.name() + current + "4",
+        INPUT$.name() + current + "5", INPUT$.name() + current + "6", INPUT$.name() + current + "7", INPUT$.name() + current + "8",
+        INPUT$.name() + current + "9", INPUT$.name() + current + "0", INPUT$.name() + current + "-", INPUT$.name() + current + " – ",
+        SUBMIT$INPUT.name() + current, current.length() <= 1 ? EMPTY$INPUT.name() : INPUT$.name() + current.substring(0, current.length() - 1), EMPTY$INPUT.name(),
+        INPUT$.name() + "2024-11-07",
+        INPUT$.name() + "2024-11-07 – 2024-11-09",
+        BACK.name()
+      )
     );
   }
 }
