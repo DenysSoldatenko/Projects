@@ -1,9 +1,11 @@
 package com.example.militarytrackerbot.managers;
 
+import static com.example.militarytrackerbot.factories.MessageFactory.createEditMessageResponse;
+import static com.example.militarytrackerbot.factories.MessageFactory.createMessageResponse;
+import static com.example.militarytrackerbot.utils.MessageUtils.AVAILABLE_COMMANDS_MESSAGE;
 import static com.example.militarytrackerbot.utils.MessageUtils.WELCOME_MESSAGE_TEMPLATE;
 
 import com.example.militarytrackerbot.factories.DataKeyboardFactory;
-import com.example.militarytrackerbot.factories.MessageFactory;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,17 +23,17 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 public class MainManager {
 
   DataKeyboardFactory dataKeyboardFactory;
-  MessageFactory messageFactory;
 
   /**
-   * Processes a regular command (message) from the user
-   * and sends a response with a welcome message and available options.
+   * Displays the main menu to the user in response to a regular command (message).
+   * Sends a welcome message along with a set of available options to the user.
    *
-   * @param message The incoming message from the user.
-   * @return A {@link BotApiMethod} that represents the response to be sent to the user.
+   * @param message The incoming message from the user that triggers the display of the main menu.
+   * @return A {@link BotApiMethod} that represents the response to be sent to the user,
+   *     containing the welcome message and options markup.
    */
-  public BotApiMethod<?> processCommand(Message message) {
-    return messageFactory.createMessageResponse(
+  public BotApiMethod<?> showMainMenu(Message message) {
+    return createMessageResponse(
       message,
       WELCOME_MESSAGE_TEMPLATE,
       dataKeyboardFactory.createOptionsMarkup()
@@ -39,18 +41,32 @@ public class MainManager {
   }
 
   /**
-   * Processes a callback query from the user
-   * (e.g., after clicking a button in the bot's inline keyboard)
-   * and sends a response with a welcome message and available options.
+   * Displays the main menu to the user with a welcome message
+   * and a set of primary options.
    *
    * @param query The callback query received from the user.
    * @return A {@link BotApiMethod} that represents the response to be sent to the user.
    */
-  public BotApiMethod<?> processQuery(CallbackQuery query) {
-    return messageFactory.createEditMessageResponse(
+  public BotApiMethod<?> showMainMenu(CallbackQuery query) {
+    return createEditMessageResponse(
       query,
       WELCOME_MESSAGE_TEMPLATE,
       dataKeyboardFactory.createOptionsMarkup()
+    );
+  }
+
+  /**
+   * Displays the available commands to the user with instructions
+   * on how to proceed, along with a set of main options.
+   *
+   * @param query The callback query received from the user.
+   * @return A {@link BotApiMethod} that represents the response to be sent to the user.
+   */
+  public BotApiMethod<?> showAvailableCommands(CallbackQuery query) {
+    return createEditMessageResponse(
+      query,
+      AVAILABLE_COMMANDS_MESSAGE,
+      dataKeyboardFactory.createMainOptionsMarkup()
     );
   }
 }

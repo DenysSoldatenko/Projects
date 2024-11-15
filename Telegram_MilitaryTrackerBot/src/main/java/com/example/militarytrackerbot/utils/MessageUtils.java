@@ -162,6 +162,39 @@ public class MessageUtils {
       ----------------------------------------
       """;
 
+  public static final String INVALID_SINGLE_DATE_FORMAT_MESSAGE = """
+      ⚠️ Invalid date format!
+    
+      Please enter a valid date in the format: yyyy-MM-dd (e.g., 2024-11-07).
+      Double-check your input and try again.
+      """;
+
+  public static final String INVALID_DATE_RANGE_FORMAT_MESSAGE = """
+      ⚠️ Invalid date range format!
+    
+      Please enter a valid date range in the format: yyyy-MM-dd - yyyy-MM-dd (e.g., 2024-11-07 - 2024-11-09).
+      Make sure both dates are in the correct format and try again.
+      """;
+
+  public static final String INVALID_START_DATE_MESSAGE = """
+      ⚠️ Invalid start date in the range!
+    
+      Please check your start date format and ensure it's a valid date in the format: yyyy-MM-dd.
+      """;
+
+  public static final String INVALID_END_DATE_MESSAGE = """
+      ⚠️ Invalid end date in the range!
+    
+      Please check your end date format and ensure it's a valid date in the format: yyyy-MM-dd.
+      """;
+
+  public static final String END_DATE_BEFORE_START_DATE_MESSAGE = """
+      ⚠️ End date cannot be before the start date!
+    
+      Please ensure the end date is after the start date and try again.
+      """;
+
+
   public static final String AVAILABLE_COMMANDS_MESSAGE = "📜 Available Commands ⬇️";
   public static final String ENTER_PERIOD_OR_DATE_MESSAGE = "📅 Please enter a period or a single date ⬇️";
 }

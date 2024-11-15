@@ -30,7 +30,7 @@ public class CommandHandler {
   public BotApiMethod<?> handle(BotApiObject object) {
     var command = (Message) object;
     if (command.getText().equals("/start")) {
-      return mainManager.processCommand(command);
+      return mainManager.showMainMenu(command);
     }
     throw new UnsupportedOperationException("Method not implemented for command: " + command.getText());
   }

@@ -101,6 +101,14 @@ public class DataKeyboardFactory {
     );
   }
 
+  /**
+   * Creates a keyboard markup for entering a period, with dynamic input options.
+   * This keyboard includes number buttons, input field, and options for submitting,
+   * clearing, or removing the input. It also provides a back button.
+   *
+   * @param current The current value in the input field. If the field is empty, a placeholder ("Input field") is used.
+   * @return An {@link InlineKeyboardMarkup} object containing the period entering keyboard.
+   */
   public InlineKeyboardMarkup createPeriodEnteringKeyboardMarkup(String current) {
     return keyboardFactory.createInlineKeyboard(
       List.of(
@@ -109,19 +117,15 @@ public class DataKeyboardFactory {
         "5", "6", "7", "8",
         "9", "0", "-", "–",
         "✔ Submit", "❌ Remove", "🗑️ Clear",
-        "2024-11-07",
-        "2024-11-07 – 2024-11-09",
         "🔙 Back"
       ),
-      List.of(1, 4, 4, 4, 3, 1, 1, 1),
+      List.of(1, 4, 4, 4, 3, 1),
       List.of(
         EMPTY$INPUT.name(),
         INPUT$.name() + current + "1", INPUT$.name() + current + "2", INPUT$.name() + current + "3", INPUT$.name() + current + "4",
         INPUT$.name() + current + "5", INPUT$.name() + current + "6", INPUT$.name() + current + "7", INPUT$.name() + current + "8",
         INPUT$.name() + current + "9", INPUT$.name() + current + "0", INPUT$.name() + current + "-", INPUT$.name() + current + " – ",
         SUBMIT$INPUT.name() + current, current.length() <= 1 ? EMPTY$INPUT.name() : INPUT$.name() + current.substring(0, current.length() - 1), EMPTY$INPUT.name(),
-        INPUT$.name() + "2024-11-07",
-        INPUT$.name() + "2024-11-07 – 2024-11-09",
         BACK.name()
       )
     );

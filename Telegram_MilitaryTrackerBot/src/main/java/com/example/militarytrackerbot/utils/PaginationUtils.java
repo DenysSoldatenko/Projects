@@ -1,9 +1,10 @@
 package com.example.militarytrackerbot.utils;
 
 import static java.lang.Integer.parseInt;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toMap;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.experimental.UtilityClass;
 
@@ -69,12 +70,12 @@ public class PaginationUtils {
     return Stream.of(params.split("&"))
       .map(pair -> pair.split("="))
       .filter(keyValue -> keyValue.length == 2)
-      .collect(Collectors.toMap(keyValue -> keyValue[0], keyValue -> keyValue[1]));
+      .collect(toMap(keyValue -> keyValue[0], keyValue -> keyValue[1]));
   }
 
   private static String reconstructQueryString(Map<String, String> paramMap) {
     return paramMap.entrySet().stream()
       .map(entry -> entry.getKey() + "=" + entry.getValue())
-      .collect(Collectors.joining("&"));
+      .collect(joining("&"));
   }
 }

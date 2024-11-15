@@ -1,9 +1,8 @@
 package com.example.militarytrackerbot.factories;
 
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Component;
+import lombok.experimental.UtilityClass;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -15,8 +14,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 /**
  * Factory for creating Telegram bot message responses.
  */
-@Component
-@RequiredArgsConstructor
+@UtilityClass
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MessageFactory {
 
@@ -28,7 +26,7 @@ public class MessageFactory {
    * @param replyMarkup the InlineKeyboardMarkup to attach to the message
    * @return an EditMessageText object configured with the provided parameters
    */
-  public EditMessageText createEditMessageResponse(CallbackQuery query, String text, InlineKeyboardMarkup replyMarkup) {
+  public static EditMessageText createEditMessageResponse(CallbackQuery query, String text, InlineKeyboardMarkup replyMarkup) {
     return EditMessageText.builder()
       .text(text)
       .chatId(query.getMessage().getChatId())
@@ -45,7 +43,7 @@ public class MessageFactory {
    * @param replyMarkup the InlineKeyboardMarkup to attach to the message
    * @return a SendMessage object configured with the provided parameters
    */
-  public SendMessage createMessageResponse(Message message, String text, InlineKeyboardMarkup replyMarkup) {
+  public static SendMessage createMessageResponse(Message message, String text, InlineKeyboardMarkup replyMarkup) {
     return SendMessage.builder()
       .chatId(message.getChatId())
       .text(text)
@@ -74,7 +72,7 @@ public class MessageFactory {
    * @param text  the text to send as a response to the callback query
    * @return a BotApiMethod object configured as an answer to the callback query
    */
-  public BotApiMethod<?> createAnswerCallback(CallbackQuery query, String text) {
+  public static BotApiMethod<?> createAnswerCallback(CallbackQuery query, String text) {
     return AnswerCallbackQuery.builder()
       .callbackQueryId(query.getId())
       .text(text)
