@@ -2,6 +2,7 @@ package com.example.militarytrackerbot.services;
 
 import static com.example.militarytrackerbot.factories.MessageFactory.createAnswerCallback;
 import static com.example.militarytrackerbot.factories.MessageFactory.createEditMessageResponse;
+import static com.example.militarytrackerbot.factories.MessageFactory.createMessageResponse;
 import static com.example.militarytrackerbot.utils.MessageUtils.MILITARY_DATA_FETCH_ERROR_MESSAGE;
 import static com.example.militarytrackerbot.utils.MessageUtils.NO_MILITARY_DATA_MESSAGE;
 import static com.example.militarytrackerbot.utils.MessageUtils.UNEXPECTED_ERROR_MESSAGE;
@@ -21,11 +22,12 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 /**
- * Service responsible for fetching and processing military data from a remote API.
- * It handles fetching data for both single-day and paginated (multiple days) requests,
- * and formats the data before returning it to the user.
+ * Service for fetching and processing military data from external sources.
+ * It handles both paginated and non-paginated responses, formats the data accordingly,
+ * and prepares appropriate responses for both regular messages and callback queries.
  */
 @Slf4j
 @Service
@@ -37,74 +39,89 @@ public class DataFetchService {
   DataKeyboardFactory dataKeyboardFactory;
 
   /**
-   * Fetches data from the specified URL and formats the response according to the type of data requested.
+   * Fetches data from the specified URL and processes it
+   * based on the response type and pagination status.
    *
-   * @param query The callback query from the user.
-   * @param url The URL to fetch the data from.
-   * @param params Any additional parameters to be included in the request.
-   * @param dateFrom The start date for fetching data.
-   * @param dateTo The end date for fetching data.
-   * @param responseType The class type representing the response (either SingleDayDataDto or MultipleDaysDataDto).
-   * @param isPaginated Whether the request expects paginated data (multiple days).
-   * @param <T> The type of response expected from the request (SingleDayDataDto or MultipleDaysDataDto).
-   * @return A BotApiMethod representing the response to be sent to the user.
+   * @param request    The request object (message or callback query) that triggered the data fetch.
+   * @param url        The URL to fetch data from.
+   * @param params     Query parameters for pagination (if applicable).
+   * @param dateFrom   The start date for the data range (if applicable).
+   * @param dateTo     The end date for the data range (if applicable).
+   * @param responseType The type of response expected (e.g., SingleDayDataDto or MultipleDaysDataDto).
+   * @param isPaginated A flag indicating if the response is paginated (true for paginated data, false for single data).
+   * @param <T>        The type of the response data (either SingleDayDataDto or MultipleDaysDataDto).
+   * @return A {@link BotApiMethod} containing the fetched and processed data, or an error message if something goes wrong.
    */
-  public <T> BotApiMethod<?> fetchData(CallbackQuery query, String url, String params, String dateFrom, String dateTo, Class<T> responseType, boolean isPaginated) {
+  public <T> BotApiMethod<?> fetchData(Object request, String url, String params, String dateFrom, String dateTo, Class<T> responseType, boolean isPaginated) {
     try {
       T response = restTemplate.getForObject(url, responseType);
       if (response == null) {
-        return createAnswerCallback(query, NO_MILITARY_DATA_MESSAGE);
+        return createResponse(request, NO_MILITARY_DATA_MESSAGE);
       }
       if (isPaginated && response instanceof MultipleDaysDataDto multipleDaysData) {
-        return handlePaginatedResponse(query, multipleDaysData, dateFrom, dateTo, params);
+        return handlePaginatedResponse(request, multipleDaysData, dateFrom, dateTo, params);
       }
       if (!isPaginated && response instanceof SingleDayDataDto singleDayData) {
-        return handleSingleDayResponse(query, singleDayData);
+        return handleSingleDayResponse(request, singleDayData);
       }
       log.error("Unexpected response type: {}", responseType.getName());
-      return createAnswerCallback(query, UNEXPECTED_ERROR_MESSAGE);
+      return createResponse(request, UNEXPECTED_ERROR_MESSAGE);
     } catch (HttpClientErrorException | HttpServerErrorException e) {
       log.error("HTTP error while fetching data from URL [{}]: {}", url, e.getMessage());
-      return createAnswerCallback(query, MILITARY_DATA_FETCH_ERROR_MESSAGE);
+      return createResponse(request, MILITARY_DATA_FETCH_ERROR_MESSAGE);
     } catch (Exception e) {
       log.error("Unexpected error fetching data from URL [{}]: {}", url, e.getMessage());
-      return createAnswerCallback(query, UNEXPECTED_ERROR_MESSAGE);
+      return createResponse(request, UNEXPECTED_ERROR_MESSAGE);
     }
   }
 
-  private BotApiMethod<?> handlePaginatedResponse(CallbackQuery query, MultipleDaysDataDto response, String dateFrom, String dateTo, String params) {
+  private BotApiMethod<?> handlePaginatedResponse(Object request, MultipleDaysDataDto response, String dateFrom, String dateTo, String params) {
     if (response.getData().getRecords().isEmpty()) {
-      return createAnswerCallback(query, NO_MILITARY_DATA_MESSAGE);
+      return createResponse(request, NO_MILITARY_DATA_MESSAGE);
     }
-    return createEditMessageResponse(query, formatForPeriod(response, dateFrom, dateTo), dataKeyboardFactory.createPaginationButtonsMarkup(params));
+    String formattedMessage = formatForPeriod(response, dateFrom, dateTo);
+    return isCallbackQuery(request)
+      ? createEditMessageResponse((CallbackQuery) request, formattedMessage, dataKeyboardFactory.createPaginationButtonsMarkup(params))
+      : createMessageResponse((Message) request, formattedMessage, dataKeyboardFactory.createPaginationButtonsMarkup(params));
   }
 
-  private BotApiMethod<?> handleSingleDayResponse(CallbackQuery query, SingleDayDataDto response) {
-    return createEditMessageResponse(query, formatForLatestDay(response), dataKeyboardFactory.createBackButtonMarkup());
+  private BotApiMethod<?> handleSingleDayResponse(Object request, SingleDayDataDto response) {
+    String formattedMessage = formatForLatestDay(response);
+    return isCallbackQuery(request)
+      ? createEditMessageResponse((CallbackQuery) request, formattedMessage, dataKeyboardFactory.createBackButtonMarkup())
+      : createMessageResponse((Message) request, formattedMessage);
+  }
+
+  private BotApiMethod<?> createResponse(Object request, String message) {
+    return isCallbackQuery(request) ? createAnswerCallback((CallbackQuery) request, message) : createMessageResponse((Message) request, message);
   }
 
   /**
-   * Fetches paginated military data from the API and returns the formatted response.
+   * Fetches paginated data from the specified URL with the given parameters and date range.
    *
-   * @param query The callback query from the user.
-   * @param url The URL to fetch the data from.
-   * @param params The parameters for pagination.
+   * @param request  The request object (either a message or callback query).
+   * @param url      The URL to fetch data from.
+   * @param params   The query parameters for pagination.
    * @param dateFrom The start date for the data range.
-   * @param dateTo The end date for the data range.
-   * @return A BotApiMethod representing the response to be sent to the user.
+   * @param dateTo   The end date for the data range.
+   * @return A {@link BotApiMethod} containing the paginated data.
    */
-  public BotApiMethod<?> fetchPaginatedData(CallbackQuery query, String url, String params, String dateFrom, String dateTo) {
-    return fetchData(query, url, params, dateFrom, dateTo, MultipleDaysDataDto.class, true);
+  public BotApiMethod<?> fetchPaginatedData(Object request, String url, String params, String dateFrom, String dateTo) {
+    return fetchData(request, url, params, dateFrom, dateTo, MultipleDaysDataDto.class, true);
   }
 
   /**
-   * Fetches and formats data for a single day from the API.
+   * Fetches and formats data from the specified URL without pagination.
    *
-   * @param query The callback query from the user.
-   * @param url The URL to fetch the data from.
-   * @return A BotApiMethod representing the response to be sent to the user.
+   * @param request The request object (either a message or callback query).
+   * @param url     The URL to fetch data from.
+   * @return A {@link BotApiMethod} containing the formatted data.
    */
-  public BotApiMethod<?> fetchAndFormatData(CallbackQuery query, String url) {
-    return fetchData(query, url, "", "", "", SingleDayDataDto.class, false);
+  public BotApiMethod<?> fetchAndFormatData(Object request, String url) {
+    return fetchData(request, url, "", "", "", SingleDayDataDto.class, false);
+  }
+
+  private boolean isCallbackQuery(Object request) {
+    return request instanceof CallbackQuery;
   }
 }

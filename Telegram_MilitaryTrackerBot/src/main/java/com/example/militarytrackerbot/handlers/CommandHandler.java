@@ -1,6 +1,8 @@
 package com.example.militarytrackerbot.handlers;
 
 import com.example.militarytrackerbot.managers.MainManager;
+import com.example.militarytrackerbot.services.DateRangeParserService;
+import com.example.militarytrackerbot.services.MessageProviderService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,6 +20,8 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 public class CommandHandler {
 
   MainManager mainManager;
+  MessageProviderService messageProviderService;
+  DateRangeParserService dateInputParserService;
 
   /**
    * Handles incoming bot commands by routing them to the appropriate manager method.
@@ -28,10 +32,23 @@ public class CommandHandler {
    * @throws UnsupportedOperationException If the command is not supported or not yet implemented.
    */
   public BotApiMethod<?> handle(BotApiObject object) {
-    var command = (Message) object;
-    if (command.getText().equals("/start")) {
-      return mainManager.showMainMenu(command);
+    var message = (Message) object;
+    String text = message.getText().trim();
+    String command = text.contains(" ") ? text.substring(0, text.indexOf(" ")).toLowerCase() : text.toLowerCase();
+    String date = text.contains(" ") ? text.substring(text.indexOf(" ")).toLowerCase() : text.toLowerCase();
+
+    if ("/set".equals(command) && date.length() < 10) {
+      return mainManager.showInvalidInputMessage(message);
     }
-    throw new UnsupportedOperationException("Method not implemented for command: " + command.getText());
+
+    return switch (command) {
+      case "/start" -> mainManager.showMainMenu(message);
+      case "/help" -> mainManager.showHelpMessage(message);
+      case "/day" -> messageProviderService.provideLatestDayData(message);
+      case "/week" -> messageProviderService.provideWeeklyData(message);
+      case "/month" -> messageProviderService.provideMonthlyData(message);
+      case "/set" -> dateInputParserService.processDateInput(message, date);
+      default -> mainManager.showInvalidInputMessage(message);
+    };
   }
 }

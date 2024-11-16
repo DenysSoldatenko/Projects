@@ -28,8 +28,8 @@ public class MessageUtils {
       - /day — Get the most recent daily losses.
       - /week — See the weekly military losses.
       - /month — View the losses for the past month.
-      - /set [date one] - [date two] — View losses for a specific date range
-        (e.g., /set 2024-11-07 – 2024-11-09).
+      - /set [date] — View losses for a specific date (e.g., /date 2024-11-07).
+      - /set [date one] – [date two] — View losses for a specific date range (e.g., /set 2024-11-07 – 2024-11-09).
   
       💪 Watch as the invaders' losses continue to grow…
   
@@ -37,14 +37,14 @@ public class MessageUtils {
       """;
 
   public static final String INVALID_INPUT_MESSAGE = """
-      ⚠️ Oops! Invalid input. Please use one of the following commands:
-  
-      - /day — Get the losses for the latest day 🗓️.
-      - /week — Get the losses for the latest week 📅.
-      - /month — View the losses for the past month 🏙️.
-      - /set [date one] - [date two] — View losses for a specific date range
-        (e.g., /set 2024-11-07 – 2024-11-09) 📅.
-  
+      ⚠️ Oops! Your input is invalid or the query could not be processed. Please use one of the following commands:
+    
+      - /day — Get the most recent daily losses.
+      - /week — See the weekly military losses.
+      - /month — View the losses for the past month.
+      - /set [date] — View losses for a specific date (e.g., /set 2024-11-07).
+      - /set [date one] – [date two] — View losses for a specific date range (e.g., /set 2024-11-07 – 2024-11-09).
+    
       ❗ Please try again with a valid command or refer to /help for more guidance.
       """;
 
@@ -80,11 +80,11 @@ public class MessageUtils {
       The bot tracks losses of Russian forces in the war.
       You can request updates based on different time periods or a specific date:
   
-      - /day — View the most recent losses for the day 📆.
-      - /week — View the total losses over the past week 📅.
-      - /month — View the total losses over the past month 📆.
-      - /set [date one] - [date two] — View losses for a specific date range
-        (e.g., /set 2024-11-07 – 2024-11-09) 🔍.
+      - /day — Get the most recent daily losses.
+      - /week — See the weekly military losses.
+      - /month — View the losses for the past month.
+      - /set [date] — View losses for a specific date (e.g., /date 2024-11-07).
+      - /set [date one] – [date two] — View losses for a specific date range (e.g., /set 2024-11-07 – 2024-11-09).
   
       You can also use these commands:
       - /start — Start the bot and see the welcome message 👋.
@@ -172,7 +172,10 @@ public class MessageUtils {
   public static final String INVALID_DATE_RANGE_FORMAT_MESSAGE = """
       ⚠️ Invalid date range format!
     
-      Please enter a valid date range in the format: yyyy-MM-dd - yyyy-MM-dd (e.g., 2024-11-07 - 2024-11-09).
+      Please enter a valid date range in the format ⬇️
+      
+      yyyy-MM-dd – yyyy-MM-dd (e.g., 2024-11-07 – 2024-11-09).
+      
       Make sure both dates are in the correct format and try again.
       """;
 
@@ -194,7 +197,11 @@ public class MessageUtils {
       Please ensure the end date is after the start date and try again.
       """;
 
+  public static final String ENTER_PERIOD_OR_DATE_MESSAGE = """ 
+      📅 Please enter a period or a single date ⬇️
+      """;
 
-  public static final String AVAILABLE_COMMANDS_MESSAGE = "📜 Available Commands ⬇️";
-  public static final String ENTER_PERIOD_OR_DATE_MESSAGE = "📅 Please enter a period or a single date ⬇️";
+  public static final String AVAILABLE_COMMANDS_MESSAGE = """
+      📜 Available Commands ⬇️
+      """;
 }

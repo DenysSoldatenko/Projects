@@ -1,8 +1,7 @@
 package com.example.militarytrackerbot.managers;
 
-import com.example.militarytrackerbot.services.DataProviderService;
 import com.example.militarytrackerbot.services.DateRangeParserService;
-import java.util.Arrays;
+import com.example.militarytrackerbot.services.QueryProviderService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,7 +20,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 public class MilitaryTrackerManager {
 
   MainManager mainManager;
-  DataProviderService dataProviderService;
+  QueryProviderService queryProviderService;
   DateRangeParserService dateInputParserService;
 
   /**
@@ -44,21 +43,20 @@ public class MilitaryTrackerManager {
     return switch (words[0]) {
       case "MAIN" -> mainManager.showMainMenu(query);
       case "OPTIONS", "BACK" -> mainManager.showAvailableCommands(query);
-      case "DAY" -> dataProviderService.provideLatestDayData(query);
-      case "WEEK" -> dataProviderService.provideWeeklyData(query);
-      case "MONTH" -> dataProviderService.provideMonthlyData(query);
-      case "PERIOD" -> dataProviderService.promptForDateSelection(query);
+      case "DAY" -> queryProviderService.provideLatestDayData(query);
+      case "WEEK" -> queryProviderService.provideWeeklyData(query);
+      case "MONTH" -> queryProviderService.provideMonthlyData(query);
+      case "PERIOD" -> queryProviderService.promptForDateSelection(query);
       default -> throw new IllegalStateException("Unexpected value: " + words[0]);
     };
   }
 
   private BotApiMethod<?> handleTwoWordsQuery(String[] words, CallbackQuery query) {
-    Arrays.stream(words).forEach(System.out::println);
     return switch (words[0]) {
-      case "EMPTY" -> dataProviderService.promptForDateSelection(query);
-      case "INPUT" -> dataProviderService.promptForDateSelection(query, words[1]);
+      case "EMPTY" -> queryProviderService.promptForDateSelection(query);
+      case "INPUT" -> queryProviderService.promptForDateSelection(query, words[1]);
       case "SUBMIT" -> dateInputParserService.processDateInput(query, words[1].substring(5));
-      case "PREV", "NEXT" -> dataProviderService.handlePagination(query, words[1]);
+      case "PREV", "NEXT" -> queryProviderService.handlePagination(query, words[1]);
       default -> throw new IllegalStateException("Unexpected value: " + words[0]);
     };
   }

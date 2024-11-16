@@ -54,13 +54,13 @@ public class MessageFactory {
   /**
    * Creates a SendMessage response using a chat ID.
    *
-   * @param chatId the ID of the chat to send the message to
-   * @param text   the text to send in the response
+   * @param message     the Message to respond to
+   * @param text        the text to send in the response
    * @return a SendMessage object configured with the provided parameters
    */
-  public SendMessage createMessageResponse(Long chatId, String text) {
+  public static SendMessage createMessageResponse(Message message, String text) {
     return SendMessage.builder()
-      .chatId(chatId)
+      .chatId(message.getChatId())
       .text(text)
       .build();
   }

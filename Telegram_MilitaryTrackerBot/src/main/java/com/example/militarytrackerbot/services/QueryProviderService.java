@@ -28,7 +28,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class DataProviderService {
+public class QueryProviderService {
 
   @Value("${military.base-url}")
   String baseUrl;
