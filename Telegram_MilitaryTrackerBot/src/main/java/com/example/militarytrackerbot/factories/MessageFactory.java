@@ -1,7 +1,5 @@
 package com.example.militarytrackerbot.factories;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import lombok.experimental.UtilityClass;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -15,7 +13,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
  * Factory for creating Telegram bot message responses.
  */
 @UtilityClass
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MessageFactory {
 
   /**

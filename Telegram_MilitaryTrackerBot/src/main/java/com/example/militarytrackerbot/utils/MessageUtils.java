@@ -28,12 +28,22 @@ public class MessageUtils {
       - /day — Get the most recent daily losses.
       - /week — See the weekly military losses.
       - /month — View the losses for the past month.
-      - /set [date] — View losses for a specific date (e.g., /date 2024-11-07).
-      - /set [date one] – [date two] — View losses for a specific date range (e.g., /set 2024-11-07 – 2024-11-09).
+      - /set [date] — View losses for a specific date
+        (e.g., /set 2024-11-07).
+      - /set [date one] – [date two] — View losses for a specific date range
+        (e.g., /set 2024-11-07 – 2024-11-09).
   
       💪 Watch as the invaders' losses continue to grow…
   
       🇺🇦 Glory to Ukraine!
+      """;
+
+  public static final String COMMANDS_ONLY_MESSAGE = """
+      ⚠️ Please note, this bot only responds to commands (e.g., /day, /week, /set) or button clicks.
+      
+      🚫 Text messages are not supported for processing. Please use the provided buttons or type a valid command to proceed.
+  
+      ❗ For more details, use /help.
       """;
 
   public static final String INVALID_INPUT_MESSAGE = """
@@ -42,8 +52,10 @@ public class MessageUtils {
       - /day — Get the most recent daily losses.
       - /week — See the weekly military losses.
       - /month — View the losses for the past month.
-      - /set [date] — View losses for a specific date (e.g., /set 2024-11-07).
-      - /set [date one] – [date two] — View losses for a specific date range (e.g., /set 2024-11-07 – 2024-11-09).
+      - /set [date] — View losses for a specific date
+        (e.g., /set 2024-11-07).
+      - /set [date one] – [date two] — View losses for a specific date range
+        (e.g., /set 2024-11-07 – 2024-11-09).
     
       ❗ Please try again with a valid command or refer to /help for more guidance.
       """;
@@ -83,8 +95,10 @@ public class MessageUtils {
       - /day — Get the most recent daily losses.
       - /week — See the weekly military losses.
       - /month — View the losses for the past month.
-      - /set [date] — View losses for a specific date (e.g., /date 2024-11-07).
-      - /set [date one] – [date two] — View losses for a specific date range (e.g., /set 2024-11-07 – 2024-11-09).
+      - /set [date] — View losses for a specific date
+        (e.g., /set 2024-11-07).
+      - /set [date one] – [date two] — View losses for a specific date range
+        (e.g., /set 2024-11-07 – 2024-11-09).
   
       You can also use these commands:
       - /start — Start the bot and see the welcome message 👋.

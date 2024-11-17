@@ -64,10 +64,8 @@ public class DateRangeParserService {
 
     if (isInvalidDateFormat(startDate) || isInvalidDateFormat(endDate) || parse(endDate).isBefore(parse(startDate))) {
       String errorMessage = isInvalidDateFormat(startDate)
-          ? INVALID_START_DATE_MESSAGE
-          : (isInvalidDateFormat(endDate)
-          ? INVALID_END_DATE_MESSAGE
-          : END_DATE_BEFORE_START_DATE_MESSAGE);
+          ? INVALID_START_DATE_MESSAGE : (isInvalidDateFormat(endDate)
+          ? INVALID_END_DATE_MESSAGE : END_DATE_BEFORE_START_DATE_MESSAGE);
       return createErrorResponse(request, errorMessage);
     }
 

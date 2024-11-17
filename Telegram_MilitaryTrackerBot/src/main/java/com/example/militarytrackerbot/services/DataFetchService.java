@@ -39,6 +39,31 @@ public class DataFetchService {
   DataKeyboardFactory dataKeyboardFactory;
 
   /**
+   * Fetches paginated data from the specified URL with the given parameters and date range.
+   *
+   * @param request  The request object (either a message or callback query).
+   * @param url      The URL to fetch data from.
+   * @param params   The query parameters for pagination.
+   * @param dateFrom The start date for the data range.
+   * @param dateTo   The end date for the data range.
+   * @return A {@link BotApiMethod} containing the paginated data.
+   */
+  public BotApiMethod<?> fetchPaginatedData(Object request, String url, String params, String dateFrom, String dateTo) {
+    return fetchData(request, url, params, dateFrom, dateTo, MultipleDaysDataDto.class, true);
+  }
+
+  /**
+   * Fetches and formats data from the specified URL without pagination.
+   *
+   * @param request The request object (either a message or callback query).
+   * @param url     The URL to fetch data from.
+   * @return A {@link BotApiMethod} containing the formatted data.
+   */
+  public BotApiMethod<?> fetchAndFormatData(Object request, String url) {
+    return fetchData(request, url, "", "", "", SingleDayDataDto.class, false);
+  }
+
+  /**
    * Fetches data from the specified URL and processes it
    * based on the response type and pagination status.
    *
@@ -94,31 +119,6 @@ public class DataFetchService {
 
   private BotApiMethod<?> createResponse(Object request, String message) {
     return isCallbackQuery(request) ? createAnswerCallback((CallbackQuery) request, message) : createMessageResponse((Message) request, message);
-  }
-
-  /**
-   * Fetches paginated data from the specified URL with the given parameters and date range.
-   *
-   * @param request  The request object (either a message or callback query).
-   * @param url      The URL to fetch data from.
-   * @param params   The query parameters for pagination.
-   * @param dateFrom The start date for the data range.
-   * @param dateTo   The end date for the data range.
-   * @return A {@link BotApiMethod} containing the paginated data.
-   */
-  public BotApiMethod<?> fetchPaginatedData(Object request, String url, String params, String dateFrom, String dateTo) {
-    return fetchData(request, url, params, dateFrom, dateTo, MultipleDaysDataDto.class, true);
-  }
-
-  /**
-   * Fetches and formats data from the specified URL without pagination.
-   *
-   * @param request The request object (either a message or callback query).
-   * @param url     The URL to fetch data from.
-   * @return A {@link BotApiMethod} containing the formatted data.
-   */
-  public BotApiMethod<?> fetchAndFormatData(Object request, String url) {
-    return fetchData(request, url, "", "", "", SingleDayDataDto.class, false);
   }
 
   private boolean isCallbackQuery(Object request) {

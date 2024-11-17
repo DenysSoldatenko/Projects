@@ -110,24 +110,24 @@ public class DataKeyboardFactory {
    * @return An {@link InlineKeyboardMarkup} object containing the period entering keyboard.
    */
   public InlineKeyboardMarkup createPeriodEnteringKeyboardMarkup(String current) {
-    return keyboardFactory.createInlineKeyboard(
-      List.of(
+    List<String> text = List.of(
         !current.isEmpty() ? current : "Input field",
         "1", "2", "3", "4",
         "5", "6", "7", "8",
         "9", "0", "-", "–",
         "✔ Submit", "❌ Remove", "🗑️ Clear",
         "🔙 Back"
-      ),
-      List.of(1, 4, 4, 4, 3, 1),
-      List.of(
+    );
+
+    List<String> callbackData = List.of(
         EMPTY$INPUT.name(),
         INPUT$.name() + current + "1", INPUT$.name() + current + "2", INPUT$.name() + current + "3", INPUT$.name() + current + "4",
         INPUT$.name() + current + "5", INPUT$.name() + current + "6", INPUT$.name() + current + "7", INPUT$.name() + current + "8",
         INPUT$.name() + current + "9", INPUT$.name() + current + "0", INPUT$.name() + current + "-", INPUT$.name() + current + " – ",
         SUBMIT$INPUT.name() + current, current.length() <= 1 ? EMPTY$INPUT.name() : INPUT$.name() + current.substring(0, current.length() - 1), EMPTY$INPUT.name(),
         BACK.name()
-      )
     );
+
+    return keyboardFactory.createInlineKeyboard(text, List.of(1, 4, 4, 4, 3, 1), callbackData);
   }
 }
