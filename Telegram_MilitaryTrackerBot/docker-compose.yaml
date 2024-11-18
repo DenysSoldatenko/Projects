@@ -1,0 +1,19 @@
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  app:
+    build:
+      context: .
+    container_name: telegram_MilitaryTrackerBot_project
+    networks:
+      - app-network
+    env_file:
+      - .env
+    ports:
+      - '8085:8085'
+    environment:
+      TELEGRAM_BOT_URL: ${TELEGRAM_BOT_URL}
+      TELEGRAM_BOT_NAME: ${TELEGRAM_BOT_NAME}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
