@@ -44,6 +44,11 @@ public class AccountController {
   private final AccountService accountService;
   private final AccountAssembler accountAssembler;
 
+  /**
+   * Initializes account data.
+   *
+   * @return a ResponseEntity indicating the result of the operation.
+   */
   @PostMapping("/initialize")
   @Operation(summary = "Initialize account data", description = "Initializes the data for accounts")
   @ApiResponses({
@@ -54,6 +59,11 @@ public class AccountController {
     return new ResponseEntity<>(accountService.initializeData(), CREATED);
   }
 
+  /**
+   * Retrieves a collection of all accounts.
+   *
+   * @return a CollectionModel containing all accounts.
+   */
   @GetMapping
   @Operation(summary = "Get all accounts", description = "Retrieves a collection of all accounts")
   @ApiResponses({
@@ -74,6 +84,12 @@ public class AccountController {
     return of(accounts, linkTo(methodOn(AccountController.class).getAllAccounts()).withRel("accounts"));
   }
 
+  /**
+   * Retrieves an account by its ID.
+   *
+   * @param id the ID of the account to retrieve.
+   * @return a ResponseEntity containing the account.
+   */
   @GetMapping("/{id}")
   @Operation(summary = "Get account by ID", description = "Retrieves an account by its ID")
   @ApiResponses({
@@ -92,6 +108,12 @@ public class AccountController {
     return new ResponseEntity<>(accountAssembler.toModel(account), OK);
   }
 
+  /**
+   * Adds a new account.
+   *
+   * @param account the account to create.
+   * @return a ResponseEntity containing the created account.
+   */
   @PostMapping
   @Operation(summary = "Add a new account", description = "Creates a new account")
   @ApiResponses({
@@ -110,6 +132,12 @@ public class AccountController {
     return new ResponseEntity<>(accountAssembler.toModel(savedAccount), CREATED);
   }
 
+  /**
+   * Updates an existing account.
+   *
+   * @param account the account with updated data.
+   * @return a ResponseEntity containing the updated account.
+   */
   @PutMapping
   @Operation(summary = "Update an existing account", description = "Updates an existing account")
   @ApiResponses({
@@ -129,6 +157,13 @@ public class AccountController {
     return new ResponseEntity<>(accountAssembler.toModel(updatedAccount), OK);
   }
 
+  /**
+   * Deposits funds into an account.
+   *
+   * @param id the ID of the account to deposit funds into.
+   * @param amount the amount to deposit.
+   * @return a ResponseEntity containing the updated account.
+   */
   @PatchMapping("/{id}/deposit")
   @Operation(summary = "Deposit funds into an account", description = "Deposits funds into an account")
   @ApiResponses({
@@ -149,6 +184,13 @@ public class AccountController {
     return new ResponseEntity<>(accountAssembler.toModel(updatedAccount), OK);
   }
 
+  /**
+   * Withdraws funds from an account.
+   *
+   * @param id the ID of the account to withdraw funds from.
+   * @param amount the amount to withdraw.
+   * @return a ResponseEntity containing the updated account.
+   */
   @PatchMapping("/{id}/withdraw")
   @Operation(summary = "Withdraw funds from an account", description = "Withdraws funds from an account")
   @ApiResponses({
@@ -169,6 +211,12 @@ public class AccountController {
     return new ResponseEntity<>(accountAssembler.toModel(updatedAccount), OK);
   }
 
+  /**
+   * Deletes an account by its ID.
+   *
+   * @param id the ID of the account to delete.
+   * @return a ResponseEntity indicating the result of the operation.
+   */
   @DeleteMapping("/{id}")
   @Operation(summary = "Delete an account", description = "Deletes an account by its ID")
   @ApiResponses({

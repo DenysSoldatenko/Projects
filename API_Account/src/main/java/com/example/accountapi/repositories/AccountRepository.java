@@ -14,11 +14,23 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
+  /**
+   * Deposits a specified amount into an account by updating the account's balance.
+   *
+   * @param amount the amount to be deposited into the account.
+   * @param id the ID of the account to deposit the amount into.
+   */
   @Modifying
   @Transactional
   @Query("UPDATE Account a SET a.balance = a.balance + :amount WHERE a.id = :id")
   void deposit(@Param("amount") float amount, @Param("id") Integer id);
 
+  /**
+   * Withdraws a specified amount from an account by updating the account's balance.
+   *
+   * @param amount the amount to be withdrawn from the account.
+   * @param id the ID of the account to withdraw the amount from.
+   */
   @Modifying
   @Transactional
   @Query("UPDATE Account a SET a.balance = a.balance - :amount WHERE a.id = :id")
