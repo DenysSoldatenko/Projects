@@ -10,6 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class JobListingApiApplication {
 
+  /**
+   * The main method that launches the Spring Boot application.
+   *
+   * @param args Command-line arguments passed to the application (not used in this case).
+   */
   public static void main(String[] args) {
     SpringApplication.run(JobListingApiApplication.class, args);
   }
