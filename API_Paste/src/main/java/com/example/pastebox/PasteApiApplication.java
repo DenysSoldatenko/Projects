@@ -11,6 +11,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class PasteApiApplication {
 
+  /**
+   * The main method that launches the Spring Boot application.
+   *
+   * @param args Command-line arguments passed to the application (not used in this case).
+   */
   public static void main(String[] args) {
     SpringApplication.run(PasteApiApplication.class, args);
   }
