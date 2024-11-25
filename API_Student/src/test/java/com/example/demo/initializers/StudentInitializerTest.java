@@ -28,7 +28,8 @@ class StudentInitializerTest {
 
   @Test
   void shouldInitializeDatabaseWithSampleData() {
-    when(studentRepository.insert(any(Student.class))).thenAnswer(invocation -> invocation.getArgument(0));
+    when(studentRepository.insert(any(Student.class)))
+        .thenAnswer(invocation -> invocation.getArgument(0));
 
     String result = studentInitializer.initDatabase();
 
