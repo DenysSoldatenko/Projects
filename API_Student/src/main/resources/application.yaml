@@ -1,8 +1,10 @@
 spring:
+  config:
+    import: optional:file:API_Student/.env[.properties]
   data:
     mongodb:
-      database: ${SPRING_DATA_SOURCE_NAME:jobs}
-      uri: ${SPRING_DATA_SOURCE_URI:mongodb://root:password@localhost:27017}
+      database: ${SPRING_DATA_SOURCE_NAME}
+      uri: ${SPRING_DATA_SOURCE_URI}
       auto-index-creation: true
   mvc:
     pathmatch:

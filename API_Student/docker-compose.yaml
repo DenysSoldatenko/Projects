@@ -10,7 +10,7 @@ services:
   app:
     build:
       context: .
-    container_name: StudentApi_project
+    container_name: api_Student_project
     networks:
       - app-network
     depends_on:
