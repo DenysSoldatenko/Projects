@@ -17,6 +17,11 @@ public class KafkaTopicConfiguration {
   @Value("${spring.kafka.topic.name}")
   private String topic;
 
+  /**
+   * Creates a Kafka topic with the specified name.
+   *
+   * @return A NewTopic instance representing the Kafka topic.
+   */
   @Bean
   public NewTopic orderTopic() {
     return TopicBuilder.name(topic).build();

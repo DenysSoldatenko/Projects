@@ -23,11 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/kafka")
-@Tag(name = "Json Message Controller", description = "Operations for publishing JSON messages to Kafka")
+@Tag(
+    name = "Json Message Controller",
+    description = "Operations for publishing JSON messages to Kafka"
+)
 public class JsonMessageController {
 
   private final JsonKafkaProducer producer;
 
+  /**
+   * Publishes a JSON message to Kafka containing product information.
+   *
+   * @param productMessage The product information message to be sent to Kafka.
+   * @return A ResponseEntity with a success message.
+   */
   @Operation(summary = "Publish JSON message",
       description = "Sends a JSON message containing product information to Kafka."
   )

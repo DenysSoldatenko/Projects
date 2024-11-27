@@ -6,7 +6,7 @@ services:
   app:
     build:
       context: .
-    container_name: kafkaDemo_project
+    container_name: kafka_Demo_project
     networks:
       - app-network
     depends_on:

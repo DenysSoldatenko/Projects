@@ -16,6 +16,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class JsonKafkaConsumer {
 
+  /**
+   * Consumes JSON messages from the Kafka topic.
+   * This method listens for messages on the topic specified in the application configuration
+   * and logs the received `ProductMessage` object.
+   *
+   * @param productMessage The deserialized ProductMessage object from the Kafka message.
+   */
   @KafkaListener(
       topics = "${spring.kafka.topic-json.name}",
       groupId = "${spring.kafka.consumer.group-id}"

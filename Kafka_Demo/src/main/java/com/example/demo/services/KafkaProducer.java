@@ -21,6 +21,11 @@ public class KafkaProducer {
 
   private final KafkaTemplate<String, String> template;
 
+  /**
+   * Sends a message to the Kafka topic.
+   *
+   * @param message The message to be sent to Kafka.
+   */
   public void sendMessage(String message) {
     log.info(format("Message sent %s", message));
     template.send(topic, message);

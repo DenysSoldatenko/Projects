@@ -13,6 +13,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaConsumer {
 
+  /**
+   * Consumes a message from the Kafka topic.
+   * This method listens for messages from the Kafka topic, and logs the received message.
+   *
+   * @param message The message received from Kafka.
+   */
   @KafkaListener(
       topics = "${spring.kafka.topic.name}",
       groupId = "${spring.kafka.consumer.group-id}"
