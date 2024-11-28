@@ -33,10 +33,20 @@ public class WebSecurityConfig {
     "/webjars/**"
   };
 
+  /**
+   * Creates and configures an {@link AuthenticationManager} bean.
+   *
+   * <p>This bean is used by Spring Security to authenticate users.</p>
+   *
+   * @param configuration The {@link AuthenticationConfiguration} to get the {@link AuthenticationManager}.
+   * @return The {@link AuthenticationManager} bean.
+   * @throws Exception If an error occurs while retrieving the {@link AuthenticationManager}.
+   */
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
     return configuration.getAuthenticationManager();
   }
+
 
   /**
    * Creates a DaoAuthenticationProvider bean for password authentication.

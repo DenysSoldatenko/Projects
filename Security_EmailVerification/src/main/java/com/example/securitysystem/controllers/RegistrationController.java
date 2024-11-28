@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controller class for handling user registration and confirmation.
+ * Controller for handling user registration and account verification.
+ *
+ * <p>This class provides endpoints for user registration, greeting messages,
+ * and registration token verification.</p>
  */
 @RestController
 @AllArgsConstructor
@@ -29,6 +32,11 @@ public class RegistrationController {
 
   private final RegistrationService registrationService;
 
+  /**
+   * Returns a greeting message for the user.
+   *
+   * @return A simple greeting message.
+   */
   @GetMapping("/greeting")
   @Operation(
       summary = "Greeting message",
@@ -41,6 +49,12 @@ public class RegistrationController {
     return "Hello user!";
   }
 
+  /**
+   * Registers a new user with the provided registration details.
+   *
+   * @param request The registration request containing the user's details.
+   * @return A confirmation message about the registration status.
+   */
   @PostMapping
   @Operation(
       summary = "Register a new user",
@@ -57,6 +71,12 @@ public class RegistrationController {
     return registrationService.register(request);
   }
 
+  /**
+   * Confirms the user registration using the provided token.
+   *
+   * @param token The token used to verify the user's registration.
+   * @return A confirmation message about the token verification status.
+   */
   @GetMapping("/verify")
   @Operation(
       summary = "Verify user registration token",
