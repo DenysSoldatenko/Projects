@@ -17,16 +17,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controller class for handling authentication-related operations.
+ * Controller for handling authentication operations, such as user registration and login.
+ *
+ * <p>This class provides endpoints for registering a new user and authenticating an existing user.
+ * It responds with JWT tokens upon successful registration or authentication.</p>
  */
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-@Tag(name = "Authentication Controller", description = "Controller for handling authentication-related operations")
+@Tag(
+    name = "Authentication Controller",
+    description = "Controller for handling authentication-related operations"
+)
 public class AuthenticationController {
 
   private final AuthenticationService authenticationService;
 
+  /**
+   * Registers a new user and returns an authentication response containing the JWT token.
+   *
+   * @param request The registration request containing user details.
+   * @return The authentication response containing the JWT token for the newly registered user.
+   */
   @PostMapping("/register")
   @Operation(
       summary = "Register a new user",
@@ -50,6 +62,12 @@ public class AuthenticationController {
     return authenticationService.registerUser(request);
   }
 
+  /**
+   * Authenticates a user with the provided credentials and returns a JWT token.
+   *
+   * @param request The authentication request containing user credentials (username and password).
+   * @return The authentication response containing the JWT token if authentication is successful.
+   */
   @PostMapping("/authenticate")
   @Operation(
       summary = "Authenticate a user",

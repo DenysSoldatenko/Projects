@@ -9,13 +9,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controller class for demonstrating secure endpoints.
+ * Controller class for demonstrating secure endpoints. This controller includes a secured
+ * endpoint that returns a "Hello" message.
  */
 @RestController
 @RequestMapping("/api/v1/demo-controller")
 @Tag(name = "Demo Controller", description = "Controller for demonstrating secure endpoints")
 public class DemoController {
 
+  /**
+   * Returns a hello message from a secured endpoint.
+   *
+   * @return A hello message if the request is successful.
+   */
   @GetMapping("/hello")
   @Operation(
       summary = "Say Hello",

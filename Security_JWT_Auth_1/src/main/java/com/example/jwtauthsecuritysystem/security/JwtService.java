@@ -28,6 +28,12 @@ public class JwtService {
   @Value("${jwt.token-expiration-duration-ms}")
   private long tokenExpirationDurationMs;
 
+  /**
+   * Generates a JWT token for the provided UserDetails, with no extra claims.
+   *
+   * @param userDetails The UserDetails object representing the authenticated user.
+   * @return The generated JWT token.
+   */
   public String generateToken(UserDetails userDetails) {
     return generateToken(new HashMap<>(), userDetails);
   }
@@ -49,14 +55,39 @@ public class JwtService {
     .compact();
   }
 
+  /**
+   * Extracts a specific claim from the JWT token using the provided claims' resolver.
+   *
+   * @param token          The JWT token from which to extract the claim.
+   * @param claimsResolver A function that extracts the desired claim from the token.
+   * @param <T>            The type of the claim.
+   * @return The extracted claim.
+   */
   public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
     final Claims claims = extractAllClaims(token);
     return claimsResolver.apply(claims);
   }
 
+  /**
+   * Checks if the JWT token is valid for the provided user.
+   *
+   * @param token        The JWT token to validate.
+   * @param userDetails  The UserDetails object to match against the token's subject.
+   * @return {@code true} if the token is valid, {@code false} otherwise.
+   */
   public boolean isTokenValid(String token, UserDetails userDetails) {
     final String username = extractUsername(token);
     return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+  }
+
+  /**
+   * Extracts the username (subject) from the JWT token.
+   *
+   * @param token The JWT token from which to extract the username.
+   * @return The username (subject) of the token.
+   */
+  public String extractUsername(String token) {
+    return extractClaim(token, Claims::getSubject);
   }
 
   private boolean isTokenExpired(String token) {
@@ -65,10 +96,6 @@ public class JwtService {
 
   private Date extractExpiration(String token) {
     return extractClaim(token, Claims::getExpiration);
-  }
-
-  public String extractUsername(String token) {
-    return extractClaim(token, Claims::getSubject);
   }
 
   private Claims extractAllClaims(String token) {
