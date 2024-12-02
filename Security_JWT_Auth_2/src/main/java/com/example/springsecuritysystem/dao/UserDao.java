@@ -15,6 +15,13 @@ public class UserDao {
 
   private final UserService userService;
 
+  /**
+   * Finds a user by their email address.
+   *
+   * @param email The email address of the user to search for.
+   * @return A {@link UserDetails} object representing the user,
+   *     or {@code null} if the user is not found.
+   */
   public UserDetails findUserByEmail(String email) {
     return userService.findUserByEmail(email);
   }

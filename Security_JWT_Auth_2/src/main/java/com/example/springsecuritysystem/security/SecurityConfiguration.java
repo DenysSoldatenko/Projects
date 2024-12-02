@@ -76,17 +76,43 @@ public class SecurityConfiguration {
     return authenticationProvider;
   }
 
+  /**
+   * Bean for BCryptPasswordEncoder to encode and decode passwords securely.
+   *
+   * <p>This bean is used for hashing passwords and comparing them during authentication.</p>
+   *
+   * @return A {@link BCryptPasswordEncoder} instance used for password encoding.
+   */
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
+  /**
+   * Bean for providing an {@link AuthenticationManager} from the Spring Security configuration.
+   *
+   * <p>The {@link AuthenticationManager} is used to authenticate users by verifying their
+   * credentials during the login process.</p>
+   *
+   * @param config The {@link AuthenticationConfiguration} that provides the necessary context
+   *               for creating an {@link AuthenticationManager}.
+   * @return An instance of {@link AuthenticationManager} for authenticating users.
+   * @throws Exception If an error occurs while creating the {@link AuthenticationManager}.
+   */
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
       throws Exception {
     return config.getAuthenticationManager();
   }
 
+  /**
+   * Bean for providing the {@link UserDetailsService} to load user-specific data.
+   *
+   * <p>This bean retrieves user details (e.g., username, password, authorities)
+   * and serves as a core component for Spring Security's authentication process.</p>
+   *
+   * @return A {@link UserDetailsService} implementation that loads user details by email.
+   */
   @Bean
   public UserDetailsService userDetailsService() {
     return userDao::findUserByEmail;
