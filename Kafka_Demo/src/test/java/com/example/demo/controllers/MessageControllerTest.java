@@ -46,7 +46,7 @@ public class MessageControllerTest {
   }
 
   @Test
-  public void testSendMessageFromBody_Success() throws Exception {
+  public void testSendMessageFromBodySuccess() throws Exception {
     MessageRequest messageRequest = new MessageRequest("Test message");
     String jsonMessage = objectMapper.writeValueAsString(messageRequest);
 
@@ -62,7 +62,7 @@ public class MessageControllerTest {
   }
 
   @Test
-  public void testSendMessageFromQueryParam_Success() throws Exception {
+  public void testSendMessageFromQueryParamSuccess() throws Exception {
     String message = "Test query message";
 
     mockMvc.perform(get("/api/v1/kafka/publish-via-query")

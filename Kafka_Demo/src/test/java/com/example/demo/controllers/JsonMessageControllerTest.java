@@ -45,7 +45,7 @@ public class JsonMessageControllerTest {
   }
 
   @Test
-  public void testPublish_Success() throws Exception {
+  public void testPublishSuccess() throws Exception {
     ProductMessage productMessage = new ProductMessage("1", "Test Product", 10.99, true);
     String jsonMessage = objectMapper.writeValueAsString(productMessage);
 
