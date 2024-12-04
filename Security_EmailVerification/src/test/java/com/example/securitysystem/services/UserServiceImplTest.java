@@ -58,7 +58,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void testLoadUserByUsername_UserExists() {
+  void testLoadUserByUsernameUserExists() {
     User user = new User();
     user.setEmail("test@example.com");
     when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
@@ -70,7 +70,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void testLoadUserByUsername_UserNotFound() {
+  void testLoadUserByUsernameUserNotFound() {
     when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
 
     assertThrows(UsernameNotFoundException.class,
@@ -78,7 +78,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void testSignUpUser_AlreadyExists() {
+  void testSignUpUserAlreadyExists() {
     User existingUser = new User();
     existingUser.setEmail("existing@example.com");
     when(userRepository.findByEmail("existing@example.com")).thenReturn(Optional.of(existingUser));
@@ -86,7 +86,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void testSignUpUser_New() {
+  void testSignUpUserNew() {
     User newUser = new User();
     newUser.setEmail("new@example.com");
     newUser.setPassword("password");

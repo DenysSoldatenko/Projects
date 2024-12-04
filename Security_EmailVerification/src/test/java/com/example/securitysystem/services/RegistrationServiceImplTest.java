@@ -1,6 +1,8 @@
 package com.example.securitysystem.services;
 
 import static java.time.LocalDateTime.now;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
@@ -17,7 +19,6 @@ import com.example.securitysystem.entities.User;
 import com.example.securitysystem.services.impl.ConfirmationTokenServiceImpl;
 import com.example.securitysystem.services.impl.RegistrationServiceImpl;
 import com.example.securitysystem.utils.EmailValidator;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -76,7 +77,7 @@ class RegistrationServiceImplTest {
   @Test
   void testConfirmTokenNotFound() {
     String token = "non-existent-token";
-    when(confirmationTokenServiceImpl.findByToken(token)).thenReturn(Optional.empty());
+    when(confirmationTokenServiceImpl.findByToken(token)).thenReturn(empty());
 
     assertThrows(IllegalStateException.class, () -> registrationService.confirmToken(token));
     verify(confirmationTokenServiceImpl, never()).confirmToken(token);
@@ -91,7 +92,7 @@ class RegistrationServiceImplTest {
     );
     confirmationToken.setConfirmedAt(now());
 
-    when(confirmationTokenServiceImpl.findByToken(token)).thenReturn(Optional.of(confirmationToken));
+    when(confirmationTokenServiceImpl.findByToken(token)).thenReturn(of(confirmationToken));
 
     assertThrows(IllegalStateException.class, () -> registrationService.confirmToken(token));
     verify(confirmationTokenServiceImpl, never()).confirmToken(token);
