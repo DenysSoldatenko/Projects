@@ -50,7 +50,10 @@ class AuthenticationServiceImplTest {
 
   @Test
   void testRegisterUser() {
-    RegisterRequest registerRequest = new RegisterRequest("John", "Doe", "john@example.com", "password");
+    RegisterRequest registerRequest = new RegisterRequest(
+        "John", "Doe",
+        "john@example.com", "password"
+    );
     User mockedUser = mock(User.class);
     when(userFactory.createUserFromRequest(registerRequest)).thenReturn(mockedUser);
 
@@ -62,8 +65,10 @@ class AuthenticationServiceImplTest {
   }
 
   @Test
-  void testAuthenticateUser_Success() {
-    AuthenticationRequest authenticationRequest = new AuthenticationRequest("john@example.com", "password");
+  void testAuthenticateUserSuccess() {
+    AuthenticationRequest authenticationRequest = new AuthenticationRequest(
+        "john@example.com", "password"
+    );
     User mockedUser = mock(User.class);
     when(userRepository.findByEmail(authenticationRequest.email()))
         .thenReturn(java.util.Optional.of(mockedUser));
@@ -78,8 +83,10 @@ class AuthenticationServiceImplTest {
   }
 
   @Test
-  void testAuthenticateUser_UserNotFound() {
-    AuthenticationRequest authenticationRequest = new AuthenticationRequest("nonexistent@example.com", "password");
+  void testUserNotFound() {
+    AuthenticationRequest authenticationRequest = new AuthenticationRequest(
+        "nonexistent@example.com", "password"
+    );
     when(userRepository.findByEmail(authenticationRequest.email()))
         .thenReturn(java.util.Optional.empty());
 
