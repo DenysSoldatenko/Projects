@@ -30,13 +30,18 @@ public class AuthenticationControllerTest {
   @Mock
   private AuthenticationService authenticationService;
 
+  /**
+   * Initializes the mocks before each test case.
+   * This method is executed before each test in the test class,
+   * ensuring that mocks are set up correctly for the tests.
+   */
   @BeforeEach
   public void setUp() {
     MockitoAnnotations.openMocks(this);
   }
 
   @Test
-  public void testAuthenticate_Success() throws Exception {
+  public void testAuthenticateSuccess() throws Exception {
     AuthenticationRequest request = new AuthenticationRequest("john.doe@gmail.com", "password");
 
     mockMvc.perform(post("/api/v1/auth/authenticate")
@@ -46,7 +51,7 @@ public class AuthenticationControllerTest {
   }
 
   @Test
-  public void testAuthenticate_Forbidden() throws Exception {
+  public void testAuthenticateForbidden() throws Exception {
     AuthenticationRequest request = new AuthenticationRequest("user@example.com", "wrongPassword");
 
     when(authenticationService.authenticateAndGenerateToken(any(AuthenticationRequest.class)))
@@ -59,7 +64,7 @@ public class AuthenticationControllerTest {
   }
 
   @Test
-  public void testAuthenticate_BadRequest() throws Exception {
+  public void testAuthenticateBadRequest() throws Exception {
     String invalidJson = "{invalidJson}";
 
     mockMvc.perform(post("/api/v1/auth/authenticate")

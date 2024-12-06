@@ -21,7 +21,7 @@ public class GreetingControllerTest {
   private MockMvc mockMvc;
 
   @Test
-  public void testSayHello_Forbidden() throws Exception {
+  public void testSayHelloForbidden() throws Exception {
     mockMvc.perform(get("/greetings")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isForbidden());
