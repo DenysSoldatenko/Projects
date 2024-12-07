@@ -10,7 +10,7 @@ services:
   app:
     build:
       context: .
-    container_name: jwt_security_system_project
+    container_name: security_JWT_Auth3_project
     networks:
       - app-network
     depends_on:
@@ -28,9 +28,9 @@ services:
     networks:
       - app-network
     environment:
-      POSTGRES_USER: ${DATASOURCE_USERNAME}
-      POSTGRES_PASSWORD: ${DATASOURCE_USERNAME}
-      POSTGRES_DB: ${DATASOURCE_DATABASE}
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     ports:
       - '5432:5432'
     volumes:

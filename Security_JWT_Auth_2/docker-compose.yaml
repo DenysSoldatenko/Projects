@@ -6,7 +6,7 @@ services:
   app:
     build:
       context: .
-    container_name: spring_security_system_project
+    container_name: security_JWT_Auth2_project
     networks:
       - app-network
     ports:

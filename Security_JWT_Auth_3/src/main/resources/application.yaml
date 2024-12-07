@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  config:
+    import: optional:file:Security_JWT_Auth_3/.env[.properties]
   jpa:
     open-in-view: false
     properties:
@@ -9,13 +11,11 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: true
-
   datasource:
-    url: jdbc:postgresql://${DATABASE_HOST:localhost}:5432/${DATABASE_NAME:example_database}
-    username: ${DATABASE_USERNAME:postgres}
-    password: ${DATABASE_PASSWORD:postgres}
+    url: jdbc:postgresql://${DATABASE_HOST}:5432/${DATABASE_NAME}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
-
   liquibase:
     change-log: classpath:db/changelog/db.changelog-primary.xml
     enabled: true
