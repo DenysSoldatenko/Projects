@@ -10,6 +10,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class PasswordEncoder {
 
+  /**
+   * Creates a {@link BCryptPasswordEncoder} bean for password encoding.
+   *
+   * <p>This method provides a {@link BCryptPasswordEncoder} instance that can be used
+   * throughout the application for securely encoding and validating passwords using the
+   * BCrypt hashing algorithm.</p>
+   *
+   * @return A {@link BCryptPasswordEncoder} instance for encoding and validating passwords.
+   */
   @Bean
   public BCryptPasswordEncoder bcryptPasswordEncoder() {
     return new BCryptPasswordEncoder();

@@ -25,6 +25,16 @@ public class AdminController {
 
   private final UserService userService;
 
+  /**
+   * Retrieves the details of an admin by their unique identifier (ID).
+   *
+   * <p>This operation returns the details of an admin if found.
+   * If no admin is found with the given ID, a 204 No Content response is returned.
+   * If an unexpected error occurs, a 500 Internal Server Error is returned.</p>
+   *
+   * @param id The unique identifier of the admin.
+   * @return The {@link AdminDto} containing the admin details.
+   */
   @Operation(
       summary = "Get an admin by ID",
       description = "Retrieve the details of an admin using their unique identifier"

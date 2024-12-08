@@ -31,11 +31,31 @@ public class SecurityConfiguration {
     "/webjars/**"
   };
 
+  /**
+   * Constructor for the {@link SecurityConfiguration} class.
+   *
+   * <p>Initializes the security configuration with the provided {@link JwtTokenFilter} instance.
+   * This filter will be used to intercept and
+   * validate JWT tokens during the authentication process.</p>
+   *
+   * @param jwtTokenFilter The {@link JwtTokenFilter} to be used for JWT validation.
+   */
   @Autowired
   public SecurityConfiguration(JwtTokenFilter jwtTokenFilter) {
     this.jwtTokenFilter = jwtTokenFilter;
   }
 
+  /**
+   * Creates and configures an {@link AuthenticationManager} bean.
+   *
+   * <p>This method retrieves the {@link AuthenticationManager} from the provided
+   * {@link AuthenticationConfiguration} instance, enabling Spring Security to manage
+   * the authentication process for users.</p>
+   *
+   * @param config The {@link AuthenticationConfiguration} to get the {@link AuthenticationManager}.
+   * @return The configured {@link AuthenticationManager}.
+   * @throws Exception If there is an issue getting the {@link AuthenticationManager}.
+   */
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
       throws Exception {
@@ -65,7 +85,7 @@ public class SecurityConfiguration {
           sessionManagementConfigurer
             .sessionCreationPolicy(STATELESS)
       )
-      .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }

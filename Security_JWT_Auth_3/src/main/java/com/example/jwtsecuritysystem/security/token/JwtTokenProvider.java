@@ -36,11 +36,20 @@ public class JwtTokenProvider {
   @Value("${jwt.token.expired}")
   private long validityInMilliseconds;
 
+  /**
+   * Constructs a JwtTokenProvider instance.
+   *
+   * @param userDetailsService The service for loading user details based on username.
+   */
   @Autowired
   public JwtTokenProvider(UserDetailsService userDetailsService) {
     this.userDetailsService = userDetailsService;
   }
 
+  /**
+   * Initializes the JWT provider by encoding the secret key in Base64.
+   * This method is called after the bean is initialized.
+   */
   @PostConstruct
   protected void init() {
     secret = Base64.getEncoder().encodeToString(secret.getBytes());
@@ -65,10 +74,16 @@ public class JwtTokenProvider {
     .setClaims(claims)
     .setIssuedAt(now)
     .setExpiration(validity)
-    .signWith(SignatureAlgorithm.HS256, secret)//
+    .signWith(SignatureAlgorithm.HS256, secret)
     .compact();
   }
 
+  /**
+   * Extracts the authentication object from the provided JWT token.
+   *
+   * @param token The JWT token from which the authentication is extracted.
+   * @return The authentication object representing the user's credentials.
+   */
   public Authentication getAuthentication(String token) {
     UserDetails userDetails = userDetailsService.loadUserByUsername(getUsername(token));
     return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
@@ -102,6 +117,14 @@ public class JwtTokenProvider {
     return null;
   }
 
+  /**
+   * Validates a JWT token by checking its expiration and verifying its integrity.
+   *
+   * @param token The JWT token to validate.
+   * @return {@code true} if the token is valid (not expired), {@code false} otherwise.
+   * @throws JwtException If the token is invalid or cannot be parsed.
+   * @throws IllegalArgumentException If the token is not properly formatted.
+   */
   @SneakyThrows({JwtException.class, IllegalArgumentException.class})
   public boolean validateToken(String token) {
     Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);

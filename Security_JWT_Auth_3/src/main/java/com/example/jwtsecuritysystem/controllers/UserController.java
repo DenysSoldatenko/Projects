@@ -25,6 +25,16 @@ public class UserController {
 
   private final UserService userService;
 
+  /**
+   * Retrieves the details of a user by their unique ID.
+   *
+   * <p>This endpoint allows an administrator or authorized user
+   * to fetch the data of a user using their unique identifier (ID).
+   * The user details are returned as a {@link UserDto} object.</p>
+   *
+   * @param id The unique identifier of the user.
+   * @return A {@link UserDto} object containing the user's details if found.
+   */
   @Operation(
       summary = "Get a user by ID",
       description = "Retrieve the details of a user using their unique identifier"

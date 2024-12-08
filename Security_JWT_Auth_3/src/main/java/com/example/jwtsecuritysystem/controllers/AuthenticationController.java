@@ -25,12 +25,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/api/v1/auth")
-@Tag(name = "Authentication Controller", description = "Endpoints for user authentication and management")
+@Tag(
+    name = "Authentication Controller",
+    description = "Endpoints for user authentication and management"
+)
 public class AuthenticationController {
 
   private final UserService userService;
   private final AuthenticationService authenticationService;
 
+  /**
+   * Authenticates a user with their username and password, and returns an authentication token.
+   *
+   * @param requestDto The authentication request containing
+   *                   the user's credentials (username and password).
+   * @return A map containing the authentication token if the credentials are valid.
+   */
   @Operation(
       summary = "Authenticate user and generate token",
       description = "Authenticate a user with username and password and return an authentication token"
@@ -57,6 +67,12 @@ public class AuthenticationController {
     return authenticationService.login(requestDto);
   }
 
+  /**
+   * Creates a new admin user.
+   *
+   * @param user The user details to be used for creating a new admin.
+   * @return The created admin user as a DTO.
+   */
   @Operation(
       summary = "Create a new admin user",
       description = "Register a new user with admin role"
@@ -86,6 +102,12 @@ public class AuthenticationController {
     return userService.createAdmin(user);
   }
 
+  /**
+   * Creates a new regular user.
+   *
+   * @param user The user details to be used for creating a new user.
+   * @return The created user as a DTO.
+   */
   @Operation(
       summary = "Create a new user",
       description = "Register a new user with regular role"
