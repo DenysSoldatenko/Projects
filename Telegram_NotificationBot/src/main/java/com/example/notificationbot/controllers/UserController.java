@@ -22,11 +22,22 @@ public class UserController {
 
   TelegramBot telegramBot;
 
+  /**
+   * Endpoint to display a welcome message for the Telegram Notification Bot.
+   *
+   * @return A welcome message string.
+   */
   @GetMapping("/")
   public String home() {
     return "Welcome to the Telegram Notification Bot!";
   }
 
+  /**
+   * Endpoint to process incoming webhook updates and pass them to the bot.
+   *
+   * @param update The update object containing the incoming data from Telegram.
+   * @return A response in the form of a BotApiMethod<?> to be sent back to Telegram.
+   */
   @PostMapping
   public BotApiMethod<?> listener(@RequestBody Update update) {
     return telegramBot.onWebhookUpdateReceived(update);

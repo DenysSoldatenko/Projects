@@ -10,5 +10,13 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
  */
 public interface MessageListener {
 
+  /**
+   * Processes a message and returns a response.
+   *
+   * @param message The message to process.
+   * @param telegramBot The bot instance used to send a response.
+   * @return A BotApiMethod<?> response to send back to the user.
+   * @throws TelegramApiException If an error occurs while processing the message.
+   */
   BotApiMethod<?> processMessage(Message message, TelegramBot telegramBot) throws TelegramApiException;
 }

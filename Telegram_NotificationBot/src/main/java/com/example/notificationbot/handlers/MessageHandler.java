@@ -27,11 +27,9 @@ public class MessageHandler implements BaseHandler {
     var message = (Message) object;
     var user = userRepository.findByChatId(message.getChatId());
 
-    switch (user.getAction()) {
-      case SENDING_TIME, SENDING_DESCRIPTION, SENDING_TITLE -> {
-        return notificationManager.processMessage(message, bot);
-      }
+    return switch (user.getAction()) {
+      case SENDING_TIME, SENDING_DESCRIPTION, SENDING_TITLE -> notificationManager.processMessage(message, bot);
       default -> throw new UnsupportedOperationException("Unexpected value: " + user.getAction());
-    }
+    };
   }
 }
