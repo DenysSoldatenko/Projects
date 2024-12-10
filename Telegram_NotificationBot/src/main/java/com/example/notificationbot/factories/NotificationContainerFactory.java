@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 public class NotificationContainerFactory {
 
   NotificationRepository notificationRepository;
-  NotificationMessageFactory notificationMessageFactory;
 
   /**
    * Creates a new instance of NotificationContainer.
@@ -27,12 +26,6 @@ public class NotificationContainerFactory {
    * @return a new instance of NotificationContainer
    */
   public NotificationContainer createNotificationContainer(Long chatId, TelegramBot telegramBot, Notification notification) {
-    return new NotificationContainer(
-      chatId,
-      telegramBot,
-      notification,
-      notificationRepository,
-      notificationMessageFactory
-    );
+    return new NotificationContainer(chatId, telegramBot, notification, notificationRepository);
   }
 }

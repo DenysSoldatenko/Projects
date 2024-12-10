@@ -1,11 +1,12 @@
 package com.example.notificationbot.editors;
 
+import static com.example.notificationbot.entities.Action.FREE;
+import static com.example.notificationbot.factories.NotificationMessageFactory.createMessageResponse;
+
 import com.example.notificationbot.configurations.TelegramBot;
-import com.example.notificationbot.entities.Action;
 import com.example.notificationbot.entities.Notification;
 import com.example.notificationbot.entities.User;
 import com.example.notificationbot.factories.NotificationMarkupFactory;
-import com.example.notificationbot.factories.NotificationMessageFactory;
 import com.example.notificationbot.managers.message.MessageManager;
 import com.example.notificationbot.repositories.NotificationRepository;
 import com.example.notificationbot.repositories.UserRepository;
@@ -28,7 +29,6 @@ public class MessageNotificationEditor {
   MessageManager messageManager;
   NotificationRepository notificationRepository;
   NotificationMarkupFactory notificationMarkupFactory;
-  NotificationMessageFactory notificationMessageFactory;
 
   /**
    * Edits the title of the current notification for the given user.
@@ -43,7 +43,7 @@ public class MessageNotificationEditor {
     notification.setTitle(message.getText());
     notificationRepository.save(notification);
 
-    user.setAction(Action.FREE);
+    user.setAction(FREE);
     userRepository.save(user);
     return messageManager.showMainMenu(message, bot);
   }
@@ -61,7 +61,7 @@ public class MessageNotificationEditor {
     notification.setDescription(message.getText());
     notificationRepository.save(notification);
 
-    user.setAction(Action.FREE);
+    user.setAction(FREE);
     userRepository.save(user);
     return messageManager.showMainMenu(message, bot);
   }
@@ -86,7 +86,7 @@ public class MessageNotificationEditor {
     }
 
     notificationRepository.save(notification);
-    user.setAction(Action.FREE);
+    user.setAction(FREE);
     userRepository.save(user);
     return messageManager.showMainMenu(message, bot);
   }
@@ -101,7 +101,7 @@ public class MessageNotificationEditor {
   }
 
   private BotApiMethod<?> sendErrorMessage(Message message, User user) {
-    return notificationMessageFactory.createMessageResponse(
+    return createMessageResponse(
       message,
       "❌ Invalid format!\n\n Use HH:MM:SS (e.g., 01:00:30 for 1 hour, 0 min, 30 sec)",
       notificationMarkupFactory.createBackButtonMarkup(String.valueOf(user.getCurrentNotification()))

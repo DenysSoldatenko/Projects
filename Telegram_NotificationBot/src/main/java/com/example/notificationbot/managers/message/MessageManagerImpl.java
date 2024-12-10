@@ -1,8 +1,9 @@
 package com.example.notificationbot.managers.message;
 
+import static com.example.notificationbot.factories.NotificationMessageFactory.createMessageResponse;
+
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.factories.NotificationMarkupFactory;
-import com.example.notificationbot.factories.NotificationMessageFactory;
 import com.example.notificationbot.repositories.NotificationRepository;
 import com.example.notificationbot.repositories.UserRepository;
 import lombok.AccessLevel;
@@ -25,14 +26,13 @@ public class MessageManagerImpl implements MessageManager {
   UserRepository userRepository;
   NotificationRepository notificationRepository;
   NotificationMarkupFactory notificationMarkupFactory;
-  NotificationMessageFactory notificationMessageFactory;
 
   @Override
   public BotApiMethod<?> showMainMenu(Message message, TelegramBot bot) {
     var user = userRepository.findByChatId(message.getChatId());
     var notification = notificationRepository.findNotificationById(user.getCurrentNotification()).orElseThrow();
 
-    return notificationMessageFactory.createMessageResponse(
+    return createMessageResponse(
       message,
       "Configure the notification",
       notificationMarkupFactory.setNotificationMarkup(notification)

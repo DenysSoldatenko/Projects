@@ -1,8 +1,10 @@
 package com.example.notificationbot.managers;
 
+import static com.example.notificationbot.factories.NotificationMessageFactory.createEditMessageResponse;
+import static com.example.notificationbot.factories.NotificationMessageFactory.createMessageResponse;
+
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.factories.NotificationMarkupFactory;
-import com.example.notificationbot.factories.NotificationMessageFactory;
 import com.example.notificationbot.listeners.CommandListener;
 import com.example.notificationbot.listeners.QueryListener;
 import lombok.AccessLevel;
@@ -24,11 +26,10 @@ public class MainManager implements QueryListener, CommandListener {
   static String WELCOME_MESSAGE = "Welcome, dear friend!";
 
   NotificationMarkupFactory notificationMarkupFactory;
-  NotificationMessageFactory notificationMessageFactory;
 
   @Override
   public BotApiMethod<?> processCommand(Message message, TelegramBot telegramBot) {
-    return notificationMessageFactory.createMessageResponse(
+    return createMessageResponse(
       message,
       WELCOME_MESSAGE,
       notificationMarkupFactory.createSetReminderButtonMarkup()
@@ -37,7 +38,7 @@ public class MainManager implements QueryListener, CommandListener {
 
   @Override
   public BotApiMethod<?> processQuery(CallbackQuery query, String[] words, TelegramBot telegramBot) {
-    return notificationMessageFactory.createEditMessageResponse(
+    return createEditMessageResponse(
       query,
       WELCOME_MESSAGE,
       notificationMarkupFactory.createSetReminderButtonMarkup()

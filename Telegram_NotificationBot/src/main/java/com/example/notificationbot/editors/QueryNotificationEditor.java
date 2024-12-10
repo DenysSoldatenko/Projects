@@ -1,6 +1,8 @@
 package com.example.notificationbot.editors;
 
 import static com.example.notificationbot.entities.NotificationStatus.IN_PROGRESS;
+import static com.example.notificationbot.factories.NotificationMessageFactory.createAnswerCallback;
+import static com.example.notificationbot.factories.NotificationMessageFactory.createEditMessageResponse;
 
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.entities.Action;
@@ -8,7 +10,6 @@ import com.example.notificationbot.entities.Notification;
 import com.example.notificationbot.entities.NotificationStatus;
 import com.example.notificationbot.factories.NotificationContainerFactory;
 import com.example.notificationbot.factories.NotificationMarkupFactory;
-import com.example.notificationbot.factories.NotificationMessageFactory;
 import com.example.notificationbot.repositories.NotificationRepository;
 import com.example.notificationbot.repositories.UserRepository;
 import java.util.UUID;
@@ -32,7 +33,6 @@ public class QueryNotificationEditor {
   UserRepository userRepository;
   NotificationRepository notificationRepository;
   NotificationMarkupFactory notificationMarkupFactory;
-  NotificationMessageFactory notificationMessageFactory;
   NotificationContainerFactory notificationContainerFactory;
 
   /**
@@ -48,20 +48,17 @@ public class QueryNotificationEditor {
     var notification = notificationRepository.findById(UUID.fromString(id)).orElseThrow();
 
     if (isNotificationValid(notification)) {
-      bot.execute(notificationMessageFactory.createAnswerCallback(query, "The notification will come to you in " + notification.getDuration() + " seconds 👀"));
+      bot.execute(createAnswerCallback(query, "The notification will come to you in " + notification.getDuration() + " seconds 👀"));
       updateNotificationStatus(notification);
       startNotificationThread(query, bot, notification);
-      return notificationMessageFactory.createEditMessageResponse(
+      return createEditMessageResponse(
         query,
         "✅ Done!\n\n✨ Would you like to set another notification?",
         notificationMarkupFactory.createAddNotificationButtonMarkup()
       );
     }
 
-    return notificationMessageFactory.createAnswerCallback(
-      query,
-      "Please fill in the required values: title and time"
-    );
+    return createAnswerCallback(query, "Please fill in the required values: title and time");
   }
 
   /**
@@ -78,7 +75,7 @@ public class QueryNotificationEditor {
         .build();
     Notification savedNotification = notificationRepository.save(notification);
 
-    return notificationMessageFactory.createEditMessageResponse(
+    return createEditMessageResponse(
       query,
       "Set up your new notification",
       notificationMarkupFactory.setNotificationMarkup(savedNotification)
@@ -94,7 +91,7 @@ public class QueryNotificationEditor {
    */
   public BotApiMethod<?> editPage(CallbackQuery query, String id) {
     var notification = notificationRepository.findNotificationById(UUID.fromString(id)).orElseThrow();
-    return notificationMessageFactory.createEditMessageResponse(
+    return createEditMessageResponse(
       query,
       "Update your notification details",
       notificationMarkupFactory.setNotificationMarkup(notification)
@@ -111,7 +108,7 @@ public class QueryNotificationEditor {
   public BotApiMethod<?> editTitle(CallbackQuery query, String id) {
     setUserAction(query, id, Action.SENDING_TITLE);
     String text = "✏ Please write a simple title for your reminder";
-    return notificationMessageFactory.createEditMessageResponse(query, text, notificationMarkupFactory.createBackButtonMarkup(id));
+    return createEditMessageResponse(query, text, notificationMarkupFactory.createBackButtonMarkup(id));
   }
 
   /**
@@ -124,7 +121,7 @@ public class QueryNotificationEditor {
   public BotApiMethod<?> editDuration(CallbackQuery query, String id) {
     setUserAction(query, id, Action.SENDING_TIME);
     String text = "⏰ Please set a reminder time\n\nFormat: HH:MM:SS (e.g., 01:30:00 for 1.5 hours)";
-    return notificationMessageFactory.createEditMessageResponse(query, text, notificationMarkupFactory.createBackButtonMarkup(id));
+    return createEditMessageResponse(query, text, notificationMarkupFactory.createBackButtonMarkup(id));
   }
 
   /**
@@ -137,7 +134,7 @@ public class QueryNotificationEditor {
   public BotApiMethod<?> editDescription(CallbackQuery query, String id) {
     setUserAction(query, id, Action.SENDING_DESCRIPTION);
     String text = "📝 Please enter the description you want for your notification";
-    return notificationMessageFactory.createEditMessageResponse(query, text, notificationMarkupFactory.createBackButtonMarkup(id));
+    return createEditMessageResponse(query, text, notificationMarkupFactory.createBackButtonMarkup(id));
   }
 
   private boolean isNotificationValid(Notification notification) {

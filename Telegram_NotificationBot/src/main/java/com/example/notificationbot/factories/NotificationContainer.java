@@ -1,8 +1,10 @@
 package com.example.notificationbot.factories;
 
+import static com.example.notificationbot.entities.NotificationStatus.COMPLETED;
+import static com.example.notificationbot.factories.NotificationMessageFactory.createMessageResponse;
+
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.entities.Notification;
-import com.example.notificationbot.entities.NotificationStatus;
 import com.example.notificationbot.repositories.NotificationRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +28,6 @@ public class NotificationContainer implements Runnable {
   TelegramBot bot;
   Notification notification;
   NotificationRepository notificationRepository;
-  NotificationMessageFactory notificationMessageFactory;
 
   @Override
   public void run() {
@@ -45,7 +46,7 @@ public class NotificationContainer implements Runnable {
   }
 
   private void sendNotification() {
-    SendMessage message = notificationMessageFactory.createMessageResponse(
+    SendMessage message = createMessageResponse(
         chatId,
         String.format("🔔 Reminder: %s\n\n📝 Details: %s", notification.getTitle(), notification.getDescription())
     );
@@ -58,7 +59,7 @@ public class NotificationContainer implements Runnable {
   }
 
   private void completeNotification() {
-    notification.setStatus(NotificationStatus.COMPLETED);
+    notification.setStatus(COMPLETED);
     notificationRepository.save(notification);
   }
 }

@@ -1,8 +1,9 @@
 package com.example.notificationbot.managers.query;
 
+import static com.example.notificationbot.factories.NotificationMessageFactory.createEditMessageResponse;
+
 import com.example.notificationbot.configurations.TelegramBot;
 import com.example.notificationbot.factories.NotificationMarkupFactory;
-import com.example.notificationbot.factories.NotificationMessageFactory;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,11 +22,10 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 public class QueryManagerImpl implements QueryManager {
 
   NotificationMarkupFactory notificationMarkupFactory;
-  NotificationMessageFactory notificationMessageFactory;
 
   @Override
   public BotApiMethod<?> showMainMenu(CallbackQuery query, TelegramBot bot) {
-    return notificationMessageFactory.createEditMessageResponse(
+    return createEditMessageResponse(
       query,
       "Please add a notification below ↓",
       notificationMarkupFactory.createAddNotificationButtonMarkup()
