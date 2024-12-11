@@ -1,8 +1,8 @@
 package com.example.weatherbot.managers;
 
+import static com.example.weatherbot.factories.MessageFactory.createMessageResponse;
 import static com.example.weatherbot.utils.MessageUtils.WELCOME_MESSAGE_TEMPLATE;
 
-import com.example.weatherbot.factories.MessageFactory;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,9 +18,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MainManager {
 
-  MessageFactory messageFactory;
-
   public BotApiMethod<?> processCommand(Message message) {
-    return messageFactory.createMessageResponse(message.getChatId(), WELCOME_MESSAGE_TEMPLATE);
+    return createMessageResponse(message.getChatId(), WELCOME_MESSAGE_TEMPLATE);
   }
 }

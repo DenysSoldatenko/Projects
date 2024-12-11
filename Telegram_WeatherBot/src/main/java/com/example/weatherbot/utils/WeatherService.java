@@ -1,10 +1,10 @@
 package com.example.weatherbot.utils;
 
+import static com.example.weatherbot.factories.MessageFactory.createMessageResponse;
 import static com.example.weatherbot.utils.MessageUtils.INVALID_INPUT_MESSAGE;
 import static com.example.weatherbot.utils.MessageUtils.WEATHER_FETCH_ERROR_MESSAGE;
 
 import com.example.weatherbot.dtos.WeatherResponse;
-import com.example.weatherbot.factories.MessageFactory;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.AccessLevel;
@@ -26,7 +26,6 @@ public class WeatherService {
 
   static String REGEX = "^([A-Za-z\\s]+)\\s(\\d+)(h|d| hours| days)$";
 
-  MessageFactory messageFactory;
   WeatherDataProvider weatherDataProvider;
   ResponseFormatter weatherResponseFormatter;
 
@@ -52,7 +51,7 @@ public class WeatherService {
     }
 
     log.warn("Invalid format received: {}", input);
-    return messageFactory.createMessageResponse(chatId, INVALID_INPUT_MESSAGE);
+    return createMessageResponse(chatId, INVALID_INPUT_MESSAGE);
   }
 
   private boolean isValidWeatherRequest(String city, String timeUnit, String number) {
@@ -84,11 +83,11 @@ public class WeatherService {
     }
 
     if (response != null) {
-      return messageFactory.createMessageResponse(chatId, weatherResponseFormatter.formatWeatherResponse(response));
+      return createMessageResponse(chatId, weatherResponseFormatter.formatWeatherResponse(response));
     }
 
     log.error("Error: Could not retrieve weather data for city: {}", city);
-    return messageFactory.createMessageResponse(chatId, WEATHER_FETCH_ERROR_MESSAGE);
+    return createMessageResponse(chatId, WEATHER_FETCH_ERROR_MESSAGE);
   }
 
   private boolean isDailyForecast(String timeUnit) {

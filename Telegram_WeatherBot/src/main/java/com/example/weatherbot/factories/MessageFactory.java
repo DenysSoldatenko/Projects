@@ -1,14 +1,12 @@
 package com.example.weatherbot.factories;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import lombok.experimental.UtilityClass;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 /**
  * Factory for creating Telegram bot message responses.
  */
-@Component
-@RequiredArgsConstructor
+@UtilityClass
 public class MessageFactory {
 
   /**
@@ -18,7 +16,7 @@ public class MessageFactory {
    * @param text   the text to send in the response
    * @return a SendMessage object configured with the provided parameters
    */
-  public SendMessage createMessageResponse(Long chatId, String text) {
+  public static SendMessage createMessageResponse(Long chatId, String text) {
     return SendMessage.builder()
       .chatId(chatId)
       .text(text)
