@@ -20,7 +20,7 @@ services:
     ports:
       - '8085:8085'
     environment:
-      DATABASE_HOST: ${DATASOURCE_HOST}
+      DATABASE_HOST: postgres
       TELEGRAM_BOT_URL: ${TELEGRAM_BOT_URL}
       TELEGRAM_BOT_NAME: ${TELEGRAM_BOT_NAME}
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
@@ -31,9 +31,9 @@ services:
     networks:
       - app-network
     environment:
-      POSTGRES_USER: ${DATASOURCE_USERNAME}
-      POSTGRES_PASSWORD: ${DATASOURCE_PASSWORD}
-      POSTGRES_DB: ${DATASOURCE_NAME}
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     ports:
       - '5432:5432'
     volumes:
