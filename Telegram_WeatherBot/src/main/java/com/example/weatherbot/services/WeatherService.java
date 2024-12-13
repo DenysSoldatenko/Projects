@@ -1,17 +1,18 @@
-package com.example.weatherbot.utils;
+package com.example.weatherbot.services;
 
 import static com.example.weatherbot.factories.MessageFactory.createMessageResponse;
 import static com.example.weatherbot.utils.MessageUtils.INVALID_INPUT_MESSAGE;
 import static com.example.weatherbot.utils.MessageUtils.WEATHER_FETCH_ERROR_MESSAGE;
 
 import com.example.weatherbot.dtos.WeatherResponse;
+import com.example.weatherbot.utils.ResponseFormatterUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 /**
@@ -19,15 +20,14 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
  * and retrieving weather data either hourly or daily for a given city.
  */
 @Slf4j
-@Component
+@Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class WeatherService {
 
   static String REGEX = "^([A-Za-z\\s]+)\\s(\\d+)(h|d| hours| days)$";
 
-  WeatherDataProvider weatherDataProvider;
-  ResponseFormatter weatherResponseFormatter;
+  DataProviderService dataProviderService;
 
   /**
    * Processes a weather request by validating the input and fetching the appropriate weather data.
@@ -77,13 +77,13 @@ public class WeatherService {
     WeatherResponse response = null;
 
     if (isDailyForecast(timeUnit)) {
-      response = weatherDataProvider.getDailyWeatherByCity(city, number);
+      response = dataProviderService.getDailyWeatherByCity(city, number);
     } else if (isHourlyForecast(timeUnit)) {
-      response = weatherDataProvider.getHourlyWeatherByCity(city, number);
+      response = dataProviderService.getHourlyWeatherByCity(city, number);
     }
 
     if (response != null) {
-      return createMessageResponse(chatId, weatherResponseFormatter.formatWeatherResponse(response));
+      return createMessageResponse(chatId, ResponseFormatterUtils.formatWeatherResponse(response));
     }
 
     log.error("Error: Could not retrieve weather data for city: {}", city);

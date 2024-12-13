@@ -18,6 +18,12 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MainManager {
 
+  /**
+   * Processes an incoming message and returns a response.
+   *
+   * @param message the incoming Telegram message.
+   * @return a BotApiMethod containing the response message to be sent.
+   */
   public BotApiMethod<?> processCommand(Message message) {
     return createMessageResponse(message.getChatId(), WELCOME_MESSAGE_TEMPLATE);
   }

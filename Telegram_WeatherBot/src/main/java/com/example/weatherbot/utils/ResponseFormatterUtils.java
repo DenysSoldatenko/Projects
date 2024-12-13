@@ -10,14 +10,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Component;
+import lombok.experimental.UtilityClass;
 
 /**
  * Formats weather response data into a user-friendly string with emojis.
  */
-@Component
+@UtilityClass
 @FieldDefaults(level = AccessLevel.PUBLIC, makeFinal = true)
-public class ResponseFormatter {
+public class ResponseFormatterUtils {
 
   static DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 

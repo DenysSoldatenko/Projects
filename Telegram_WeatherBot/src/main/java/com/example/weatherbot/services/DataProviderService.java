@@ -1,11 +1,11 @@
-package com.example.weatherbot.utils;
+package com.example.weatherbot.services;
 
 import com.example.weatherbot.configurations.WeatherProperties;
 import com.example.weatherbot.dtos.WeatherResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -13,10 +13,10 @@ import org.springframework.web.util.UriComponentsBuilder;
  * Service to interact with weather APIs and retrieve weather information for a given city.
  * Provides methods to fetch hourly and daily weather forecasts.
  */
-@Component
+@Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class WeatherDataProvider {
+public class DataProviderService {
 
   RestTemplate restTemplate;
   WeatherProperties weatherProperties;
