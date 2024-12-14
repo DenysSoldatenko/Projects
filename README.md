@@ -36,3 +36,14 @@ Delve into a Spring Boot application security tutorial focused on securing REST 
 
 ### 4. JWT-Enhanced Security for Spring APIs - Security_JWT_Auth_3 Project
 Discover a repository dedicated to creating a secure Spring Security REST API utilizing JWT for authentication and authorization. This project addresses essential aspects of API security, ensuring that only authorized users can access sensitive resources.
+
+## Telegram
+
+### 1. Russian Military Loss Tracker Bot - Telegram_Military_Tracker_Bot Project
+Track real-time military losses of Russian forces, including personnel, tanks, planes, and more. Use simple commands to view daily, weekly, or monthly loss statistics, or specify custom date ranges.
+
+### 2. Custom Task Reminder Bot - Telegram_Notification_Bot Project
+Schedule customizable reminders for tasks, events, or deadlines. Set titles, durations, and descriptions with ease, and receive timely notifications to stay organized.
+
+### 3. Global Weather Forecast Bot - Telegram_WeatherBot Project
+Get real-time weather updates using the WeatherBit API. Check current conditions and access 24-hour or 5-day forecasts for any city, all through simple commands.
